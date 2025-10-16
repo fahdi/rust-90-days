@@ -1,6 +1,6 @@
 ---
-title: Day 61 - Implementing Traits
-description: Learn about implementing traits in Rust
+title: "Day 61 - Implementing Traits"
+description: "Learn about implementing traits in Rust"
 ---
 
 # Day 61: Implementing Traits

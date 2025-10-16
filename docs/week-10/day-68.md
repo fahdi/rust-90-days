@@ -1,6 +1,6 @@
 ---
-title: Day 68 - Associated Types
-description: Learn about associated types in Rust
+title: "Day 68 - Associated Types"
+description: "Learn about associated types in Rust"
 ---
 
 # Day 68: Associated Types

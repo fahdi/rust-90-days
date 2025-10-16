@@ -1,6 +1,6 @@
 ---
-title: Day 32 - Tuple Structs
-description: Learn about tuple structs in Rust
+title: "Day 32 - Tuple Structs"
+description: "Learn about tuple structs in Rust"
 ---
 
 # Day 32: Tuple Structs

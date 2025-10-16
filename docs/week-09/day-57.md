@@ -1,6 +1,6 @@
 ---
-title: Day 57 - Generics Basics
-description: Learn about generics basics in Rust
+title: "Day 57 - Generics Basics"
+description: "Learn about generics basics in Rust"
 ---
 
 # Day 57: Generics Basics

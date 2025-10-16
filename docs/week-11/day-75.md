@@ -1,6 +1,6 @@
 ---
-title: Day 75 - Static Lifetime
-description: Learn about static lifetime in Rust
+title: "Day 75 - Static Lifetime"
+description: "Learn about static lifetime in Rust"
 ---
 
 # Day 75: Static Lifetime
@@ -102,5 +102,5 @@ fn main() {
 
 <div class="lesson-nav">
   <a href="/week-11/day-74">← Day 74: Struct Lifetimes</a>
-  <a href="/week-11/day-76">Day 76: Box<T> →</a>
+  <a href="/week-11/day-76">Day 76: Box&lt;T&gt; →</a>
 </div>

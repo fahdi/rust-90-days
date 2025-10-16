@@ -1,6 +1,6 @@
 ---
-title: Day 4 - Strings vs &str
-description: Learn about strings vs &str in Rust
+title: "Day 4 - Strings vs &str"
+description: "Learn about strings vs &str in Rust"
 ---
 
 # Day 4: Strings vs &str

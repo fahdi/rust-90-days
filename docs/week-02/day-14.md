@@ -1,6 +1,6 @@
 ---
-title: Day 14 - Project: CLI Calculator
-description: Learn about project: cli calculator in Rust
+title: "Day 14 - Project: CLI Calculator"
+description: "Learn about project: cli calculator in Rust"
 ---
 
 # Day 14: Project: CLI Calculator

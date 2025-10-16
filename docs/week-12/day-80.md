@@ -1,6 +1,6 @@
 ---
-title: Day 80 - Arc<T> for Threading
-description: Learn about arc<t> for threading in Rust
+title: "Day 80 - Arc T  for Threading"
+description: "Learn about arc t  for threading in Rust"
 ---
 
 # Day 80: Arc<T> for Threading
@@ -101,6 +101,6 @@ fn main() {
 <ProgressTracker />
 
 <div class="lesson-nav">
-  <a href="/week-12/day-79">← Day 79: Rc<RefCell<T>> Pattern</a>
-  <a href="/week-12/day-81">Day 81: Weak<T> References →</a>
+  <a href="/week-12/day-79">← Day 79: Rc&lt;RefCell&lt;T&gt;&gt; Pattern</a>
+  <a href="/week-12/day-81">Day 81: Weak&lt;T&gt; References →</a>
 </div>

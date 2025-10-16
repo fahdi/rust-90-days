@@ -1,6 +1,6 @@
 ---
-title: Day 42 - Project: JSON-like Data Structure
-description: Learn about project: json-like data structure in Rust
+title: "Day 42 - Project: JSON-like Data Structure"
+description: "Learn about project: json-like data structure in Rust"
 ---
 
 # Day 42: Project: JSON-like Data Structure

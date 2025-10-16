@@ -1,6 +1,7 @@
 {
   "name": "rust-90-days",
   "version": "1.0.0",
+  "type": "module",
   "description": "Master Rust with 10-minute daily lessons over 90 days",
   "scripts": {
     "docs:dev": "vitepress dev docs",

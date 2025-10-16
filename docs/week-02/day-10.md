@@ -1,6 +1,6 @@
 ---
-title: Day 10 - Comments & Docs
-description: Learn about comments & docs in Rust
+title: "Day 10 - Comments & Docs"
+description: "Learn about comments & docs in Rust"
 ---
 
 # Day 10: Comments & Docs

@@ -1,6 +1,6 @@
 ---
-title: Day 45 - Iterators Basics
-description: Learn about iterators basics in Rust
+title: "Day 45 - Iterators Basics"
+description: "Learn about iterators basics in Rust"
 ---
 
 # Day 45: Iterators Basics

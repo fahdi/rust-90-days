@@ -1,6 +1,6 @@
 ---
-title: Day 20 - References & Borrowing
-description: Learn about references & borrowing in Rust
+title: "Day 20 - References & Borrowing"
+description: "Learn about references & borrowing in Rust"
 ---
 
 # Day 20: References & Borrowing

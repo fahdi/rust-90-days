@@ -1,6 +1,6 @@
 ---
-title: Day 6 - Functions
-description: Learn about functions in Rust
+title: "Day 6 - Functions"
+description: "Learn about functions in Rust"
 ---
 
 # Day 6: Functions

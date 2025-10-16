@@ -1,6 +1,6 @@
 ---
-title: Day 26 - Dangling References
-description: Learn about dangling references in Rust
+title: "Day 26 - Dangling References"
+description: "Learn about dangling references in Rust"
 ---
 
 # Day 26: Dangling References

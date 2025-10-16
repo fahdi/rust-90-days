@@ -1,6 +1,6 @@
 ---
-title: Day 44 - Hash Maps
-description: Learn about hash maps in Rust
+title: "Day 44 - Hash Maps"
+description: "Learn about hash maps in Rust"
 ---
 
 # Day 44: Hash Maps

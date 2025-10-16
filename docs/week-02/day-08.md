@@ -1,6 +1,6 @@
 ---
-title: Day 8 - Loops
-description: Learn about loops in Rust
+title: "Day 8 - Loops"
+description: "Learn about loops in Rust"
 ---
 
 # Day 8: Loops

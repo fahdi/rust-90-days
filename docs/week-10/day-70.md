@@ -1,6 +1,6 @@
 ---
-title: Day 70 - Operator Overloading
-description: Learn about operator overloading in Rust
+title: "Day 70 - Operator Overloading"
+description: "Learn about operator overloading in Rust"
 ---
 
 # Day 70: Operator Overloading

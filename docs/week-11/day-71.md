@@ -1,6 +1,6 @@
 ---
-title: Day 71 - Lifetime Annotations Intro
-description: Learn about lifetime annotations intro in Rust
+title: "Day 71 - Lifetime Annotations Intro"
+description: "Learn about lifetime annotations intro in Rust"
 ---
 
 # Day 71: Lifetime Annotations Intro

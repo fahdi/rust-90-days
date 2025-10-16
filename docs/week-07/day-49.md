@@ -1,6 +1,6 @@
 ---
-title: Day 49 - Closures Introduction
-description: Learn about closures introduction in Rust
+title: "Day 49 - Closures Introduction"
+description: "Learn about closures introduction in Rust"
 ---
 
 # Day 49: Closures Introduction

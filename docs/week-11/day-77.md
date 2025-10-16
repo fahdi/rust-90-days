@@ -1,6 +1,6 @@
 ---
-title: Day 77 - Rc<T> & Reference Counting
-description: Learn about rc<t> & reference counting in Rust
+title: "Day 77 - Rc T  & Reference Counting"
+description: "Learn about rc t  & reference counting in Rust"
 ---
 
 # Day 77: Rc<T> & Reference Counting
@@ -101,6 +101,6 @@ fn main() {
 <ProgressTracker />
 
 <div class="lesson-nav">
-  <a href="/week-11/day-76">← Day 76: Box<T></a>
+  <a href="/week-11/day-76">← Day 76: Box&lt;T&gt;</a>
   <a href="/week-12/">Week 12 Overview →</a>
 </div>

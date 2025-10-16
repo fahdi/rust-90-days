@@ -1,6 +1,6 @@
 ---
-title: Day 59 - Generic Structs
-description: Learn about generic structs in Rust
+title: "Day 59 - Generic Structs"
+description: "Learn about generic structs in Rust"
 ---
 
 # Day 59: Generic Structs

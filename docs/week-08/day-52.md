@@ -1,6 +1,6 @@
 ---
-title: Day 52 - Fn, FnMut, FnOnce Traits
-description: Learn about fn, fnmut, fnonce traits in Rust
+title: "Day 52 - Fn, FnMut, FnOnce Traits"
+description: "Learn about fn, fnmut, fnonce traits in Rust"
 ---
 
 # Day 52: Fn, FnMut, FnOnce Traits

@@ -1,6 +1,6 @@
 ---
-title: Day 76 - Box<T>
-description: Learn about box<t> in Rust
+title: "Day 76 - Box T "
+description: "Learn about box t  in Rust"
 ---
 
 # Day 76: Box<T>
@@ -102,5 +102,5 @@ fn main() {
 
 <div class="lesson-nav">
   <a href="/week-11/day-75">← Day 75: Static Lifetime</a>
-  <a href="/week-11/day-77">Day 77: Rc<T> & Reference Counting →</a>
+  <a href="/week-11/day-77">Day 77: Rc&lt;T&gt; & Reference Counting →</a>
 </div>

@@ -1,6 +1,6 @@
 ---
-title: Day 7 - Control Flow
-description: Learn about control flow in Rust
+title: "Day 7 - Control Flow"
+description: "Learn about control flow in Rust"
 ---
 
 # Day 7: Control Flow

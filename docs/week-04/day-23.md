@@ -1,6 +1,6 @@
 ---
-title: Day 23 - Slices
-description: Learn about slices in Rust
+title: "Day 23 - Slices"
+description: "Learn about slices in Rust"
 ---
 
 # Day 23: Slices

@@ -1,6 +1,6 @@
 ---
-title: Day 33 - Enums Basics
-description: Learn about enums basics in Rust
+title: "Day 33 - Enums Basics"
+description: "Learn about enums basics in Rust"
 ---
 
 # Day 33: Enums Basics
@@ -102,5 +102,5 @@ fn main() {
 
 <div class="lesson-nav">
   <a href="/week-05/day-32">← Day 32: Tuple Structs</a>
-  <a href="/week-05/day-34">Day 34: Option<T> →</a>
+  <a href="/week-05/day-34">Day 34: Option&lt;T&gt; →</a>
 </div>

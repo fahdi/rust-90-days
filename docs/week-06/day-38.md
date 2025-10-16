@@ -1,6 +1,6 @@
 ---
-title: Day 38 - Method Chaining
-description: Learn about method chaining in Rust
+title: "Day 38 - Method Chaining"
+description: "Learn about method chaining in Rust"
 ---
 
 # Day 38: Method Chaining

@@ -1,6 +1,6 @@
 ---
-title: Day 1 - Hello Rust
-description: Learn about hello rust in Rust
+title: "Day 1 - Hello Rust"
+description: "Learn about hello rust in Rust"
 ---
 
 # Day 1: Hello Rust

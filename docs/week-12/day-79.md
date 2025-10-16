@@ -1,6 +1,6 @@
 ---
-title: Day 79 - Rc<RefCell<T>> Pattern
-description: Learn about rc<refcell<t>> pattern in Rust
+title: "Day 79 - Rc RefCell T   Pattern"
+description: "Learn about rc refcell t   pattern in Rust"
 ---
 
 # Day 79: Rc<RefCell<T>> Pattern
@@ -101,6 +101,6 @@ fn main() {
 <ProgressTracker />
 
 <div class="lesson-nav">
-  <a href="/week-12/day-78">← Day 78: RefCell<T> & Interior Mutability</a>
-  <a href="/week-12/day-80">Day 80: Arc<T> for Threading →</a>
+  <a href="/week-12/day-78">← Day 78: RefCell&lt;T&gt; & Interior Mutability</a>
+  <a href="/week-12/day-80">Day 80: Arc&lt;T&gt; for Threading →</a>
 </div>

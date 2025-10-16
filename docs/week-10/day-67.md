@@ -1,6 +1,6 @@
 ---
-title: Day 67 - Static vs Dynamic Dispatch
-description: Learn about static vs dynamic dispatch in Rust
+title: "Day 67 - Static vs Dynamic Dispatch"
+description: "Learn about static vs dynamic dispatch in Rust"
 ---
 
 # Day 67: Static vs Dynamic Dispatch

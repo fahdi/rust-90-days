@@ -1,6 +1,6 @@
 ---
-title: Day 3 - Data Types
-description: Learn about data types in Rust
+title: "Day 3 - Data Types"
+description: "Learn about data types in Rust"
 ---
 
 # Day 3: Data Types

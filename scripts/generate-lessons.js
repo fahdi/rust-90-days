@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Course structure
 const courseStructure = [
@@ -249,22 +253,22 @@ function createDayLesson(weekData, dayData, dayIndex) {
   
   if (prevDay) {
     const prevDayNum = prevDay.day.toString().padStart(2, '0');
-    prevLink = `<a href="/week-${weekNum}/day-${prevDayNum}">← Day ${prevDay.day}: ${prevDay.title}</a>`;
+    prevLink = `<a href="/week-${weekNum}/day-${prevDayNum}">← Day ${prevDay.day}: ${prevDay.title.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</a>`;
   } else if (week > 1) {
     prevLink = `<a href="/week-${weekNum}/">← Week ${week} Overview</a>`;
   }
   
   if (nextDay) {
     const nextDayNum = nextDay.day.toString().padStart(2, '0');
-    nextLink = `<a href="/week-${weekNum}/day-${nextDayNum}">Day ${nextDay.day}: ${nextDay.title} →</a>`;
+    nextLink = `<a href="/week-${weekNum}/day-${nextDayNum}">Day ${nextDay.day}: ${nextDay.title.replace(/</g, '&lt;').replace(/>/g, '&gt;')} →</a>`;
   } else if (week < 13) {
     const nextWeekNum = (week + 1).toString().padStart(2, '0');
     nextLink = `<a href="/week-${nextWeekNum}/">Week ${week + 1} Overview →</a>`;
   }
   
   return `---
-title: Day ${day} - ${title}
-description: Learn about ${title.toLowerCase()} in Rust
+title: "Day ${day} - ${title.replace(/</g, ' ').replace(/>/g, ' ')}"
+description: "Learn about ${title.toLowerCase().replace(/</g, ' ').replace(/>/g, ' ')} in Rust"
 ---
 
 # Day ${day}: ${title}

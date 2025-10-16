@@ -1,6 +1,6 @@
 ---
-title: Day 66 - Trait Objects (dyn)
-description: Learn about trait objects (dyn) in Rust
+title: "Day 66 - Trait Objects (dyn)"
+description: "Learn about trait objects (dyn) in Rust"
 ---
 
 # Day 66: Trait Objects (dyn)

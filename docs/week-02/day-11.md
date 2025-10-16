@@ -1,6 +1,6 @@
 ---
-title: Day 11 - Project: Temperature Converter
-description: Learn about project: temperature converter in Rust
+title: "Day 11 - Project: Temperature Converter"
+description: "Learn about project: temperature converter in Rust"
 ---
 
 # Day 11: Project: Temperature Converter

@@ -1,6 +1,6 @@
 ---
-title: Day 22 - Borrowing Rules
-description: Learn about borrowing rules in Rust
+title: "Day 22 - Borrowing Rules"
+description: "Learn about borrowing rules in Rust"
 ---
 
 # Day 22: Borrowing Rules

@@ -1,6 +1,6 @@
 ---
-title: Day 30 - Struct Methods
-description: Learn about struct methods in Rust
+title: "Day 30 - Struct Methods"
+description: "Learn about struct methods in Rust"
 ---
 
 # Day 30: Struct Methods

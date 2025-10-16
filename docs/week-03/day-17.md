@@ -1,6 +1,6 @@
 ---
-title: Day 17 - Ownership Rules
-description: Learn about ownership rules in Rust
+title: "Day 17 - Ownership Rules"
+description: "Learn about ownership rules in Rust"
 ---
 
 # Day 17: Ownership Rules

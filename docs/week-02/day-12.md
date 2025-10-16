@@ -1,6 +1,6 @@
 ---
-title: Day 12 - Modules Basics
-description: Learn about modules basics in Rust
+title: "Day 12 - Modules Basics"
+description: "Learn about modules basics in Rust"
 ---
 
 # Day 12: Modules Basics

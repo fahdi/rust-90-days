@@ -1,6 +1,6 @@
 ---
-title: Day 81 - Weak<T> References
-description: Learn about weak<t> references in Rust
+title: "Day 81 - Weak T  References"
+description: "Learn about weak t  references in Rust"
 ---
 
 # Day 81: Weak<T> References
@@ -101,6 +101,6 @@ fn main() {
 <ProgressTracker />
 
 <div class="lesson-nav">
-  <a href="/week-12/day-80">← Day 80: Arc<T> for Threading</a>
+  <a href="/week-12/day-80">← Day 80: Arc&lt;T&gt; for Threading</a>
   <a href="/week-12/day-82">Day 82: Memory Leaks Prevention →</a>
 </div>

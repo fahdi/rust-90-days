@@ -1,6 +1,6 @@
 ---
-title: Day 87 - Macros: macro_rules!
-description: Learn about macros: macro_rules! in Rust
+title: "Day 87 - Macros: macro_rules!"
+description: "Learn about macros: macro_rules! in Rust"
 ---
 
 # Day 87: Macros: macro_rules!

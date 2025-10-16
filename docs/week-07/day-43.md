@@ -1,6 +1,6 @@
 ---
-title: Day 43 - Vectors
-description: Learn about vectors in Rust
+title: "Day 43 - Vectors"
+description: "Learn about vectors in Rust"
 ---
 
 # Day 43: Vectors

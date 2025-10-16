@@ -1,6 +1,6 @@
 ---
-title: Day 34 - Option<T>
-description: Learn about option<t> in Rust
+title: "Day 34 - Option T "
+description: "Learn about option t  in Rust"
 ---
 
 # Day 34: Option<T>
@@ -102,5 +102,5 @@ fn main() {
 
 <div class="lesson-nav">
   <a href="/week-05/day-33">← Day 33: Enums Basics</a>
-  <a href="/week-05/day-35">Day 35: Result<T, E> →</a>
+  <a href="/week-05/day-35">Day 35: Result&lt;T, E&gt; →</a>
 </div>

@@ -1,6 +1,6 @@
 ---
-title: Day 74 - Struct Lifetimes
-description: Learn about struct lifetimes in Rust
+title: "Day 74 - Struct Lifetimes"
+description: "Learn about struct lifetimes in Rust"
 ---
 
 # Day 74: Struct Lifetimes

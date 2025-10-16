@@ -1,6 +1,6 @@
 ---
-title: Day 40 - Project: Config Parser
-description: Learn about project: config parser in Rust
+title: "Day 40 - Project: Config Parser"
+description: "Learn about project: config parser in Rust"
 ---
 
 # Day 40: Project: Config Parser

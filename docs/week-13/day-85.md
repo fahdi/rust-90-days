@@ -1,6 +1,6 @@
 ---
-title: Day 85 - Async/Await Basics
-description: Learn about async/await basics in Rust
+title: "Day 85 - Async/Await Basics"
+description: "Learn about async/await basics in Rust"
 ---
 
 # Day 85: Async/Await Basics

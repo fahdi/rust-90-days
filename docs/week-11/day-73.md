@@ -1,6 +1,6 @@
 ---
-title: Day 73 - Lifetime Elision Rules
-description: Learn about lifetime elision rules in Rust
+title: "Day 73 - Lifetime Elision Rules"
+description: "Learn about lifetime elision rules in Rust"
 ---
 
 # Day 73: Lifetime Elision Rules

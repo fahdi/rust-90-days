@@ -1,6 +1,6 @@
 ---
-title: Day 39 - Builder Pattern
-description: Learn about builder pattern in Rust
+title: "Day 39 - Builder Pattern"
+description: "Learn about builder pattern in Rust"
 ---
 
 # Day 39: Builder Pattern

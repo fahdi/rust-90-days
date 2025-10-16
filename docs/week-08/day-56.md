@@ -1,6 +1,6 @@
 ---
-title: Day 56 - Collection Performance Tips
-description: Learn about collection performance tips in Rust
+title: "Day 56 - Collection Performance Tips"
+description: "Learn about collection performance tips in Rust"
 ---
 
 # Day 56: Collection Performance Tips

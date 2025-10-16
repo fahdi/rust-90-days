@@ -1,6 +1,6 @@
 ---
-title: Day 36 - Pattern Matching with Enums
-description: Learn about pattern matching with enums in Rust
+title: "Day 36 - Pattern Matching with Enums"
+description: "Learn about pattern matching with enums in Rust"
 ---
 
 # Day 36: Pattern Matching with Enums

@@ -1,6 +1,6 @@
 ---
-title: Day 48 - Custom Iterators
-description: Learn about custom iterators in Rust
+title: "Day 48 - Custom Iterators"
+description: "Learn about custom iterators in Rust"
 ---
 
 # Day 48: Custom Iterators

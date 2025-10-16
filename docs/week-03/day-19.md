@@ -1,6 +1,6 @@
 ---
-title: Day 19 - Clone & Copy Traits
-description: Learn about clone & copy traits in Rust
+title: "Day 19 - Clone & Copy Traits"
+description: "Learn about clone & copy traits in Rust"
 ---
 
 # Day 19: Clone & Copy Traits

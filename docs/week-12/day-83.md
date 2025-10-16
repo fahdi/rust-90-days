@@ -1,6 +1,6 @@
 ---
-title: Day 83 - Project: Graph Data Structure
-description: Learn about project: graph data structure in Rust
+title: "Day 83 - Project: Graph Data Structure"
+description: "Learn about project: graph data structure in Rust"
 ---
 
 # Day 83: Project: Graph Data Structure

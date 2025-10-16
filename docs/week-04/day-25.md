@@ -1,6 +1,6 @@
 ---
-title: Day 25 - Common Ownership Errors
-description: Learn about common ownership errors in Rust
+title: "Day 25 - Common Ownership Errors"
+description: "Learn about common ownership errors in Rust"
 ---
 
 # Day 25: Common Ownership Errors

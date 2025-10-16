@@ -1,6 +1,6 @@
 ---
-title: Day 63 - Multiple Trait Bounds
-description: Learn about multiple trait bounds in Rust
+title: "Day 63 - Multiple Trait Bounds"
+description: "Learn about multiple trait bounds in Rust"
 ---
 
 # Day 63: Multiple Trait Bounds

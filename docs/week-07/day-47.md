@@ -1,6 +1,6 @@
 ---
-title: Day 47 - Consuming Adapters
-description: Learn about consuming adapters in Rust
+title: "Day 47 - Consuming Adapters"
+description: "Learn about consuming adapters in Rust"
 ---
 
 # Day 47: Consuming Adapters

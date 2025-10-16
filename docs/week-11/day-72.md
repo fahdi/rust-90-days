@@ -1,6 +1,6 @@
 ---
-title: Day 72 - Lifetime Syntax
-description: Learn about lifetime syntax in Rust
+title: "Day 72 - Lifetime Syntax"
+description: "Learn about lifetime syntax in Rust"
 ---
 
 # Day 72: Lifetime Syntax

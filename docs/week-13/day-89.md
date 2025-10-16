@@ -1,6 +1,6 @@
 ---
-title: Day 89 - Unsafe Rust Intro
-description: Learn about unsafe rust intro in Rust
+title: "Day 89 - Unsafe Rust Intro"
+description: "Learn about unsafe rust intro in Rust"
 ---
 
 # Day 89: Unsafe Rust Intro

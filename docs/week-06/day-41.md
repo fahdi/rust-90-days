@@ -1,6 +1,6 @@
 ---
-title: Day 41 - Error Handling Strategies
-description: Learn about error handling strategies in Rust
+title: "Day 41 - Error Handling Strategies"
+description: "Learn about error handling strategies in Rust"
 ---
 
 # Day 41: Error Handling Strategies

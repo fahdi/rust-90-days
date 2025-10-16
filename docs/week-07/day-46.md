@@ -1,6 +1,6 @@
 ---
-title: Day 46 - Iterator Adapters: map, filter
-description: Learn about iterator adapters: map, filter in Rust
+title: "Day 46 - Iterator Adapters: map, filter"
+description: "Learn about iterator adapters: map, filter in Rust"
 ---
 
 # Day 46: Iterator Adapters: map, filter

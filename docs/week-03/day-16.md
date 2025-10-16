@@ -1,6 +1,6 @@
 ---
-title: Day 16 - Stack vs Heap
-description: Learn about stack vs heap in Rust
+title: "Day 16 - Stack vs Heap"
+description: "Learn about stack vs heap in Rust"
 ---
 
 # Day 16: Stack vs Heap

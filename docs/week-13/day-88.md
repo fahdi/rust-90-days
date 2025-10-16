@@ -1,6 +1,6 @@
 ---
-title: Day 88 - Procedural Macros Overview
-description: Learn about procedural macros overview in Rust
+title: "Day 88 - Procedural Macros Overview"
+description: "Learn about procedural macros overview in Rust"
 ---
 
 # Day 88: Procedural Macros Overview

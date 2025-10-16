@@ -1,6 +1,6 @@
 ---
-title: Day 82 - Memory Leaks Prevention
-description: Learn about memory leaks prevention in Rust
+title: "Day 82 - Memory Leaks Prevention"
+description: "Learn about memory leaks prevention in Rust"
 ---
 
 # Day 82: Memory Leaks Prevention
@@ -101,6 +101,6 @@ fn main() {
 <ProgressTracker />
 
 <div class="lesson-nav">
-  <a href="/week-12/day-81">← Day 81: Weak<T> References</a>
+  <a href="/week-12/day-81">← Day 81: Weak&lt;T&gt; References</a>
   <a href="/week-12/day-83">Day 83: Project: Graph Data Structure →</a>
 </div>

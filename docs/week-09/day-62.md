@@ -1,6 +1,6 @@
 ---
-title: Day 62 - Trait Bounds
-description: Learn about trait bounds in Rust
+title: "Day 62 - Trait Bounds"
+description: "Learn about trait bounds in Rust"
 ---
 
 # Day 62: Trait Bounds

@@ -1,6 +1,6 @@
 ---
-title: Day 18 - Move Semantics
-description: Learn about move semantics in Rust
+title: "Day 18 - Move Semantics"
+description: "Learn about move semantics in Rust"
 ---
 
 # Day 18: Move Semantics

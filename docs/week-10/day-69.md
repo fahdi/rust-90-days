@@ -1,6 +1,6 @@
 ---
-title: Day 69 - Project: Generic Data Store
-description: Learn about project: generic data store in Rust
+title: "Day 69 - Project: Generic Data Store"
+description: "Learn about project: generic data store in Rust"
 ---
 
 # Day 69: Project: Generic Data Store

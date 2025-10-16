@@ -1,6 +1,6 @@
 ---
-title: Day 86 - Tokio Runtime Intro
-description: Learn about tokio runtime intro in Rust
+title: "Day 86 - Tokio Runtime Intro"
+description: "Learn about tokio runtime intro in Rust"
 ---
 
 # Day 86: Tokio Runtime Intro

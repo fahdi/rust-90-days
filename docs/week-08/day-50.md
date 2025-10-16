@@ -1,6 +1,6 @@
 ---
-title: Day 50 - Closure Syntax Variations
-description: Learn about closure syntax variations in Rust
+title: "Day 50 - Closure Syntax Variations"
+description: "Learn about closure syntax variations in Rust"
 ---
 
 # Day 50: Closure Syntax Variations

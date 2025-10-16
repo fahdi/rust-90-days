@@ -1,6 +1,6 @@
 ---
-title: Day 5 - Tuples & Arrays
-description: Learn about tuples & arrays in Rust
+title: "Day 5 - Tuples & Arrays"
+description: "Learn about tuples & arrays in Rust"
 ---
 
 # Day 5: Tuples & Arrays

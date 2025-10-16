@@ -1,6 +1,6 @@
 ---
-title: Day 9 - Pattern Matching
-description: Learn about pattern matching in Rust
+title: "Day 9 - Pattern Matching"
+description: "Learn about pattern matching in Rust"
 ---
 
 # Day 9: Pattern Matching

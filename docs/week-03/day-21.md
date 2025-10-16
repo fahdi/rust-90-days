@@ -1,6 +1,6 @@
 ---
-title: Day 21 - Mutable References
-description: Learn about mutable references in Rust
+title: "Day 21 - Mutable References"
+description: "Learn about mutable references in Rust"
 ---
 
 # Day 21: Mutable References

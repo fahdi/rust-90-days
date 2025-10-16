@@ -1,6 +1,6 @@
 ---
-title: Day 29 - Defining Structs
-description: Learn about defining structs in Rust
+title: "Day 29 - Defining Structs"
+description: "Learn about defining structs in Rust"
 ---
 
 # Day 29: Defining Structs

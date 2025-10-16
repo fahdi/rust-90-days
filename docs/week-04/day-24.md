@@ -1,6 +1,6 @@
 ---
-title: Day 24 - String Slices Deep Dive
-description: Learn about string slices deep dive in Rust
+title: "Day 24 - String Slices Deep Dive"
+description: "Learn about string slices deep dive in Rust"
 ---
 
 # Day 24: String Slices Deep Dive

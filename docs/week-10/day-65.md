@@ -1,6 +1,6 @@
 ---
-title: Day 65 - Default Implementations
-description: Learn about default implementations in Rust
+title: "Day 65 - Default Implementations"
+description: "Learn about default implementations in Rust"
 ---
 
 # Day 65: Default Implementations

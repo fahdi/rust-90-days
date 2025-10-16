@@ -1,6 +1,6 @@
 ---
-title: Day 90 - Final Project: Micro Web Server
-description: Learn about final project: micro web server in Rust
+title: "Day 90 - Final Project: Micro Web Server"
+description: "Learn about final project: micro web server in Rust"
 ---
 
 # Day 90: Final Project: Micro Web Server

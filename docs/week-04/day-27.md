@@ -1,6 +1,6 @@
 ---
-title: Day 27 - Project: Text Analyzer
-description: Learn about project: text analyzer in Rust
+title: "Day 27 - Project: Text Analyzer"
+description: "Learn about project: text analyzer in Rust"
 ---
 
 # Day 27: Project: Text Analyzer

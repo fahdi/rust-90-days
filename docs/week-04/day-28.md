@@ -1,6 +1,6 @@
 ---
-title: Day 28 - Ownership Patterns Review
-description: Learn about ownership patterns review in Rust
+title: "Day 28 - Ownership Patterns Review"
+description: "Learn about ownership patterns review in Rust"
 ---
 
 # Day 28: Ownership Patterns Review

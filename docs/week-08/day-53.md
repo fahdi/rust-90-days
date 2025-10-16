@@ -1,6 +1,6 @@
 ---
-title: Day 53 - Iterator Performance
-description: Learn about iterator performance in Rust
+title: "Day 53 - Iterator Performance"
+description: "Learn about iterator performance in Rust"
 ---
 
 # Day 53: Iterator Performance

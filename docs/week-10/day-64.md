@@ -1,6 +1,6 @@
 ---
-title: Day 64 - Where Clauses
-description: Learn about where clauses in Rust
+title: "Day 64 - Where Clauses"
+description: "Learn about where clauses in Rust"
 ---
 
 # Day 64: Where Clauses

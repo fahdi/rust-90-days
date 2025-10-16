@@ -1,6 +1,6 @@
 ---
-title: Day 31 - Associated Functions
-description: Learn about associated functions in Rust
+title: "Day 31 - Associated Functions"
+description: "Learn about associated functions in Rust"
 ---
 
 # Day 31: Associated Functions

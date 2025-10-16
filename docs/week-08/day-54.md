@@ -1,6 +1,6 @@
 ---
-title: Day 54 - Common Iterator Patterns
-description: Learn about common iterator patterns in Rust
+title: "Day 54 - Common Iterator Patterns"
+description: "Learn about common iterator patterns in Rust"
 ---
 
 # Day 54: Common Iterator Patterns

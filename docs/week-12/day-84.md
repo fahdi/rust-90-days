@@ -1,6 +1,6 @@
 ---
-title: Day 84 - Smart Pointer Patterns
-description: Learn about smart pointer patterns in Rust
+title: "Day 84 - Smart Pointer Patterns"
+description: "Learn about smart pointer patterns in Rust"
 ---
 
 # Day 84: Smart Pointer Patterns

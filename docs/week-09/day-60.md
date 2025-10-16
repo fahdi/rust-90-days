@@ -1,6 +1,6 @@
 ---
-title: Day 60 - Trait Definitions
-description: Learn about trait definitions in Rust
+title: "Day 60 - Trait Definitions"
+description: "Learn about trait definitions in Rust"
 ---
 
 # Day 60: Trait Definitions

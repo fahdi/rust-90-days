@@ -1,6 +1,6 @@
 ---
-title: Day 55 - Project: Word Frequency Counter
-description: Learn about project: word frequency counter in Rust
+title: "Day 55 - Project: Word Frequency Counter"
+description: "Learn about project: word frequency counter in Rust"
 ---
 
 # Day 55: Project: Word Frequency Counter

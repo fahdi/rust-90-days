@@ -1,6 +1,6 @@
 ---
-title: Day 51 - move Closures
-description: Learn about move closures in Rust
+title: "Day 51 - move Closures"
+description: "Learn about move closures in Rust"
 ---
 
 # Day 51: move Closures

@@ -1,6 +1,6 @@
 ---
-title: Day 58 - Generic Functions
-description: Learn about generic functions in Rust
+title: "Day 58 - Generic Functions"
+description: "Learn about generic functions in Rust"
 ---
 
 # Day 58: Generic Functions

@@ -1,6 +1,6 @@
 ---
-title: Day 15 - What is Ownership?
-description: Learn about what is ownership? in Rust
+title: "Day 15 - What is Ownership?"
+description: "Learn about what is ownership? in Rust"
 ---
 
 # Day 15: What is Ownership?

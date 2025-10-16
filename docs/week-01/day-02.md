@@ -1,6 +1,6 @@
 ---
-title: Day 2 - Variables & Mutability
-description: Learn about variables & mutability in Rust
+title: "Day 2 - Variables & Mutability"
+description: "Learn about variables & mutability in Rust"
 ---
 
 # Day 2: Variables & Mutability

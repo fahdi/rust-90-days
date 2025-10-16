@@ -1,6 +1,6 @@
 ---
-title: Day 78 - RefCell<T> & Interior Mutability
-description: Learn about refcell<t> & interior mutability in Rust
+title: "Day 78 - RefCell T  & Interior Mutability"
+description: "Learn about refcell t  & interior mutability in Rust"
 ---
 
 # Day 78: RefCell<T> & Interior Mutability
@@ -102,5 +102,5 @@ fn main() {
 
 <div class="lesson-nav">
   <a href="/week-12/">← Week 12 Overview</a>
-  <a href="/week-12/day-79">Day 79: Rc<RefCell<T>> Pattern →</a>
+  <a href="/week-12/day-79">Day 79: Rc&lt;RefCell&lt;T&gt;&gt; Pattern →</a>
 </div>

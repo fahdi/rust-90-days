@@ -1,6 +1,6 @@
 ---
-title: Day 37 - if let & while let
-description: Learn about if let & while let in Rust
+title: "Day 37 - if let & while let"
+description: "Learn about if let & while let in Rust"
 ---
 
 # Day 37: if let & while let

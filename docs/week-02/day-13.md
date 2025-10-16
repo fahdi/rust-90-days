@@ -1,6 +1,6 @@
 ---
-title: Day 13 - Cargo Fundamentals
-description: Learn about cargo fundamentals in Rust
+title: "Day 13 - Cargo Fundamentals"
+description: "Learn about cargo fundamentals in Rust"
 ---
 
 # Day 13: Cargo Fundamentals

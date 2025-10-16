@@ -1,6 +1,6 @@
 ---
-title: Day 35 - Result<T, E>
-description: Learn about result<t, e> in Rust
+title: "Day 35 - Result T, E "
+description: "Learn about result t, e  in Rust"
 ---
 
 # Day 35: Result<T, E>
@@ -101,6 +101,6 @@ fn main() {
 <ProgressTracker />
 
 <div class="lesson-nav">
-  <a href="/week-05/day-34">← Day 34: Option<T></a>
+  <a href="/week-05/day-34">← Day 34: Option&lt;T&gt;</a>
   <a href="/week-06/">Week 6 Overview →</a>
 </div>
