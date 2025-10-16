@@ -1,0 +1,18 @@
+{
+  "name": "rust-90-days",
+  "version": "1.0.0",
+  "description": "Master Rust with 10-minute daily lessons over 90 days",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "generate": "node scripts/generate-lessons.js"
+  },
+  "keywords": ["rust", "tutorial", "learning", "documentation"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0",
+    "vue": "^3.3.0"
+  }
+}
