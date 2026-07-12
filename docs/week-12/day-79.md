@@ -3,7 +3,7 @@ title: "Day 79 - Rc RefCell T   Pattern"
 description: "Learn about rc refcell t   pattern in Rust"
 ---
 
-# Day 79: Rc<RefCell<T>> Pattern
+# Day 79: Rc&lt;RefCell&lt;T&gt;&gt; Pattern
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about rc refcell t   pattern in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for Rc<RefCell<T>> Pattern]
+[Learning objective for Rc&lt;RefCell&lt;T&gt;&gt; Pattern]
 
 ## 📚 The Concept (3 min)
 

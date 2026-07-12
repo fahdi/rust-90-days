@@ -10,10 +10,10 @@ By the end of this week, you'll have mastered key concepts in lifetimes & smart 
 
 | Day | Topic | Time | Difficulty |
 |-----|-------|------|------------|
-| [Day 78](/week-12/day-78) | RefCell<T> & Interior Mutability | 10 min | ⭐⭐⭐ |
-| [Day 79](/week-12/day-79) | Rc<RefCell<T>> Pattern | 10 min | ⭐⭐⭐ |
-| [Day 80](/week-12/day-80) | Arc<T> for Threading | 10 min | ⭐⭐⭐ |
-| [Day 81](/week-12/day-81) | Weak<T> References | 10 min | ⭐⭐⭐ |
+| [Day 78](/week-12/day-78) | RefCell&lt;T&gt; & Interior Mutability | 10 min | ⭐⭐⭐ |
+| [Day 79](/week-12/day-79) | Rc&lt;RefCell&lt;T&gt;&gt; Pattern | 10 min | ⭐⭐⭐ |
+| [Day 80](/week-12/day-80) | Arc&lt;T&gt; for Threading | 10 min | ⭐⭐⭐ |
+| [Day 81](/week-12/day-81) | Weak&lt;T&gt; References | 10 min | ⭐⭐⭐ |
 | [Day 82](/week-12/day-82) | Memory Leaks Prevention | 10 min | ⭐⭐⭐ |
 | [Day 83](/week-12/day-83) | Project: Graph Data Structure | 10 min | ⭐⭐⭐ |
 | [Day 84](/week-12/day-84) | Smart Pointer Patterns | 10 min | ⭐⭐⭐ |
@@ -31,4 +31,4 @@ Advanced memory management unlocks sophisticated patterns.
 
 ---
 
-[Start Day 78: RefCell<T> & Interior Mutability →](/week-12/day-78)
+[Start Day 78: RefCell&lt;T&gt; & Interior Mutability →](/week-12/day-78)

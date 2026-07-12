@@ -15,8 +15,8 @@ By the end of this week, you'll have mastered key concepts in lifetimes & smart 
 | [Day 73](/week-11/day-73) | Lifetime Elision Rules | 10 min | ⭐⭐⭐ |
 | [Day 74](/week-11/day-74) | Struct Lifetimes | 10 min | ⭐⭐⭐ |
 | [Day 75](/week-11/day-75) | Static Lifetime | 9 min | ⭐⭐⭐ |
-| [Day 76](/week-11/day-76) | Box<T> | 10 min | ⭐⭐⭐ |
-| [Day 77](/week-11/day-77) | Rc<T> & Reference Counting | 10 min | ⭐⭐⭐ |
+| [Day 76](/week-11/day-76) | Box&lt;T&gt; | 10 min | ⭐⭐⭐ |
+| [Day 77](/week-11/day-77) | Rc&lt;T&gt; & Reference Counting | 10 min | ⭐⭐⭐ |
 
 ## What Makes This Week Important
 

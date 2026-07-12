@@ -3,7 +3,7 @@ title: "Day 78 - RefCell T  & Interior Mutability"
 description: "Learn about refcell t  & interior mutability in Rust"
 ---
 
-# Day 78: RefCell<T> & Interior Mutability
+# Day 78: RefCell&lt;T&gt; & Interior Mutability
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about refcell t  & interior mutability in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for RefCell<T> & Interior Mutability]
+[Learning objective for RefCell&lt;T&gt; & Interior Mutability]
 
 ## 📚 The Concept (3 min)
 

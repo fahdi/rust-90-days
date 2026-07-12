@@ -209,6 +209,7 @@ function generateSidebar() {
 }
 
 export default defineConfig({
+  base: '/rust-90-days/',
   title: 'Rust in 90 Days',
   description: 'Master Rust with 10-minute daily lessons',
   

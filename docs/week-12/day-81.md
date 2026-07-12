@@ -3,7 +3,7 @@ title: "Day 81 - Weak T  References"
 description: "Learn about weak t  references in Rust"
 ---
 
-# Day 81: Weak<T> References
+# Day 81: Weak&lt;T&gt; References
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about weak t  references in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for Weak<T> References]
+[Learning objective for Weak&lt;T&gt; References]
 
 ## 📚 The Concept (3 min)
 

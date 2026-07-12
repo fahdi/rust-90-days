@@ -3,7 +3,7 @@ title: "Day 77 - Rc T  & Reference Counting"
 description: "Learn about rc t  & reference counting in Rust"
 ---
 
-# Day 77: Rc<T> & Reference Counting
+# Day 77: Rc&lt;T&gt; & Reference Counting
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about rc t  & reference counting in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for Rc<T> & Reference Counting]
+[Learning objective for Rc&lt;T&gt; & Reference Counting]
 
 ## 📚 The Concept (3 min)
 

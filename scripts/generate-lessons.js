@@ -192,6 +192,11 @@ const courseStructure = [
 
 const docsDir = path.join(__dirname, '..', 'docs');
 
+// Escape angle brackets so titles like Option<T> aren't parsed as HTML by Vue
+function escapeTitle(title) {
+  return title.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 // Create week overview template
 function createWeekOverview(weekData) {
   const { week, title, description, days } = weekData;
@@ -212,7 +217,7 @@ By the end of this week, you'll have mastered key concepts in ${title.toLowerCas
 ${days.map(d => {
   const dayNum = d.day.toString().padStart(2, '0');
   const stars = d.difficulty === 'Beginner' ? '⭐' : d.difficulty === 'Intermediate' ? '⭐⭐' : d.difficulty === 'Advanced' ? '⭐⭐⭐' : '⭐⭐⭐⭐';
-  return `| [Day ${d.day}](/week-${weekNum}/day-${dayNum}) | ${d.title} | ${d.time} min | ${stars} |`;
+  return `| [Day ${d.day}](/week-${weekNum}/day-${dayNum}) | ${escapeTitle(d.title)} | ${d.time} min | ${stars} |`;
 }).join('\n')}
 
 ## What Makes This Week Important
@@ -234,7 +239,7 @@ ${week <= 2 ? 'This week establishes the foundation for everything that follows.
 
 ---
 
-[Start Day ${days[0].day}: ${days[0].title} →](/week-${weekNum}/day-${days[0].day.toString().padStart(2, '0')})
+[Start Day ${days[0].day}: ${escapeTitle(days[0].title)} →](/week-${weekNum}/day-${days[0].day.toString().padStart(2, '0')})
 `;
 }
 
@@ -271,7 +276,7 @@ title: "Day ${day} - ${title.replace(/</g, ' ').replace(/>/g, ' ')}"
 description: "Learn about ${title.toLowerCase().replace(/</g, ' ').replace(/>/g, ' ')} in Rust"
 ---
 
-# Day ${day}: ${title}
+# Day ${day}: ${escapeTitle(title)}
 
 <div class="lesson-meta">
   <span class="time">⏱️ ${time} minutes</span>
@@ -281,7 +286,7 @@ description: "Learn about ${title.toLowerCase().replace(/</g, ' ').replace(/>/g,
 
 ## 🎯 Today's Goal
 
-[Learning objective for ${title}]
+[Learning objective for ${escapeTitle(title)}]
 
 ## 📚 The Concept (3 min)
 

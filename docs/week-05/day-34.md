@@ -3,7 +3,7 @@ title: "Day 34 - Option T "
 description: "Learn about option t  in Rust"
 ---
 
-# Day 34: Option<T>
+# Day 34: Option&lt;T&gt;
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about option t  in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for Option<T>]
+[Learning objective for Option&lt;T&gt;]
 
 ## 📚 The Concept (3 min)
 

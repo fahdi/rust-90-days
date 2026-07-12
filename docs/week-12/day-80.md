@@ -3,7 +3,7 @@ title: "Day 80 - Arc T  for Threading"
 description: "Learn about arc t  for threading in Rust"
 ---
 
-# Day 80: Arc<T> for Threading
+# Day 80: Arc&lt;T&gt; for Threading
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about arc t  for threading in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for Arc<T> for Threading]
+[Learning objective for Arc&lt;T&gt; for Threading]
 
 ## 📚 The Concept (3 min)
 

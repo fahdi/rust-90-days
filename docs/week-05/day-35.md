@@ -3,7 +3,7 @@ title: "Day 35 - Result T, E "
 description: "Learn about result t, e  in Rust"
 ---
 
-# Day 35: Result<T, E>
+# Day 35: Result&lt;T, E&gt;
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about result t, e  in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for Result<T, E>]
+[Learning objective for Result&lt;T, E&gt;]
 
 ## 📚 The Concept (3 min)
 

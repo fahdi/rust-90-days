@@ -15,8 +15,8 @@ By the end of this week, you'll have mastered key concepts in structs & enums i.
 | [Day 31](/week-05/day-31) | Associated Functions | 9 min | ⭐⭐ |
 | [Day 32](/week-05/day-32) | Tuple Structs | 9 min | ⭐⭐ |
 | [Day 33](/week-05/day-33) | Enums Basics | 10 min | ⭐⭐ |
-| [Day 34](/week-05/day-34) | Option<T> | 10 min | ⭐⭐ |
-| [Day 35](/week-05/day-35) | Result<T, E> | 10 min | ⭐⭐ |
+| [Day 34](/week-05/day-34) | Option&lt;T&gt; | 10 min | ⭐⭐ |
+| [Day 35](/week-05/day-35) | Result&lt;T, E&gt; | 10 min | ⭐⭐ |
 
 ## What Makes This Week Important
 

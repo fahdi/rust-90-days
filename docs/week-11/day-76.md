@@ -3,7 +3,7 @@ title: "Day 76 - Box T "
 description: "Learn about box t  in Rust"
 ---
 
-# Day 76: Box<T>
+# Day 76: Box&lt;T&gt;
 
 <div class="lesson-meta">
   <span class="time">⏱️ 10 minutes</span>
@@ -13,7 +13,7 @@ description: "Learn about box t  in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for Box<T>]
+[Learning objective for Box&lt;T&gt;]
 
 ## 📚 The Concept (3 min)
 

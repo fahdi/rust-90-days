@@ -111,12 +111,12 @@ MIT License - feel free to use this for learning!
 
 ## 📞 Support
 
-- 🐛 Found a bug? [Open an issue](https://github.com/yourusername/rust-90-days/issues)
-- 💡 Have a suggestion? [Start a discussion](https://github.com/yourusername/rust-90-days/discussions)
+- 🐛 Found a bug? [Open an issue](https://github.com/fahdi/rust-90-days/issues)
+- 💡 Have a suggestion? [Start a discussion](https://github.com/fahdi/rust-90-days/discussions)
 - ❓ Questions? Join our [Discord community](https://discord.gg/rust)
 
 ---
 
 **Start your Rust journey today!** 🚀
 
-[View Live Site](https://yourusername.github.io/rust-90-days/) | [Read Introduction](docs/introduction.md)
+[View Live Site](https://fahdi.github.io/rust-90-days/) | [Read Introduction](docs/introduction.md)
