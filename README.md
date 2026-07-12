@@ -1,35 +1,21 @@
 # Rust in 90 Days 🦀
 
-Master Rust programming with daily 10-minute lessons over 90 days.
+Master Rust with daily 10-minute lessons over 90 days, from absolute beginner to expert.
 
-![Rust Logo](docs/public/logo.svg)
+## 📖 Read the Course Online
 
-## 🚀 Quick Start
+**The course lives at [fahdi.github.io/rust-90-days](https://fahdi.github.io/rust-90-days/)** with full-text search and progress tracking. No setup needed.
 
-```bash
-# Install dependencies
-npm install
+- 🚀 [Start with Day 1: Hello Rust](https://fahdi.github.io/rust-90-days/week-01/day-01)
+- 📋 [Read the introduction](https://fahdi.github.io/rust-90-days/introduction) for how the course works
 
-# Generate all lesson files
-npm run generate
-
-# Start development server
-npm run docs:dev
-
-# Build for production
-npm run docs:build
-
-# Preview production build
-npm run docs:preview
-```
-
-## 📚 Course Structure
+## 📚 What You Get
 
 - **90 daily lessons**, each under 10 minutes
 - **13 weeks** of progressive learning
 - **7 milestone projects** to build
-- **Progress tracking** with localStorage
-- From absolute beginner to Rust expert
+- **Runnable code examples** in every lesson
+- **Progress tracking** in your browser (localStorage, no account needed)
 
 ## 🎯 Learning Path
 
@@ -43,65 +29,51 @@ npm run docs:preview
 | 11-12 | Lifetimes | Advanced memory, smart pointers |
 | 13 | Expert Topics | Async, macros, unsafe |
 
-## ✨ Features
+## 🛠️ Run It Locally
 
-- 📖 **Comprehensive Content** - 90 carefully crafted lessons
-- 🎯 **Structured Learning** - Progressive difficulty curve
-- 💻 **Code Examples** - Runnable code in every lesson
-- 📊 **Progress Tracking** - Track your learning journey
-- 🎨 **Beautiful UI** - Clean, modern VitePress theme
-- 📱 **Responsive** - Works on all devices
-- 🔍 **Searchable** - Full-text search powered by VitePress
-- 🚀 **Fast** - Lightning-fast page loads
+Only needed if you want to contribute or read offline. The site is built with [VitePress](https://vitepress.dev/).
 
-## 🛠️ Development
+```bash
+git clone https://github.com/fahdi/rust-90-days.git
+cd rust-90-days
+npm install
+
+npm run docs:dev      # local dev server with hot reload
+npm run docs:build    # production build
+npm run docs:preview  # preview the production build
+npm test              # validate lesson content
+```
 
 ### Project Structure
 
 ```
-rust-learning/
-├── docs/                    # Documentation source
-│   ├── .vitepress/         # VitePress config
-│   │   ├── config.ts       # Main config
-│   │   └── theme/          # Custom theme
-│   ├── week-XX/            # Weekly lessons
-│   └── public/             # Static assets
-├── scripts/                 # Build scripts
-│   └── generate-lessons.js # Lesson generator
-└── package.json            # Dependencies
+rust-90-days/
+├── docs/                    # Course content
+│   ├── .vitepress/          # VitePress config and custom theme
+│   ├── week-XX/             # Weekly lessons (day-XX.md)
+│   └── public/              # Static assets
+├── scripts/
+│   ├── generate-lessons.js  # Scaffolds missing lesson files
+│   └── validate-lessons.js  # Checks lessons for completeness
+└── package.json
 ```
 
-### Adding Content
+### Editing Content
 
-1. Lessons are in `docs/week-XX/day-XX.md`
-2. Edit the markdown files directly
-3. Use the `<ProgressTracker />` component in lessons
-4. Follow the established template structure
+1. Lessons are plain markdown in `docs/week-XX/day-XX.md`; edit them directly
+2. Keep each lesson's frontmatter, `<ProgressTracker />`, and navigation footer intact
+3. `npm run generate` scaffolds any missing lesson files; it never overwrites existing ones
+4. `npm test` verifies every lesson is complete before you push
 
-### Regenerating Lessons
-
-If you modify the course structure:
-
-```bash
-npm run generate
-```
-
-This will regenerate all lesson files based on `scripts/generate-lessons.js`.
+Deployment is automatic: every push to `main` builds and publishes the site via GitHub Actions.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
-
-1. **Fix typos or errors** - Submit a PR
-2. **Improve explanations** - Make concepts clearer
-3. **Add examples** - More code examples are always good
-4. **Translate** - Help make this accessible to more people
-
-Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting PRs.
+Contributions are welcome: fix errors, improve explanations, add examples, or translate. Please read the [Contributing Guidelines](CONTRIBUTING.md) before submitting a PR.
 
 ## 📄 License
 
-MIT License - feel free to use this for learning!
+MIT License. Feel free to use this for learning.
 
 ## 🙏 Acknowledgments
 
@@ -113,10 +85,3 @@ MIT License - feel free to use this for learning!
 
 - 🐛 Found a bug? [Open an issue](https://github.com/fahdi/rust-90-days/issues)
 - 💡 Have a suggestion? [Start a discussion](https://github.com/fahdi/rust-90-days/discussions)
-- ❓ Questions? Join our [Discord community](https://discord.gg/rust)
-
----
-
-**Start your Rust journey today!** 🚀
-
-[View Live Site](https://fahdi.github.io/rust-90-days/) | [Read Introduction](docs/introduction.md)
