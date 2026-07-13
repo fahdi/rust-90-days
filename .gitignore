@@ -1,6 +1,7 @@
 node_modules/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
+/.superpowers/
 .DS_Store
 *.log
 npm-debug.log*
