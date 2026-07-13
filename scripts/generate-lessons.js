@@ -394,16 +394,24 @@ function generateAllLessons() {
       console.log(`📁 Created directory: week-${weekNum}/`);
     }
     
-    // Create week overview
-    const weekOverview = createWeekOverview(weekData);
-    fs.writeFileSync(path.join(weekDir, 'index.md'), weekOverview);
-    console.log(`  ✅ Created week-${weekNum}/index.md`);
-    
-    // Create daily lessons
+    // Create week overview (skip if it exists — never overwrite authored content)
+    const weekIndexPath = path.join(weekDir, 'index.md');
+    if (!fs.existsSync(weekIndexPath)) {
+      fs.writeFileSync(weekIndexPath, createWeekOverview(weekData));
+      console.log(`  ✅ Created week-${weekNum}/index.md`);
+    } else {
+      console.log(`  ⏭️  Exists, skipped: week-${weekNum}/index.md`);
+    }
+
+    // Create daily lessons (skip if they exist — never overwrite authored content)
     weekData.days.forEach((dayData, index) => {
       const dayNum = dayData.day.toString().padStart(2, '0');
-      const dayLesson = createDayLesson(weekData, dayData, index);
-      fs.writeFileSync(path.join(weekDir, `day-${dayNum}.md`), dayLesson);
+      const dayPath = path.join(weekDir, `day-${dayNum}.md`);
+      if (fs.existsSync(dayPath)) {
+        console.log(`  ⏭️  Exists, skipped: week-${weekNum}/day-${dayNum}.md`);
+        return;
+      }
+      fs.writeFileSync(dayPath, createDayLesson(weekData, dayData, index));
       console.log(`  ✅ Created week-${weekNum}/day-${dayNum}.md`);
     });
     

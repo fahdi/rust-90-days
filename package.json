@@ -7,7 +7,8 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "generate": "node scripts/generate-lessons.js"
+    "generate": "node scripts/generate-lessons.js",
+    "test": "node scripts/validate-lessons.js"
   },
   "keywords": ["rust", "tutorial", "learning", "documentation"],
   "author": "",
