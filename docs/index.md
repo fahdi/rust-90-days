@@ -41,7 +41,7 @@ features:
 
 <div>
 
-## 🌟 Week 1-2: Foundation
+## [🌟 Week 1-2: Foundation](/week-01/)
 **Days 1-14**
 
 Start your Rust journey with the basics: variables, functions, control flow, and project organization. Build your first CLI tools.
@@ -52,7 +52,7 @@ Start your Rust journey with the basics: variables, functions, control flow, and
 
 <div>
 
-## 🔐 Week 3-4: Ownership
+## [🔐 Week 3-4: Ownership](/week-03/)
 **Days 15-28**
 
 Master Rust's unique ownership system - the key to memory safety without garbage collection.
@@ -63,7 +63,7 @@ Master Rust's unique ownership system - the key to memory safety without garbage
 
 <div>
 
-## 🏗️ Week 5-6: Structs & Enums
+## [🏗️ Week 5-6: Structs & Enums](/week-05/)
 **Days 29-42**
 
 Build complex data structures and handle different program states with confidence.
@@ -74,7 +74,7 @@ Build complex data structures and handle different program states with confidenc
 
 <div>
 
-## 📚 Week 7-8: Collections
+## [📚 Week 7-8: Collections](/week-07/)
 **Days 43-56**
 
 Work with vectors, hashmaps, and powerful iterators. Master functional programming with closures.
@@ -85,7 +85,7 @@ Work with vectors, hashmaps, and powerful iterators. Master functional programmi
 
 <div>
 
-## 🎨 Week 9-10: Traits & Generics
+## [🎨 Week 9-10: Traits & Generics](/week-09/)
 **Days 57-70**
 
 Write flexible, reusable code with traits and generics. Understand polymorphism the Rust way.
@@ -96,7 +96,7 @@ Write flexible, reusable code with traits and generics. Understand polymorphism 
 
 <div>
 
-## 🧠 Week 11-12: Advanced Topics
+## [🧠 Week 11-12: Advanced Topics](/week-11/)
 **Days 71-84**
 
 Dive deep into lifetimes and smart pointers for sophisticated memory management patterns.
@@ -107,7 +107,7 @@ Dive deep into lifetimes and smart pointers for sophisticated memory management 
 
 <div>
 
-## 🚀 Week 13: Expert Level
+## [🚀 Week 13: Expert Level](/week-13/)
 **Days 85-90**
 
 Explore async/await, macros, and unsafe Rust for production-ready applications.
