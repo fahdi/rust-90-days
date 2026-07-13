@@ -23,7 +23,7 @@ The syntax is compact: parameters go between pipes, followed by the body.
 
 ```rust
 let add_one = |x: u32| -> u32 { x + 1 };  // fully annotated
-let add_one = |x| x + 1;                   // inferred — same thing
+let add_one = |x| x + 1;                   // inferred, same thing
 ```
 
 Unlike a regular `fn`, closures usually don't need type annotations. The compiler infers types from the first call site. Note the trade-off: once you call `add_one(5)`, the closure is locked to integers, calling it later with a float won't compile, because a closure gets one concrete set of types, not generics.
@@ -49,7 +49,7 @@ A closure = an anonymous function **plus** the environment it was created in. Th
 
 ```rust
 fn main() {
-    // A closure that adds two numbers — types are inferred
+    // A closure that adds two numbers, types are inferred
     let add = |a, b| a + b;
     println!("add(3, 4) = {}", add(3, 4));
 

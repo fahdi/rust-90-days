@@ -13,7 +13,7 @@ description: "Learn about where clauses in Rust"
 
 ## 🎯 Today's Goal
 
-Rewrite crowded inline trait bounds as clean `where` clauses, and use bounds that inline syntax cannot even express, like constraining an iterator's `Item` type.
+Rewrite crowded inline trait bounds as clean `where` clauses, and use them for bounds that get awkward inline, like constraining an iterator's `Item` type.
 
 ## 📚 The Concept (3 min)
 
@@ -24,22 +24,22 @@ A `where` clause moves the bounds out of the angle brackets and below the signat
 The two forms are exactly equivalent to the compiler:
 
 ```rust
-// Inline bounds — fine when short
+// Inline bounds: fine when short
 fn describe<T: std::fmt::Display + Clone>(item: T) {}
 
-// Where clause — same meaning, scales better
+// Where clause: same meaning, scales better
 fn describe2<T>(item: T)
 where
     T: std::fmt::Display + Clone,
 {}
 ```
 
-But `where` clauses are not just cosmetic. They can express bounds that inline syntax literally cannot. The most common example: constraining an *associated type* of a type parameter, like requiring that whatever an iterator yields must be printable, `where I: IntoIterator, I::Item: Display`. There is no way to write that bound inline on `I`. You will lean on this constantly once you start writing functions that accept "anything iterable".
+But `where` clauses are not just cosmetic. Some bounds get genuinely awkward inline. The most common example: constraining an *associated type* of a type parameter, like requiring that whatever an iterator yields must be printable, `where I: IntoIterator, I::Item: Display`. An inline form does exist since Rust 1.79, `I: IntoIterator<Item: Display>`, but it is less common and harder to scan; the `where` clause is the conventional, most readable way to write it. You will lean on this constantly once you start writing functions that accept "anything iterable".
 
 Style rule used across the Rust standard library: one or two simple bounds, inline is fine; anything more, or any bound on an associated type, use `where`.
 
 ::: tip Key Insight
-A `where` clause is not just prettier syntax, it can express bounds inline syntax cannot, such as constraints on associated types like `I::Item: Display`.
+A `where` clause is not just prettier syntax, it is the idiomatic home for bounds that crowd a signature, especially constraints on associated types like `I::Item: Display`.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -82,7 +82,7 @@ fn main() {
 
 ### Example 2: Practical Application
 
-A report printer that accepts *anything iterable* whose items are printable. The bound `I::Item: Display` is only possible with a `where` clause:
+A report printer that accepts *anything iterable* whose items are printable. The bound `I::Item: Display` is exactly the kind a `where` clause expresses most clearly:
 
 ```rust
 use std::fmt::Display;
@@ -128,7 +128,7 @@ Example 2:
 
 ✅ `where` clauses and inline bounds compile to exactly the same thing, choose for readability  
 ✅ Use `where` once you have two or more type parameters or three or more bounds  
-✅ Only `where` can constrain associated types, e.g. `I::Item: Display`  
+✅ `where` is the conventional way to constrain associated types, e.g. `I::Item: Display` (the inline form `I: IntoIterator<Item: Display>` exists since Rust 1.79, but is rarer)  
 ✅ Bounds listed in `where` are checked at compile time, a caller passing a type missing a trait gets a clear error at the call site
 
 </div>

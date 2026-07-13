@@ -47,20 +47,20 @@ All four patterns in one program:
 
 ```rust
 fn main() {
-    // Pattern 1: Move — ownership transfers to a new variable
+    // Pattern 1: Move, ownership transfers to a new variable
     let owner = String::from("gears");
     let new_owner = owner; // `owner` can no longer be used
 
-    // Pattern 2: Immutable borrow — read without taking ownership
+    // Pattern 2: Immutable borrow, read without taking ownership
     let len = measure(&new_owner);
     println!("'{}' has {} bytes", new_owner, len);
 
-    // Pattern 3: Mutable borrow — modify in place
+    // Pattern 3: Mutable borrow, modify in place
     let mut label = String::from("day");
     add_suffix(&mut label);
     println!("label is now '{}'", label);
 
-    // Pattern 4: Clone — explicit deep copy when you truly need two
+    // Pattern 4: Clone, explicit deep copy when you truly need two
     let original = String::from("blueprint");
     let copy = original.clone();
     println!("original: {}, copy: {}", original, copy);
@@ -120,7 +120,7 @@ fn main() {
     // Mutable borrow: restock modifies our Vec in place
     restock(&mut inventory, 10);
 
-    // Move: inventory is consumed — we're done with it anyway
+    // Move: inventory is consumed; we're done with it anyway
     let report = into_report(inventory);
     print!("{}", report);
 }
@@ -235,5 +235,5 @@ original still here: hello rustacean
 
 <div class="lesson-nav">
   <a href="/week-04/day-27">← Day 27: Project: Text Analyzer</a>
-  <a href="/week-05/">Week 5 Overview →</a>
+  <a href="/week-05/day-29">Day 29: Defining Structs →</a>
 </div>

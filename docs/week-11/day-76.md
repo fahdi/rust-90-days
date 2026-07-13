@@ -1,6 +1,6 @@
 ---
-title: "Day 76 - Box T "
-description: "Learn about box t  in Rust"
+title: "Day 76 - Box<T>"
+description: "Learn about Box<T>, Rust's heap-allocating smart pointer"
 ---
 
 # Day 76: Box&lt;T&gt;
@@ -13,22 +13,22 @@ description: "Learn about box t  in Rust"
 
 ## 🎯 Today's Goal
 
-Learn `Box&lt;T&gt;`, Rust's simplest smart pointer: single-owner heap allocation, and why it's the key to recursive types like linked lists.
+Learn `Box<T>`, Rust's simplest smart pointer: single-owner heap allocation, and why it's the key to recursive types like linked lists.
 
 ## 📚 The Concept (3 min)
 
-By default Rust puts local values on the stack. `Box&lt;T&gt;` moves a value to the **heap** and leaves a pointer on the stack. The box *owns* the heap value: when the box goes out of scope, the heap memory is freed automatically. No garbage collector, no manual `free`, plain ownership, just with the data living elsewhere.
+By default Rust puts local values on the stack. `Box<T>` moves a value to the **heap** and leaves a pointer on the stack. The box *owns* the heap value: when the box goes out of scope, the heap memory is freed automatically. No garbage collector, no manual `free`, plain ownership, just with the data living elsewhere.
 
 Why would you want that? Three classic reasons:
 
-1. **Recursive types.** Consider a cons list: `enum List { Cons(i32, List), Nil }`. The compiler must know a type's size at compile time, but this definition nests `List` inside itself infinitely, size unknowable, error `E0072`. Wrap the recursion in a box, `Cons(i32, Box&lt;List&gt;)`, and the field becomes a pointer of known, fixed size. Trees, linked lists, and ASTs all use this trick.
-2. **Large data, cheap moves.** Moving a `Box&lt;[u8; 1_000_000]&gt;` copies 8 bytes (the pointer), not a megabyte.
-3. **Trait objects.** `Box&lt;dyn Trait&gt;` stores *some* type implementing a trait when the concrete type varies at runtime, you met this with `Box&lt;dyn Error&gt;` in error handling.
+1. **Recursive types.** Consider a cons list: `enum List { Cons(i32, List), Nil }`. The compiler must know a type's size at compile time, but this definition nests `List` inside itself infinitely, size unknowable, error `E0072`. Wrap the recursion in a box, `Cons(i32, Box<List>)`, and the field becomes a pointer of known, fixed size. Trees, linked lists, and ASTs all use this trick.
+2. **Large data, cheap moves.** Moving a `Box<[u8; 1_000_000]>` copies 8 bytes (the pointer), not a megabyte.
+3. **Trait objects.** `Box<dyn Trait>` stores *some* type implementing a trait when the concrete type varies at runtime, you met this with `Box<dyn Error>` in error handling.
 
-Ergonomically, a box is nearly invisible: it implements `Deref`, so you call methods on a `Box&lt;T&gt;` exactly as on a `T`, and `*b` gets the inner value. What it does *not* give you is shared ownership, a box has exactly one owner, and assigning it moves it. When two owners genuinely need the same heap data, that's tomorrow's tool: `Rc&lt;T&gt;`.
+Ergonomically, a box is nearly invisible: it implements `Deref`, so you call methods on a `Box<T>` exactly as on a `T`, and `*b` gets the inner value. What it does *not* give you is shared ownership, a box has exactly one owner, and assigning it moves it. When two owners genuinely need the same heap data, that's tomorrow's tool: `Rc<T>`.
 
 ::: tip Key Insight
-`Box&lt;T&gt;` = heap allocation + single ownership. Its killer feature is having a known size (one pointer) regardless of what it points to, which is exactly what recursive type definitions need.
+`Box<T>` = heap allocation + single ownership. Its killer feature is having a known size (one pointer) regardless of what it points to, which is exactly what recursive type definitions need.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -49,7 +49,7 @@ fn main() {
     let b2 = b;
     println!("moved into b2: {}", b2);
     // println!("{}", b); // error[E0382]: borrow of moved value: `b`
-} // b2 dropped here — heap memory freed automatically
+} // b2 dropped here; heap memory freed automatically
 ```
 
 ### Example 2: Practical Application
@@ -97,9 +97,9 @@ sum of list = 6
 <div class="takeaways">
 
 ✅ `Box::new(v)` moves `v` to the heap; the box owns it and frees it on drop, ordinary ownership rules apply  
-✅ Boxes make recursive types possible: a `Box&lt;List&gt;` field is pointer-sized, breaking the infinite-size cycle  
+✅ Boxes make recursive types possible: a `Box<List>` field is pointer-sized, breaking the infinite-size cycle  
 ✅ `Deref` makes boxes transparent, call methods directly, use `*b` to reach the value  
-✅ `Box` is single-owner; assignment moves it, use `Rc&lt;T&gt;` (Day 77) when multiple owners are required
+✅ `Box` is single-owner; assignment moves it, use `Rc<T>` (Day 77) when multiple owners are required
 
 </div>
 

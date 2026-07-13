@@ -1,6 +1,6 @@
 ---
-title: "Day 34 - Option T "
-description: "Learn about option t  in Rust"
+title: "Day 34 - Option<T>"
+description: "Learn about Option<T> in Rust"
 ---
 
 # Day 34: Option&lt;T&gt;

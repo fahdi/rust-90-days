@@ -91,7 +91,7 @@ enum ApiEvent {
 fn handle(event: ApiEvent) -> String {
     match event {
         ApiEvent::UserJoined { name, admin: true } => {
-            format!("Admin {} joined — grant moderator tools", name)
+            format!("Admin {} joined: grant moderator tools", name)
         }
         ApiEvent::UserJoined { name, admin: false } => {
             format!("{} joined the room", name)
@@ -131,7 +131,7 @@ Total: 41 cents
 
 Example 2:
 ```
-Admin Aisha joined — grant moderator tools
+Admin Aisha joined: grant moderator tools
 [Aisha] hi all
 [Bilal] (long message, 35 chars)
 pong #42

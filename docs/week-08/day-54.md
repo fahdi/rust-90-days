@@ -45,15 +45,15 @@ The four foundational patterns on a plain list of numbers:
 fn main() {
     let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    // Pattern 1: map + collect — transform every element
+    // Pattern 1: map + collect: transform every element
     let squares: Vec<i32> = numbers.iter().map(|n| n * n).collect();
     println!("Squares: {:?}", squares);
 
-    // Pattern 2: filter + collect — keep only matching elements
+    // Pattern 2: filter + collect: keep only matching elements
     let evens: Vec<&i32> = numbers.iter().filter(|n| *n % 2 == 0).collect();
     println!("Evens: {:?}", evens);
 
-    // Pattern 3: chain them — filter first, then transform
+    // Pattern 3: chain them: filter first, then transform
     let doubled_odds: Vec<i32> = numbers
         .iter()
         .filter(|n| *n % 2 != 0)

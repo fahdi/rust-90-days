@@ -72,7 +72,7 @@ struct Point {
 
 #[derive(Debug, Clone)]
 struct Player {
-    name: String,   // String prevents Copy — Clone only
+    name: String,   // String prevents Copy, so Clone only
     position: Point,
     score: u32,
 }
@@ -180,7 +180,7 @@ struct Config {
 
 #[derive(Debug, Clone)]
 struct Profile {
-    username: String, // String blocks Copy — Clone is the ceiling here
+    username: String, // String blocks Copy: Clone is the ceiling here
     config: Config,
 }
 
@@ -191,7 +191,7 @@ fn use_config(c: Config) {
 fn main() {
     let config = Config { retries: 3, verbose: true };
     use_config(config); // copied in
-    use_config(config); // still valid — Copy at work
+    use_config(config); // still valid, Copy at work
 
     let profile = Profile {
         username: String::from("ferris"),

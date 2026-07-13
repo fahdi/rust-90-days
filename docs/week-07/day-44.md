@@ -17,7 +17,7 @@ Store and look up key-value pairs with `HashMap`, and use the `entry` API to upd
 
 ## 📚 The Concept (3 min)
 
-Yesterday's vectors are great when your data is a sequence you access by position. But often you want to access data by *name*: "what's the population of Lahore?" or "how many times did this word appear?" That's a hash map, Rust's `HashMap&lt;K, V&gt;` from `std::collections`, the equivalent of Python's dict or JavaScript's Map.
+Yesterday's vectors are great when your data is a sequence you access by position. But often you want to access data by *name*: "what's the population of Lahore?" or "how many times did this word appear?" That's a hash map, Rust's `HashMap<K, V>` from `std::collections`, the equivalent of Python's dict or JavaScript's Map.
 
 Think of it as a coat check. You hand over a coat (the value) and get a numbered ticket (the key). Later, you present the ticket and get exactly your coat back, instantly, without the attendant searching every rack. Internally, a hashing function converts your key into a storage location, which is why lookups are fast on average no matter how many entries you have.
 

@@ -23,13 +23,13 @@ A consuming adapter is any iterator method that calls `next()` internally until 
 
 - `sum()` / `product()`, reduce numeric items to one number
 - `count()`, how many items the iterator yields
-- `collect()`, gather items into a collection like `Vec&lt;T&gt;`, `String`, or `HashMap&lt;K, V&gt;`
+- `collect()`, gather items into a collection like `Vec<T>`, `String`, or `HashMap<K, V>`
 - `fold(init, f)`, the general-purpose reducer everything else could be built from
 - `max()`, `min()`, `last()`, `for_each()`, other finishers
 
 Think of an iterator pipeline as a factory line: adapters like `map` and `filter` are stations that transform parts, but the conveyor belt only moves when a consumer at the end demands output. `collect` is the worker boxing everything up; `sum` is the accountant tallying totals.
 
-One practical wrinkle: `collect` and `sum` are generic over their output, so the compiler often needs a type annotation, `let v: Vec&lt;i32&gt; = ...` or `.sum::&lt;i32&gt;()` (the "turbofish" syntax).
+One practical wrinkle: `collect` and `sum` are generic over their output, so the compiler often needs a type annotation, `let v: Vec<i32> = ...` or `.sum::<i32>()` (the "turbofish" syntax).
 
 ::: tip Key Insight
 Adapters build the recipe; consumers cook the meal. Until you call a consuming adapter, an iterator chain is just a description of work, no loop runs, no memory is allocated, nothing iterates.
@@ -76,7 +76,7 @@ fn main() {
     let char_count = words.iter().fold(0, |acc, w| acc + w.len());
     println!("Total chars: {}", char_count);
 
-    // A consumed iterator is gone — this would NOT compile:
+    // A consumed iterator is gone; this would NOT compile:
     // let it = words.iter();
     // let n = it.count();
     // let m = it.count(); // error: use of moved value `it`
@@ -101,7 +101,7 @@ Total chars: 9
 ✅ Consuming adapters (`sum`, `count`, `collect`, `fold`, `max`) call `next()` until the iterator is exhausted  
 ✅ They take `self` by value, so the iterator cannot be reused afterward, create a fresh one if needed  
 ✅ Nothing in a `map`/`filter` chain executes until a consuming adapter pulls values through it  
-✅ `collect` and `sum` need a type annotation or turbofish (`.sum::&lt;i32&gt;()`) because their output type is generic
+✅ `collect` and `sum` need a type annotation or turbofish (`.sum::<i32>()`) because their output type is generic
 
 </div>
 
@@ -152,8 +152,8 @@ fn main() {
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [The Rust Book - Processing a Series of Items with Iterators](https://doc.rust-lang.org/book/ch13-02-iterators.html)
+- [Rust by Example - Iterators](https://doc.rust-lang.org/rust-by-example/trait/iter.html)
 
 ---
 

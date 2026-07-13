@@ -193,8 +193,8 @@ fn main() {
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [The Rust Book - Macros](https://doc.rust-lang.org/book/ch20-05-macros.html)
+- [The Rust Reference - Procedural Macros](https://doc.rust-lang.org/reference/procedural-macros.html)
 
 ---
 

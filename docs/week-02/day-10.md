@@ -25,9 +25,9 @@ Every language has comments, but Rust treats documentation as a first-class citi
 
 **Doc comments** are where Rust shines. A comment starting with `///` documents the item *below* it (a function, struct, or module), and `//!` documents the item it's *inside* (typically the whole file or crate). Think of `///` as a label on a jar and `//!` as a note taped inside the jar's lid.
 
-Here's the killer feature: doc comments are written in Markdown, and running `cargo doc --open` compiles them into a browsable HTML site, the exact same tooling that generates the official documentation at docs.rs. Even better, code blocks inside doc comments become **doc tests**: `cargo test` actually compiles and runs your examples, so your documentation can never silently drift out of date.
+Here's the killer feature: doc comments are written in Markdown, and running `cargo doc --open` compiles them into a browsable HTML site, the exact same tooling that generates the official documentation at docs.rs. Even better, code blocks inside doc comments become **doc tests**: `cargo test` actually compiles and runs your examples (for library targets like `src/lib.rs`; binaries skip doc tests), so your documentation can never silently drift out of date.
 
-One gotcha: doc comments must be attached to an item. A `///` floating above a random `let` statement inside a function does NOT compile, the compiler will complain about an unused doc comment. This does NOT compile as documentation; use plain `//` inside function bodies.
+One gotcha: doc comments must be attached to an item. A `///` floating above a random `let` statement inside a function produces an "unused doc comment" warning, and the doc text is silently discarded, it never becomes documentation; use plain `//` inside function bodies.
 
 ::: tip Key Insight
 `//` comments talk to the next programmer reading the source; `///` doc comments talk to the *users* of your code, and Rust can test the examples inside them, so docs stay truthful forever.
@@ -38,7 +38,7 @@ One gotcha: doc comments must be attached to an item. A `///` floating above a r
 ### Example 1: Basic Usage
 
 ```rust
-// This is a line comment — the compiler ignores everything after //
+// This is a line comment: the compiler ignores everything after //
 
 /* This is a block comment.
    It can span multiple lines. */
@@ -62,7 +62,7 @@ fn main() {
 
 ```rust
 //! A tiny temperature helper library.
-//! Inner doc comments (`//!`) describe the enclosing item — here, the whole file.
+//! Inner doc comments (`//!`) describe the enclosing item; here, the whole file.
 
 /// Converts a temperature from Celsius to Fahrenheit.
 ///
@@ -101,7 +101,7 @@ Freezing at -5°C? true
 ```
 :::
 
-In a real Cargo project, running `cargo doc --open` on Example 2 would generate an HTML page listing both functions with their descriptions, and `cargo test` would compile and run the `assert_eq!` example inside the doc comment.
+In a real Cargo project, running `cargo doc --open` on Example 2 would generate an HTML page listing both functions with their descriptions. Note that doc tests only run for library targets: if these functions lived in `src/lib.rs`, `cargo test` would compile and run the `assert_eq!` example inside the doc comment; in a binary (`fn main`) target, doc tests are skipped.
 
 ## 🎓 Key Takeaways (1 min)
 
@@ -117,7 +117,7 @@ In a real Cargo project, running `cargo doc --open` on Example 2 would generate 
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Putting `///` inside a function body.** Doc comments must be attached to an item like a `fn` or `struct`. A `///` above a `let` statement triggers an "unused doc comment" error, use plain `//` there instead.
+- **Putting `///` inside a function body.** Doc comments must be attached to an item like a `fn` or `struct`. A `///` above a `let` statement triggers an "unused doc comment" warning and the doc text is silently discarded, use plain `//` there instead.
 - **Using `//!` below the top of the file.** Inner doc comments must come *before* any items in the file or module. Dropping `//!` after a function definition is a compile error.
 - **Comments that restate the code.** `// add 1 to counter` above `counter += 1` adds maintenance burden with zero information. Write comments for intent, constraints, and surprises, the code already says what it does.
 :::

@@ -265,8 +265,9 @@ Output: `total values: 6`
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [The Rust Book - Ch. 6: Enums and Pattern Matching](https://doc.rust-lang.org/book/ch06-00-enums.html)
+- [The Rust Book - Ch. 15.1: Using Box to Point to Data on the Heap (recursive types)](https://doc.rust-lang.org/book/ch15-01-box.html)
+- [Rust by Example - Enums](https://doc.rust-lang.org/rust-by-example/custom_types/enum.html)
 
 ---
 

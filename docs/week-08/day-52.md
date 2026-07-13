@@ -177,7 +177,7 @@ where
 
 fn main() {
     let mut total = 0;
-    // Uncomment this line — it won't compile until you fix the bound:
+    // Uncomment this line - it won't compile until you fix the bound:
     // repeat(5, |i| total += i);
     repeat(3, |i| println!("tick {i}"));
     println!("total: {total}");

@@ -17,7 +17,7 @@ Understand why Rust's iterators are a *zero-cost abstraction*, and confidently w
 
 ## 📚 The Concept (3 min)
 
-Coming from Python or JavaScript, you might assume that a chain like `.filter().map().sum()` is slow, in those languages, each step often builds an intermediate collection or pays function-call overhead per element. Rust is different: iterators are one of its flagship **zero-cost abstractions**. The compiler aggressively inlines every closure in the chain and fuses the whole pipeline into a single loop. In the classic benchmark from *The Rust Book* (Chapter 13), the iterator version of a search function actually ran slightly *faster* than the manual loop version.
+Coming from Python or JavaScript, you might assume that a chain like `.filter().map().sum()` is slow: in those languages, each step often builds an intermediate collection or pays function-call overhead per element. Rust is different: iterators are one of its flagship **zero-cost abstractions**. The compiler aggressively inlines every closure in the chain and fuses the whole pipeline into a single loop. In the classic benchmark from *The Rust Book* (Chapter 13), the iterator version of a search function actually ran slightly *faster* than the manual loop version.
 
 Two properties make this work:
 
@@ -47,7 +47,7 @@ fn main() {
         total_loop += prices[i];
     }
 
-    // Iterator version — compiles to the same machine code
+    // Iterator version: compiles to the same machine code
     let total_iter: i32 = prices.iter().sum();
 
     println!("Loop total:     {}", total_loop);

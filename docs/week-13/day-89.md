@@ -135,7 +135,7 @@ data  = [100, 2, 300, 4, 5, 6]
 
 ## ✅ Quick Challenge
 
-Write a safe function `first_and_last(slice: &[i32]) -> Option&lt;(i32, i32)&gt;` that uses raw pointer reads (`ptr.read()` or `*ptr`) inside an `unsafe` block to fetch the first and last elements, returning `None` for an empty slice so the unsafe code is never reached with invalid bounds.
+Write a safe function `first_and_last(slice: &[i32]) -> Option<(i32, i32)>` that uses raw pointer reads (`ptr.read()` or `*ptr`) inside an `unsafe` block to fetch the first and last elements, returning `None` for an empty slice so the unsafe code is never reached with invalid bounds.
 
 ```rust
 // Starter code
@@ -183,8 +183,8 @@ fn main() {
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [The Rust Book - Unsafe Rust](https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html)
+- [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
 
 ---
 

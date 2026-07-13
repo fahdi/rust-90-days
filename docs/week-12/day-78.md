@@ -1,6 +1,6 @@
 ---
-title: "Day 78 - RefCell T  & Interior Mutability"
-description: "Learn about refcell t  & interior mutability in Rust"
+title: "Day 78 - RefCell<T> & Interior Mutability"
+description: "Learn about RefCell<T> and interior mutability in Rust"
 ---
 
 # Day 78: RefCell&lt;T&gt; & Interior Mutability
@@ -19,7 +19,7 @@ Understand interior mutability: how `RefCell<T>` lets you mutate data through a 
 
 Rust's borrowing rules normally say: either many immutable borrows or one mutable borrow, checked at compile time. But sometimes a value is logically immutable from the outside while needing internal mutation. A classic example is a mock object in tests: the trait method takes `&self`, yet your mock needs to record which calls happened. You cannot change the trait signature to `&mut self` just for the mock, so how do you mutate through `&self`?
 
-`RefCell<T>` is the answer. It wraps a value and enforces the same borrowing rules, but at runtime instead of compile time. You call `.borrow()` to get an immutable `Ref<T>` and `.borrow_mut()` to get a mutable `RefMut<T>`. Internally, `RefCell` keeps a counter of active borrows. If you violate the rules, say, calling `borrow_mut()` while a `borrow()` is still alive, the program panics with `already borrowed: BorrowMutError` rather than failing to compile.
+`RefCell<T>` is the answer. It wraps a value and enforces the same borrowing rules, but at runtime instead of compile time. You call `.borrow()` to get an immutable `Ref<T>` and `.borrow_mut()` to get a mutable `RefMut<T>`. Internally, `RefCell` keeps a counter of active borrows. If you violate the rules, say, calling `borrow_mut()` while a `borrow()` is still alive, the program panics with a `BorrowMutError` (`RefCell already borrowed`) rather than failing to compile.
 
 This is a trade-off, not a loophole. You gain flexibility for patterns the borrow checker cannot verify statically, and you pay with a small runtime cost and the risk of panics. `RefCell<T>` is strictly single-threaded (`!Sync`); for threads you use `Mutex<T>` instead. Related types in the same family: `Cell<T>` (moves values in and out, no references, good for `Copy` types) and `OnceCell<T>` (write-once initialization).
 
@@ -102,7 +102,7 @@ Example 1:
 ```
 value = 15
 a = 15, b = 15
-could not borrow mutably: already borrowed
+could not borrow mutably: RefCell already borrowed
 ```
 
 Example 2:

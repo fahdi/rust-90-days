@@ -177,7 +177,7 @@ fn main() {
     let owner = Rc::new(Owner { gadget: RefCell::new(None) });
     let gadget = Rc::new(Gadget { owner: RefCell::new(Some(Rc::clone(&owner))) });
     *owner.gadget.borrow_mut() = Some(Rc::clone(&gadget));
-    // Currently prints nothing on drop — fix it!
+    // Currently prints nothing on drop - fix it!
 }
 ```
 

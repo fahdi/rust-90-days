@@ -145,7 +145,7 @@ fn main() {
 
     // TODO 1: make a copy of `count` and print both values
     // TODO 2: pass `name` to `shout` and print the result
-    // TODO 3: print `name` again after the call — make it work
+    // TODO 3: print `name` again after the call: make it work
     //         by having `shout` borrow instead of take ownership
     let _ = (count, name);
 }

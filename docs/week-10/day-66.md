@@ -17,9 +17,9 @@ Understand what `dyn Trait` means, why trait objects must live behind a pointer 
 
 ## 📚 The Concept (3 min)
 
-Generics have a limitation you'll hit fast: a `Vec&lt;T&gt;` holds values of exactly *one* type. Say you're building a drawing app with circles, squares, and text labels, all implementing a `Draw` trait. You want one list of everything on the canvas, in z-order, so you can loop and draw. `Vec&lt;T: Draw&gt;` can't do it, once `T` is chosen, the vector is circles-only or squares-only.
+Generics have a limitation you'll hit fast: a `Vec<T>` holds values of exactly *one* type. Say you're building a drawing app with circles, squares, and text labels, all implementing a `Draw` trait. You want one list of everything on the canvas, in z-order, so you can loop and draw. `Vec<T: Draw>` can't do it, once `T` is chosen, the vector is circles-only or squares-only.
 
-Trait objects solve this. `Box&lt;dyn Draw&gt;` means "a heap-allocated value of *some* type that implements `Draw`, we don't know which until runtime." A `Vec&lt;Box&lt;dyn Draw&gt;&gt;` can mix circles, squares, and labels freely.
+Trait objects solve this. `Box<dyn Draw>` means "a heap-allocated value of *some* type that implements `Draw`, we don't know which until runtime." A `Vec<Box<dyn Draw>>` can mix circles, squares, and labels freely.
 
 Why the `Box` (or `&`, or `Rc`)? Different concrete types have different sizes, and Rust needs every vector slot to be the same size. A pointer is always the same size, so we store pointers. Behind the scenes, a trait object is a *fat pointer*: one pointer to the data, plus one pointer to a vtable, a table of function pointers for that concrete type's trait methods. Calling a method looks up the right function at runtime; this is dynamic dispatch (tomorrow's topic in depth).
 
@@ -147,8 +147,8 @@ Layer 2: Label("Hello")
 <div class="takeaways">
 
 ✅ `dyn Trait` is a type whose concrete implementation is decided at runtime, not compile time  
-✅ Trait objects are unsized, so they must live behind a pointer: `Box&lt;dyn T&gt;`, `&dyn T`, or `Rc&lt;dyn T&gt;`  
-✅ A `Vec&lt;Box&lt;dyn Trait&gt;&gt;` can hold many different concrete types, generics can't do that  
+✅ Trait objects are unsized, so they must live behind a pointer: `Box<dyn T>`, `&dyn T`, or `Rc<dyn T>`  
+✅ A `Vec<Box<dyn Trait>>` can hold many different concrete types, generics can't do that  
 ✅ Method calls go through a vtable (dynamic dispatch), and only object-safe traits can become trait objects
 
 </div>
@@ -163,7 +163,7 @@ Layer 2: Label("Hello")
 
 ## ✅ Quick Challenge
 
-Build a plugin system: a `Plugin` trait with `run(&self) -> String`, two plugin structs `Logger` and `Timer`, and a `run_all` function that takes `&[Box&lt;dyn Plugin&gt;]` and prints each result.
+Build a plugin system: a `Plugin` trait with `run(&self) -> String`, two plugin structs `Logger` and `Timer`, and a `run_all` function that takes `&[Box<dyn Plugin>]` and prints each result.
 
 ```rust
 // Starter code
@@ -184,7 +184,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-The function signature is `fn run_all(plugins: &[Box&lt;dyn Plugin&gt;])`. Inside, iterate with `for p in plugins` and call `p.run()`.
+The function signature is `fn run_all(plugins: &[Box<dyn Plugin>])`. Inside, iterate with `for p in plugins` and call `p.run()`.
 
 </details>
 

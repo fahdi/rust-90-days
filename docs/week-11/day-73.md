@@ -21,7 +21,7 @@ If every reference needs a lifetime, why did `fn first_word(s: &str) -> &str` co
 
 The three rules, applied in order:
 
-1. **Each input reference gets its own lifetime parameter.** `fn f(x: &str, y: &str)` is treated as `fn f&lt;'a, 'b&gt;(x: &'a str, y: &'b str)`.
+1. **Each input reference gets its own lifetime parameter.** `fn f(x: &str, y: &str)` is treated as `fn f<'a, 'b>(x: &'a str, y: &'b str)`.
 2. **If there is exactly one input lifetime, it is assigned to all output references.** That's why `first_word(s: &str) -> &str` works: one input, so the output obviously borrows from it.
 3. **If one of the inputs is `&self` or `&mut self` (a method), the lifetime of `self` is assigned to all outputs.** This is why methods returning references almost never need annotations, the compiler assumes the output borrows from `self`.
 
@@ -121,7 +121,7 @@ For each signature, decide: does elision succeed, and if so what does the compil
 ```rust
 // (a) fn f(s: &str) -> &str
 // (b) fn f(x: &str, y: &str) -> &str
-// (c) shown below — currently a compile error if you delete the lifetimes:
+// (c) shown below, currently a compile error if you delete the lifetimes:
 fn pick<'a>(primary: &'a str, fallback: &'a str) -> &'a str {
     if primary.is_empty() { fallback } else { primary }
 }
@@ -142,7 +142,7 @@ fn main() {
 <details>
 <summary>✅ Solution</summary>
 
-- (a) Elision succeeds: `fn f&lt;'a&gt;(s: &'a str) -> &'a str` (rule 2).
+- (a) Elision succeeds: `fn f<'a>(s: &'a str) -> &'a str` (rule 2).
 - (b) Elision fails: two input lifetimes, no `self`, output ambiguous → `E0106`.
 - (c) Fixed form, since the output may come from either input, both must share `'a`:
 

@@ -19,14 +19,14 @@ Group related values together using Rust's two built-in compound types: use tupl
 
 So far you've worked with single values: one integer, one string, one boolean. Real programs constantly need to group values together, and Rust gives you two compound types baked into the language: **tuples** and **arrays**.
 
-A **tuple** is like a labeled shipping box with fixed compartments: each compartment can hold a *different* kind of thing. A player record might be `("Alia", 7, 91.5)`, a name, a level, and a score, all traveling together as one value. The tuple's type is written as the types of its parts: a name-level-score tuple has type (&str, u32, f64). You access parts by position (`player.0`, `player.1`) or pull everything out at once with destructuring: `let (name, level, score) = player;`. Tuples shine when a function needs to return more than one value, no wrapper struct required.
+A **tuple** is like a labeled shipping box with fixed compartments: each compartment can hold a *different* kind of thing. A player record might be `("Alia", 7, 91.5)`, a name, a level, and a score, all traveling together as one value. The tuple's type is written as the types of its parts: a name-level-score tuple has type `(&str, u32, f64)`. You access parts by position (`player.0`, `player.1`) or pull everything out at once with destructuring: `let (name, level, score) = player;`. Tuples shine when a function needs to return more than one value, no wrapper struct required.
 
-An **array** is more like an egg carton: every slot holds the *same* kind of thing, and the number of slots is fixed at compile time. `[21.5, 23.0, 19.8]` is an array of three f64 values, and its length is literally part of its type, written [f64; 3]. That fixed size means arrays live on the stack and are very fast, but they can never grow or shrink. (When you need a growable list, Rust has Vec, coming later in the course.)
+An **array** is more like an egg carton: every slot holds the *same* kind of thing, and the number of slots is fixed at compile time. `[21.5, 23.0, 19.8]` is an array of three `f64` values, and its length is literally part of its type, written `[f64; 3]`. That fixed size means arrays live on the stack and are very fast, but they can never grow or shrink. (When you need a growable list, Rust has `Vec`, coming later in the course.)
 
 Choosing between them is simple: different types or "these belong together as one record" → tuple; a list of same-typed items you'll index or loop over → array. Rust also checks array bounds, indexing past the end doesn't silently read garbage like in C; it stops your program safely.
 
 ::: tip Key Insight
-Tuples group *different* types by position; arrays hold a *fixed number* of the *same* type. Both have sizes known at compile time, that's what separates them from growable collections like Vec.
+Tuples group *different* types by position; arrays hold a *fixed number* of the *same* type. Both have sizes known at compile time, that's what separates them from growable collections like `Vec`.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -111,7 +111,7 @@ Weekend temps: [18.4, 20.9]
 <div class="takeaways">
 
 ✅ Tuples bundle values of different types; access them with `.0`, `.1`, `.2` or destructure with `let (a, b, c) = tup;`  
-✅ Arrays hold a fixed number of same-typed values; the length is part of the type, e.g. [i32; 5]  
+✅ Arrays hold a fixed number of same-typed values; the length is part of the type, e.g. `[i32; 5]`  
 ✅ `[0; 3]` is shorthand for an array of three zeros, handy for initializing buffers  
 ✅ Returning a tuple like `(min, max)` lets a function hand back multiple values without a struct
 
@@ -121,8 +121,8 @@ Weekend temps: [18.4, 20.9]
 
 ::: warning Watch Out!
 - **Using `[]` on a tuple or `.0` on an array.** The syntaxes don't cross over: `player[0]` on a tuple is a compile error, and so is `days.0` on an array. Tuples use dot-number, arrays use square brackets.
-- **Indexing out of bounds.** `days[5]` on a 5-element array is caught at compile time for literal indexes, but a runtime index like `days[user_input]` panics if it's too big. Check against `.len()` first, or use `days.get(i)`, which returns an Option instead of crashing.
-- **Expecting arrays to grow.** `temps.push(30.0)` does NOT compile, arrays are fixed-size forever. If you find yourself wanting to add or remove elements, you need a Vec, not an array.
+- **Indexing out of bounds.** `days[5]` on a 5-element array is caught at compile time for literal indexes, but a runtime index like `days[user_input]` panics if it's too big. Check against `.len()` first, or use `days.get(i)`, which returns an `Option` instead of crashing.
+- **Expecting arrays to grow.** `temps.push(30.0)` does NOT compile, arrays are fixed-size forever. If you find yourself wanting to add or remove elements, you need a `Vec`, not an array.
 :::
 
 ## ✅ Quick Challenge
@@ -143,7 +143,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-The last index is `scores.len() - 1`. For the average, the sum is an integer but the average shouldn't be, convert with `sum as f64 / scores.len() as f64`. Your tuple will have type (i32, f64), and you can print its parts with `stats.0` and `stats.1`.
+The last index is `scores.len() - 1`. For the average, the sum is an integer but the average shouldn't be, convert with `sum as f64 / scores.len() as f64`. Your tuple will have type `(i32, f64)`, and you can print its parts with `stats.0` and `stats.1`.
 
 </details>
 

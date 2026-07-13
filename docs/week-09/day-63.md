@@ -19,9 +19,9 @@ Combine several trait bounds with `+` and organize complex signatures with `wher
 
 Real generic functions rarely need just one capability. Consider a caching helper: it must *clone* the value to store it, *hash* the key to index it, and *debug-print* both when logging. One bound is not enough, you need a set.
 
-The `+` syntax composes bounds: `fn log_and_store&lt;T: Clone + Debug&gt;(item: T)` accepts any type that implements *both* `Clone` and `Debug`. This is an AND, not an OR, the type must satisfy every listed trait. The same syntax works in `impl Trait` position (`item: &(impl Summary + Display)`) and in `impl` blocks (`impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt;`).
+The `+` syntax composes bounds: `fn log_and_store<T: Clone + Debug>(item: T)` accepts any type that implements *both* `Clone` and `Debug`. This is an AND, not an OR, the type must satisfy every listed trait. The same syntax works in `impl Trait` position (`item: &(impl Summary + Display)`) and in `impl` blocks (`impl<T: Display + PartialOrd> Pair<T>`).
 
-Once you have multiple generic parameters each with multiple bounds, inline syntax turns into soup: `fn f&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &T, u: &U) -> i32`. The `where` clause moves constraints after the signature, keeping the parameter list clean:
+Once you have multiple generic parameters each with multiple bounds, inline syntax turns into soup: `fn f<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32`. The `where` clause moves constraints after the signature, keeping the parameter list clean:
 
 ```rust
 fn f<T, U>(t: &T, u: &U) -> i32
@@ -30,7 +30,7 @@ where
     U: Clone + Debug,
 ```
 
-Both forms compile identically; `where` is purely readability, and it is the idiomatic choice as soon as you have more than one bound per parameter. `where` can also express bounds inline syntax cannot, like constraints on non-parameter types (`where Option&lt;T&gt;: Debug`).
+Both forms compile identically; `where` is purely readability, and it is the idiomatic choice as soon as you have more than one bound per parameter. `where` can also express bounds inline syntax cannot, like constraints on non-parameter types (`where Option<T>: Debug`).
 
 A related concept you will meet in the wild: **supertraits**. `trait Loggable: Debug + Display` means "to implement `Loggable`, a type must already implement `Debug` and `Display`", bundling a common bound-set under one name so users write `T: Loggable` instead of repeating three traits everywhere.
 
@@ -127,13 +127,13 @@ increases: 3
 
 ::: warning Watch Out!
 - Reading `+` as "either/or", a caller whose type implements `Clone` but not `Debug` fails `T: Clone + Debug`; there is no OR for bounds
-- Writing `where` before the return type (`fn f&lt;T&gt;(t: T) where T: Debug -> i32`), the `where` clause goes *after* `-> i32`, before the body
+- Writing `where` before the return type (`fn f<T>(t: T) where T: Debug -> i32`), the `where` clause goes *after* `-> i32`, before the body
 - Accumulating stale bounds as code evolves, after refactoring away the last `clone()`, remove `Clone` from the bounds or you needlessly reject valid caller types
 :::
 
 ## ✅ Quick Challenge
 
-Write `fn max_by_label&lt;T&gt;(items: &[(T, &str)]) -> &str` that returns the label of the tuple with the largest `T` value, then prints each candidate while scanning. Decide which bounds `T` needs and express them in a `where` clause.
+Write `fn max_by_label<T>(items: &[(T, &str)]) -> &str` that returns the label of the tuple with the largest `T` value, then prints each candidate while scanning. Decide which bounds `T` needs and express them in a `where` clause.
 
 ```rust
 // Starter code

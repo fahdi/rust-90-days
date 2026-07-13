@@ -81,7 +81,7 @@ impl Add for Vec2 {
     }
 }
 
-// Scalar multiplication: Vec2 * f64 — mixed operand types!
+// Scalar multiplication: Vec2 * f64 (mixed operand types!)
 impl Mul<f64> for Vec2 {
     type Output = Vec2;
     fn mul(self, scalar: f64) -> Vec2 {
@@ -128,7 +128,7 @@ reversed velocity: Vec2 { x: -1.5, y: 0.5 }
 
 ✅ Operators map to `std::ops` traits: `+` → `Add`, `*` → `Mul`, `-x` → `Neg`, `+=` → `AddAssign`; `==` comes from `PartialEq`  
 ✅ The associated `Output` type declares what the operation produces, it can differ from `Self`  
-✅ `Mul&lt;f64&gt; for Vec2` shows the generic parameter is the right-hand side, allowing mixed-type operations  
+✅ `Mul<f64> for Vec2` shows the generic parameter is the right-hand side, allowing mixed-type operations  
 ✅ Operator methods take `self` by value, so derive `Copy` on small math types to keep operands usable afterward
 
 </div>
@@ -137,13 +137,13 @@ reversed velocity: Vec2 { x: -1.5, y: 0.5 }
 
 ::: warning Watch Out!
 - Being surprised that `let c = a + b;` moves `a` and `b`, without `Copy`, both are consumed by the operator call.
-- Implementing `Vec2 * f64` and expecting `f64 * Vec2` to work, operand order matters; the reverse needs a separate `impl Mul&lt;Vec2&gt; for f64`.
+- Implementing `Vec2 * f64` and expecting `f64 * Vec2` to work, operand order matters; the reverse needs a separate `impl Mul<Vec2> for f64`.
 - Overloading operators with non-obvious meanings (e.g. `+` that appends to a log file), readers assume mathematical semantics, so surprising behavior is a maintenance trap.
 :::
 
 ## ✅ Quick Challenge
 
-Create a `Money` struct with `cents: i64`. Implement `Add` (money + money = money) and `Mul&lt;i64&gt;` (money * quantity = money), then compute the total for 3 coffees at $4.50 plus one muffin at $3.25.
+Create a `Money` struct with `cents: i64`. Implement `Add` (money + money = money) and `Mul<i64>` (money * quantity = money), then compute the total for 3 coffees at $4.50 plus one muffin at $3.25.
 
 ```rust
 // Starter code
@@ -164,7 +164,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-You need `use std::ops::{Add, Mul};`, then two impl blocks: `impl Add for Money` and `impl Mul&lt;i64&gt; for Money`, both with `type Output = Money;`.
+You need `use std::ops::{Add, Mul};`, then two impl blocks: `impl Add for Money` and `impl Mul<i64> for Money`, both with `type Output = Money;`.
 
 </details>
 
