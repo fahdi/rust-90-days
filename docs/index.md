@@ -118,6 +118,28 @@ Explore async/await, macros, and unsafe Rust for production-ready applications.
 
 </div>
 
+## How This Course Works
+
+<div class="journey-grid">
+
+<div>
+
+## [🆕 New here? Start with the introduction](/introduction)
+
+What this course covers, how the 90 days are structured, and what you'll be able to build by the end.
+
+</div>
+
+<div>
+
+## [📖 How the daily lessons work](/how-to-use)
+
+How to pace yourself, what a typical 10-minute lesson looks like, and how to use the progress tracker.
+
+</div>
+
+</div>
+
 ## Why Rust in 90 Days?
 
 **🎯 Proven Learning Method**  
