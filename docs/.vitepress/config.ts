@@ -246,7 +246,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/yourusername/rust-90-days' }
+      { icon: 'github', link: 'https://github.com/fahdi/rust-90-days' }
     ],
 
     footer: {
@@ -259,13 +259,16 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/yourusername/rust-90-days/edit/main/docs/:path',
+      pattern: 'https://github.com/fahdi/rust-90-days/edit/main/docs/:path',
       text: 'Edit this page on GitHub'
     }
   },
 
   markdown: {
-    theme: 'material-theme-palenight',
+    theme: {
+      light: 'material-theme-lighter',
+      dark: 'material-theme-palenight'
+    },
     lineNumbers: true
   }
 })

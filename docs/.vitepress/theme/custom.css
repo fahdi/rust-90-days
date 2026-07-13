@@ -63,15 +63,33 @@
 }
 
 .journey-grid > div {
+  position: relative;
   padding: 1.5rem;
   background: var(--vp-c-bg-soft);
   border-radius: 8px;
   border: 1px solid var(--vp-c-divider);
+  transition: transform 0.2s, border-color 0.2s;
 }
 
-.journey-grid h3 {
+.journey-grid > div:has(h2 a:hover) {
+  transform: translateY(-2px);
+  border-color: var(--vp-c-brand);
+}
+
+.journey-grid h2 {
   margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.journey-grid h2 a {
   color: var(--vp-c-brand);
+  text-decoration: none;
+}
+
+.journey-grid h2 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 }
 
 /* Progress tracker styles */
@@ -180,5 +198,38 @@
   
   .progress-stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Task 4: replace native hero actions with ContinueButton.vue's row.
+   Scoped to .VPHomeHero so it can never affect non-home pages. The
+   replacement uses its own class names (not .actions/.action) so this
+   hide rule can't accidentally catch the replacement too. */
+.VPHomeHero .actions {
+  display: none;
+}
+
+.continue-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -6px;
+  padding-top: 24px;
+  justify-content: center;
+}
+
+.continue-cta-row .action {
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+@media (min-width: 640px) {
+  .continue-cta-row {
+    padding-top: 32px;
+  }
+}
+
+@media (min-width: 960px) {
+  .continue-cta-row {
+    justify-content: flex-start;
   }
 }
