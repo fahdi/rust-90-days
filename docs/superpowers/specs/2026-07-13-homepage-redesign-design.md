@@ -46,22 +46,40 @@ and is not actually broken.
 
 ### 2. Progress-aware hero CTA
 
-Verified against the installed VitePress source
-(`node_modules/vitepress/dist/client/theme-default/components/VPHomeHero.vue`):
-the hero's action buttons render directly from `useData().frontmatter.hero.actions`,
-which is a reactive ref. There is no slot that lets you replace the actions
-row wholesale (only `home-hero-actions-after`, which appends, not replaces).
+**Revision (found during Task 4 implementation):** the mutate-frontmatter-in-place
+approach described below originally was verified against `VPHomeHero.vue`
+(confirming it *reads* `useData().frontmatter.hero.actions` reactively) but
+that verification missed how `frontmatter`'s underlying source is populated.
+`node_modules/vitepress/dist/client/app/router.js` shows
+`route.data = import.meta.env.PROD ? markRaw(__pageData) : readonly(__pageData)`
+— the page-data object VitePress hands to `frontmatter` is deliberately
+wrapped `readonly()` in dev (writes are rejected, Vue logs
+`Set operation on key "text" failed: target is readonly`) and `markRaw()` in
+prod (writes silently succeed as a plain property set but are invisible to
+Vue's reactivity, so no re-render happens). Mutating
+`frontmatter.value.hero.actions[1]` is therefore a no-op in both modes —
+confirmed empirically in the implementer's dev and prod testing, not just
+by re-reading source.
 
-So instead of a custom `Layout` override, this adds one new component,
-`docs/.vitepress/theme/ContinueButton.vue`, mounted via the
-`home-hero-actions-after` slot (wired up in `docs/.vitepress/theme/index.ts`
-using the `Layout` wrapper pattern from VitePress's own
-"Extending the Default Theme" docs). The component renders no visible markup
-of its own; in `onMounted` it calls `useData()`, reads
-`localStorage['rust90days-progress']`, and when progress exists, mutates
-`frontmatter.value.hero.actions[1].text` and `.link` directly. Because that
-ref is reactive, VPHero re-renders the existing second button with the new
-label/link automatically, no third button, no layout shift, no DOM hacking.
+**Corrected design:** also verified against source
+(`node_modules/vitepress/dist/client/theme-default/components/VPHero.vue`),
+the native action buttons render inside a single `<div class="actions">`,
+immediately followed by `<slot name="home-hero-actions-after" />` — both
+direct children of `.VPHero .container .main` (and `VPButton`, the button
+component VitePress itself uses, is a public export of `vitepress/theme`).
+So instead of mutating frontmatter, this hides the native `.actions` row
+with CSS scoped to `.VPHomeHero` (so it never affects any non-home page) and
+renders a replacement row of the same two buttons, using the real `VPButton`
+component, inside the `home-hero-actions-after` slot. The first button's
+text/link is read (not mutated) reactively from
+`frontmatter.value.hero.actions[0]`, so `docs/index.md`'s frontmatter stays
+the single source of truth for it. The second button starts from local
+`ref()` state seeded from `frontmatter.value.hero.actions[1]`
+("View Weeks" / `/week-01/`), then on mount is overridden based on saved
+progress. `docs/.vitepress/theme/custom.css` gains the hide rule plus a
+small layout rule for the replacement row (copied from `VPHero.vue`'s own
+`.actions`/`.action` CSS so spacing matches exactly, under new class names
+so the hide rule can't accidentally catch the replacement too).
 
 Behavior:
 - Reads `localStorage['rust90days-progress']` (same key/shape
@@ -77,12 +95,20 @@ Behavior:
 
 ### 3. Journey grid → real links
 
-In `docs/index.md`, each of the 7 `<div>...</div>` week-group cards becomes
-a single wrapping `<a href="/week-XX/">...</a>` (first week of each pair,
-e.g. Week 1-2 card links to `/week-01/`). `custom.css`'s `.journey-grid > div`
-selector becomes `.journey-grid > a`, and a `:hover` rule is added
-(`transform: translateY(-2px); border-color: var(--vp-c-brand);`) consistent
-with the existing `.lesson-nav a:hover` treatment elsewhere in the file.
+**Revision (found during plan review, before implementation):** wrapping
+each card's whole `<div>` in `<a>` risks breaking the nested markdown —
+`<div>` is a CommonMark HTML-block tag that lets markdown-it resume parsing
+`##`/`**bold**` after a blank line; `<a>` is not on that tag list, so the
+outer element stays `<div>`. Instead, each card's `## heading` becomes a
+markdown link (`## [🌟 Week 1-2: Foundation](/week-01/)`), and
+`custom.css` adds a `::after` "stretched link" on that heading anchor
+(`position: absolute; inset: 0`) so the whole card is clickable while the
+underlying link is still a real, crawlable `<a href>`. `.journey-grid > div`
+gains `position: relative` plus a `:has(h2 a:hover)` rule for the hover
+lift/border treatment, consistent with the existing `.lesson-nav a:hover`
+look elsewhere in the file. (This also fixed a pre-existing dead selector:
+`.journey-grid h3` never matched anything, since the cards use `##`, which
+renders `<h2>` — corrected to `.journey-grid h2`.)
 
 ### 4. "How This Course Works" section
 

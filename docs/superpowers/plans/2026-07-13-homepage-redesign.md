@@ -287,14 +287,29 @@ git commit -m "Add How This Course Works section linking introduction and how-to
 
 ### Task 4: Progress-aware hero CTA
 
+**Revision history:** the first attempt at this task (mutating
+`frontmatter.value.hero.actions[1]` in place) was implemented verbatim from
+an earlier version of this brief and failed — VitePress wraps the
+underlying page-data object `readonly()` (dev) / `markRaw()` (prod) before
+`frontmatter` is computed from it
+(`node_modules/vitepress/dist/client/app/router.js:62-65`), so the mutation
+is rejected (dev: console warning, no-op) or silently invisible to Vue's
+reactivity (prod: no re-render). Confirmed empirically in both `docs:dev`
+and `docs:build`+`docs:preview`. The design below replaces that approach;
+if you are re-implementing this task, use ONLY the code in this version, not
+any earlier one.
+
 **Files:**
 - Create: `docs/.vitepress/theme/ContinueButton.vue`
 - Create: `docs/.vitepress/theme/Layout.vue`
 - Modify: `docs/.vitepress/theme/index.ts`
+- Modify: `docs/.vitepress/theme/custom.css`
 
 **Interfaces:**
-- Consumes: `localStorage['rust90days-progress']`, JSON shape `{ completed: string[] }` where each entry is `"day-NN"` (zero-padded) — this is the exact shape `docs/.vitepress/theme/ProgressTracker.vue` already reads/writes (see its `loadProgress`/`saveProgress` functions).
+- Consumes: `localStorage['rust90days-progress']`, JSON shape `{ completed: string[] }` where each entry is `"day-NN"` (zero-padded) — this is the exact shape `docs/.vitepress/theme/ProgressTracker.vue` already reads/writes (see its `loadProgress`/`saveProgress` functions). Also consumes (read-only) `useData().frontmatter.hero.actions[0]` for the first button's text/link — do not write to this ref, only read it.
 - Produces: no new exports consumed elsewhere; `ContinueButton` is used only by `Layout.vue` in this task.
+
+**Verified against installed VitePress source** (`node_modules/vitepress/dist/client/theme-default/components/VPHero.vue`): the native hero renders `<div v-if="actions" class="actions"><div v-for="action in actions" class="action"><VPButton .../></div></div>` immediately followed by `<slot name="home-hero-actions-after" />`, both direct children of `.VPHero .container .main`. `VPButton` is a public export of `vitepress/theme` (`node_modules/vitepress/dist/client/theme-default/without-fonts.js:13`), and its exact layout CSS is in the same `VPHero.vue` file (`.actions { display: flex; flex-wrap: wrap; margin: -6px; padding-top: 24px; }` / `.VPHero.has-image .actions { justify-content: center }` at narrow widths, `flex-start` from 960px up — this homepage's hero has an image, so the `has-image` variant applies — and `.action { flex-shrink: 0; padding: 6px; }`).
 
 - [ ] **Step 1: Create the ContinueButton component**
 
@@ -302,17 +317,37 @@ Create `docs/.vitepress/theme/ContinueButton.vue`:
 
 ```vue
 <template>
-  <!-- Renders no markup of its own; on mount it mutates the hero's
-       second action button in place via the reactive frontmatter ref
-       VitePress's VPHomeHero.vue renders from. -->
+  <div class="continue-cta-row">
+    <div v-if="firstAction" class="action">
+      <VPButton
+        tag="a"
+        size="medium"
+        :theme="firstAction.theme || 'brand'"
+        :text="firstAction.text"
+        :href="firstAction.link"
+      />
+    </div>
+    <div class="action">
+      <VPButton tag="a" size="medium" theme="alt" :text="label" :href="link" />
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useData } from 'vitepress'
+import { VPButton } from 'vitepress/theme'
 
 const TOTAL_LESSONS = 90
 const { frontmatter } = useData()
+
+const firstAction = computed(() => {
+  const actions = frontmatter.value.hero && frontmatter.value.hero.actions
+  return actions && actions[0]
+})
+
+const label = ref('View Weeks')
+const link = ref('/week-01/')
 
 function pad(n) {
   return String(n).padStart(2, '0')
@@ -331,7 +366,10 @@ function findNextIncompleteDay(completed) {
 
 onMounted(() => {
   const actions = frontmatter.value.hero && frontmatter.value.hero.actions
-  if (!actions || !actions[1]) return
+  if (actions && actions[1]) {
+    label.value = actions[1].text
+    link.value = actions[1].link
+  }
 
   let saved
   try {
@@ -354,17 +392,19 @@ onMounted(() => {
   const nextDay = findNextIncompleteDay(completed)
 
   if (nextDay === null) {
-    actions[1].text = 'Review Any Lesson'
-    actions[1].link = '/week-01/'
+    label.value = 'Review Any Lesson'
+    link.value = '/week-01/'
     return
   }
 
   const week = weekForDay(nextDay)
-  actions[1].text = `Continue Day ${nextDay} →`
-  actions[1].link = `/week-${pad(week)}/day-${pad(nextDay)}`
+  label.value = `Continue Day ${nextDay} →`
+  link.value = `/week-${pad(week)}/day-${pad(nextDay)}`
 })
 </script>
 ```
+
+Note: `label`/`link` are seeded from the real `frontmatter.value.hero.actions[1]` on mount (not hardcoded), so if `docs/index.md`'s default second action ever changes, this stays in sync without editing this file.
 
 - [ ] **Step 2: Create the Layout wrapper that mounts it**
 
@@ -421,16 +461,55 @@ export default {
 }
 ```
 
-- [ ] **Step 4: Verify the build**
+- [ ] **Step 4: Hide the native hero actions row and style the replacement**
+
+In `docs/.vitepress/theme/custom.css`, add (anywhere in the file — e.g. at the end):
+
+```css
+/* Task 4: replace native hero actions with ContinueButton.vue's row.
+   Scoped to .VPHomeHero so it can never affect non-home pages. The
+   replacement uses its own class names (not .actions/.action) so this
+   hide rule can't accidentally catch the replacement too. */
+.VPHomeHero .actions {
+  display: none;
+}
+
+.continue-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -6px;
+  padding-top: 24px;
+  justify-content: center;
+}
+
+.continue-cta-row .action {
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+@media (min-width: 640px) {
+  .continue-cta-row {
+    padding-top: 32px;
+  }
+}
+
+@media (min-width: 960px) {
+  .continue-cta-row {
+    justify-content: flex-start;
+  }
+}
+```
+
+- [ ] **Step 5: Verify the build**
 
 Run: `npm run docs:build`
 Expected: build completes with no errors.
 
-- [ ] **Step 5: Verify default (no-progress) behavior in the browser**
+- [ ] **Step 6: Verify default (no-progress) behavior in the browser**
 
-Run: `npm run docs:dev`, open the homepage in a private/incognito window (guarantees empty `localStorage`). Confirm the second hero button still reads "View Weeks" and links to `/week-01/` (unchanged from before this task).
+Run: `npm run docs:dev`, open the homepage in a private/incognito window (guarantees empty `localStorage`). Confirm the hero shows exactly two buttons — "Start Learning" and "View Weeks" — visually in the same position/spacing as before this task, and "View Weeks" links to `/week-01/`.
 
-- [ ] **Step 6: Verify progress-aware behavior in the browser**
+- [ ] **Step 7: Verify progress-aware behavior in the browser**
 
 In the same dev server, open the homepage in a normal window, open devtools console, run:
 
@@ -440,7 +519,7 @@ localStorage.setItem('rust90days-progress', JSON.stringify({ completed: ['day-01
 
 Reload the homepage. Confirm the second hero button now reads "Continue Day 4 →" and clicking it navigates to `/week-01/day-04`.
 
-- [ ] **Step 7: Verify the all-complete edge case**
+- [ ] **Step 8: Verify the all-complete edge case**
 
 In devtools console, run:
 
@@ -452,14 +531,18 @@ localStorage.setItem('rust90days-progress', JSON.stringify({ completed: all }))
 
 Reload the homepage. Confirm the second hero button reads "Review Any Lesson" and links to `/week-01/`.
 
-- [ ] **Step 8: Clean up test data**
+- [ ] **Step 9: Verify production mode too**
+
+Run: `npm run docs:build && npm run docs:preview`. Repeat Steps 6-8 against the preview server (this is what actually catches `markRaw`-only bugs that dev's `readonly()` warnings would mask, since prod has no console warning at all). Stop the preview server (Ctrl-C) when done.
+
+- [ ] **Step 10: Clean up test data**
 
 In devtools console, run: `localStorage.removeItem('rust90days-progress')`
 
-- [ ] **Step 9: Commit**
+- [ ] **Step 11: Commit**
 
 ```bash
-git add docs/.vitepress/theme/ContinueButton.vue docs/.vitepress/theme/Layout.vue docs/.vitepress/theme/index.ts
+git add docs/.vitepress/theme/ContinueButton.vue docs/.vitepress/theme/Layout.vue docs/.vitepress/theme/index.ts docs/.vitepress/theme/custom.css
 git commit -m "Add progress-aware Continue Day N hero CTA"
 ```
 
