@@ -214,7 +214,7 @@ export default defineConfig({
   description: 'Master Rust with 10-minute daily lessons',
   
   head: [
-    ['link', { rel: 'icon', href: '/logo.svg' }],
+    ['link', { rel: 'icon', href: '/rust-90-days/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#ce422b' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:title', content: 'Rust in 90 Days' }],
@@ -222,7 +222,7 @@ export default defineConfig({
   ],
   
   themeConfig: {
-    logo: '/logo.svg',
+    logo: { light: '/logo-light.svg', dark: '/logo-dark.svg' },
     
     nav: [
       { text: 'Home', link: '/' },

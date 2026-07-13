@@ -1,9 +1,56 @@
+/* ---- Rust-Branded Technical token layer (spec 2026-07-13) ---- */
+/* Light mode */
 :root {
-  --vp-c-brand: #ce422b;
-  --vp-c-brand-light: #f74c00;
-  --vp-c-brand-lighter: #ff6b35;
-  --vp-c-brand-dark: #a33722;
-  --vp-c-brand-darker: #7a2a1a;
+  --vp-c-brand: #b93a25; /* legacy alias used by lesson styles below */
+  --vp-c-brand-light: #ce422b; /* legacy: .progress-bar gradient */
+  --vp-c-brand-dark: #a33320; /* legacy: .lesson-complete-btn:hover */
+  --vp-c-brand-1: #b93a25;
+  --vp-c-brand-2: #ce422b;
+  --vp-c-brand-3: #b93a25;
+  --vp-c-brand-soft: rgba(206, 66, 43, 0.14);
+
+  --vp-c-bg: #faf9f6;
+  --vp-c-bg-alt: #f5f3ee;
+  --vp-c-bg-soft: #f1eee8;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-divider: #e4dfd6;
+  --vp-c-text-1: #26211c;
+  --vp-c-text-2: #6b635a;
+  --vp-c-text-3: #948a7f;
+
+  --vp-button-brand-bg: #b93a25;
+  --vp-button-brand-hover-bg: #ce422b;
+  --vp-button-brand-active-bg: #a33320;
+}
+
+/* Dark mode (flagship) */
+.dark {
+  --vp-c-brand: #e86a50;
+  --vp-c-brand-light: #e86a50; /* legacy: .progress-bar gradient */
+  --vp-c-brand-dark: #a33320; /* legacy: .lesson-complete-btn:hover */
+  --vp-c-brand-1: #e86a50;
+  --vp-c-brand-2: #ce422b;
+  --vp-c-brand-3: #b93a25;
+  --vp-c-brand-soft: rgba(206, 66, 43, 0.16);
+
+  --vp-c-bg: #16130f;
+  --vp-c-bg-alt: #14110e;
+  --vp-c-bg-soft: #1f1b17;
+  --vp-c-bg-elv: #1f1b17;
+  --vp-c-divider: #332c25;
+  --vp-c-text-1: #f3efe6;
+  --vp-c-text-2: #9a968c;
+  --vp-c-text-3: #665c52;
+
+  --vp-button-brand-bg: #b93a25;
+  --vp-button-brand-hover-bg: #ce422b;
+  --vp-button-brand-active-bg: #a33320;
+}
+
+/* Local search button: sharp, bordered */
+.DocSearch-Button {
+  border-radius: 2px;
+  border: 1px solid var(--vp-c-divider);
 }
 
 .lesson-meta {
@@ -77,6 +124,10 @@
 }
 
 .journey-grid h2 {
+  /* VitePress's own theme sets position:relative on headings (for its
+     heading-anchor-link feature); override it so the ::after stretched
+     link below sizes against the card, not just the heading's own box. */
+  position: static;
   margin-top: 0;
   font-size: 1.25rem;
 }
@@ -201,35 +252,256 @@
   }
 }
 
-/* Task 4: replace native hero actions with ContinueButton.vue's row.
-   Scoped to .VPHomeHero so it can never affect non-home pages. The
-   replacement uses its own class names (not .actions/.action) so this
-   hide rule can't accidentally catch the replacement too. */
-.VPHomeHero .actions {
-  display: none;
+/* ---- Homepage: Rust-Branded Technical ---- */
+
+/* Section headings on home: strip vp-doc's divider treatment */
+.VPHome .vp-doc h2 {
+  border-top: none;
+  padding-top: 0;
+  margin: 64px 0 28px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
-.continue-cta-row {
+/* Hero */
+.rd-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 48px 0 24px;
+}
+
+.rd-hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.rd-hero-sub {
+  color: var(--vp-c-text-2);
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 38ch;
+  margin: 20px 0 0;
+}
+
+.rd-hero-ctas {
   display: flex;
   flex-wrap: wrap;
-  margin: -6px;
-  padding-top: 24px;
-  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
 }
 
-.continue-cta-row .action {
-  flex-shrink: 0;
-  padding: 6px;
+.vp-doc a.rd-btn {
+  text-decoration: none;
 }
 
-@media (min-width: 640px) {
-  .continue-cta-row {
-    padding-top: 32px;
+.rd-btn {
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.rd-btn:active {
+  transform: scale(0.98);
+}
+
+.rd-hero-ctas .rd-btn-solid {
+  background: var(--vp-c-brand-3);
+  color: #ffffff;
+}
+
+.rd-hero-ctas .rd-btn-solid:hover {
+  background: var(--vp-c-brand-2);
+  color: #ffffff;
+}
+
+.rd-hero-ctas .rd-btn-outline {
+  border: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-1);
+}
+
+.rd-hero-ctas .rd-btn-outline:hover {
+  border-color: var(--vp-c-brand-2);
+}
+
+/* Hero visual: code panel + gear watermark */
+.rd-hero-visual {
+  position: relative;
+}
+
+.rd-gear {
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 400px;
+  height: 400px;
+  color: var(--vp-c-brand-2);
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.rd-hero-panel {
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 2px;
+  background: var(--vp-c-bg-soft);
+  overflow: hidden;
+}
+
+.rd-panel-tab {
+  border-bottom: 1px solid var(--vp-c-divider);
+  padding: 8px 14px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  color: var(--vp-c-brand-1);
+}
+
+.rd-hero-panel div[class*='language-'] {
+  margin: 0;
+  border-radius: 0;
+}
+
+/* Numbered feature grid */
+.rd-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.rd-cell {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 2px;
+  padding: 22px;
+}
+
+.rd-span-2 { grid-column: span 2; }
+.rd-span-4 { grid-column: span 4; }
+.rd-span-6 { grid-column: span 6; }
+
+.rd-cell-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.rd-num {
+  font-family: var(--vp-font-family-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--vp-c-brand-2);
+}
+
+.rd-cell-title {
+  color: var(--vp-c-text-1);
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.rd-cell-row .rd-cell-title {
+  margin-top: 0;
+}
+
+.rd-cell-body {
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+.rd-cell-tint {
+  background: linear-gradient(135deg, #f3e5dd, var(--vp-c-bg-soft));
+  border-color: #e0cfc4;
+}
+
+.dark .rd-cell-tint {
+  background: linear-gradient(135deg, #241a14, var(--vp-c-bg-soft));
+  border-color: #3d2c22;
+}
+
+.rd-cell-texture {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 6px,
+    rgba(206, 66, 43, 0.05) 6px,
+    rgba(206, 66, 43, 0.05) 7px
+  );
+}
+
+/* Week-card kicker + sharpened cards */
+.rd-kicker {
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--vp-c-text-2);
+  margin-bottom: 2px;
+}
+
+.journey-grid > div {
+  border-radius: 2px;
+}
+
+.journey-grid h2 {
+  font-size: 1.05rem;
+}
+
+/* Entry motion (hero only, one-time, transform/opacity only) */
+@media (prefers-reduced-motion: no-preference) {
+  .rd-hero-copy > * {
+    animation: rd-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .rd-hero-copy > *:nth-child(2) { animation-delay: 0.08s; }
+  .rd-hero-copy > *:nth-child(3) { animation-delay: 0.16s; }
+  .rd-hero-visual {
+    animation: rd-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
   }
 }
 
-@media (min-width: 960px) {
-  .continue-cta-row {
-    justify-content: flex-start;
+@keyframes rd-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Mobile collapse */
+@media (max-width: 767px) {
+  .rd-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 24px;
   }
+  .rd-gear {
+    width: 260px;
+    height: 260px;
+    top: -40px;
+    right: -40px;
+  }
+  .rd-grid {
+    grid-template-columns: 1fr;
+  }
+  .rd-span-2, .rd-span-4, .rd-span-6 {
+    grid-column: auto;
+  }
+  .rd-cell-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+/* Nav logo: larger, mode-specific variants set in config themeConfig.logo */
+.VPNavBarTitle .logo {
+  height: 30px;
 }
