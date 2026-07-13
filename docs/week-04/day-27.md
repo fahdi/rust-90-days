@@ -17,7 +17,7 @@ Build a small text analyzer that counts words, lines, and word frequencies, and 
 
 ## 📚 The Concept (3 min)
 
-Today is a project day. Instead of learning one new rule, you'll combine the ownership skills from Days 22–26 into something useful: a text analyzer, the kind of tool behind word counters, readability scores, and search indexing.
+Today is a project day. Instead of learning one new rule, you'll combine the ownership skills from Days 22-26 into something useful: a text analyzer, the kind of tool behind word counters, readability scores, and search indexing.
 
 The design question at the heart of this project is: **who owns the text?** Think of the text like a library book. The analyzer doesn't need to *keep* the book, it just needs to read it, take some notes (counts, frequencies), and hand it back. That means every analysis function should take `&str`, a borrowed view of the text, rather than `String`, which would take ownership. If `count_words` demanded a `String`, the caller would lose their text after a single count, or be forced to `.clone()` everywhere, which is wasteful.
 

@@ -49,7 +49,7 @@ fn calculate_length(s: &String) -> usize {
 fn main() {
     let greeting = String::from("Hello, Rustaceans!");
 
-    // &greeting creates a reference — we lend the value, not move it
+    // &greeting creates a reference: we lend the value, not move it
     let length = calculate_length(&greeting);
 
     // greeting is still valid because ownership never left main
@@ -65,7 +65,7 @@ struct Order {
     total: f64,
 }
 
-// Borrows the whole vector — read-only access is all we need
+// Borrows the whole vector: read-only access is all we need
 fn revenue(orders: &Vec<Order>) -> f64 {
     orders.iter().map(|o| o.total).sum()
 }

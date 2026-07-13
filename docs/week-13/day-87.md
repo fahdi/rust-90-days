@@ -181,8 +181,9 @@ fn main() {
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [The Rust Book - Macros](https://doc.rust-lang.org/book/ch20-05-macros.html)
+- [Rust by Example - macro_rules!](https://doc.rust-lang.org/rust-by-example/macros.html)
+- [The Little Book of Rust Macros](https://veykril.github.io/tlborm/)
 
 ---
 

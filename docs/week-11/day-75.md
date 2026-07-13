@@ -22,7 +22,7 @@ Understand what `'static` really means, data valid for the entire program, where
 1. **String literals.** Every `&str` literal like `"hello"` is baked into the compiled binary itself, so a reference to it can never dangle. Its full type is `&'static str`.
 2. **`static` items and constants.** `static GREETING: &str = "hi";` lives at a fixed address for the whole program run.
 
-That's the honest supply of `'static` data. The trouble starts with demand. You'll see `'static` as a *bound*, `T: 'static`, in APIs like `std::thread::spawn`. This bound doesn't mean "T must be a reference to static data"; it means "T contains no references shorter than `'static`." Owned types like `String`, `Vec&lt;u8&gt;`, and `i32` all satisfy `T: 'static` because they contain no borrows at all. That distinction trips up almost everyone: a `String` created at runtime is `'static`-compatible; a `&str` borrowed from it is not.
+That's the honest supply of `'static` data. The trouble starts with demand. You'll see `'static` as a *bound*, `T: 'static`, in APIs like `std::thread::spawn`. This bound doesn't mean "T must be a reference to static data"; it means "T contains no references shorter than `'static`." Owned types like `String`, `Vec<u8>`, and `i32` all satisfy `T: 'static` because they contain no borrows at all. That distinction trips up almost everyone: a `String` created at runtime is `'static`-compatible; a `&str` borrowed from it is not.
 
 Why does `thread::spawn` require this? The spawned thread might outlive the function that created it, so it can't be allowed to borrow from that function's stack. Requiring `'static` forces you to *move ownership* into the thread.
 
@@ -48,7 +48,7 @@ fn main() {
     let banner;
     {
         banner = pick_banner(true);
-    } // inner scope ends — no problem, the data isn't on any stack
+    } // inner scope ends, no problem: the data isn't on any stack
     println!("{}", banner);
 
     static VERSION: &str = "1.0.3";
@@ -143,7 +143,7 @@ Fix 1: `thread::spawn(move || ...)`, but then `main` can't use `name` afterward 
 use std::thread;
 
 fn main() {
-    // Fix 2: a literal is &'static str — freely copyable into the closure.
+    // Fix 2: a literal is &'static str, freely copyable into the closure.
     let name: &'static str = "Rustacean";
     let handle = thread::spawn(move || {
         println!("hi, {}", name);

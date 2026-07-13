@@ -28,7 +28,7 @@ The server skeleton is:
 3. Read the request, parse the method and path, match on the path to choose a handler.
 4. Format and write the response, flush, drop the stream (which closes the connection).
 
-A single-threaded loop handles one request at a time, one slow client stalls everyone. The classic fix (Rust Book chapter 21) is a thread pool; the modern fix is the async runtime from Days 85–86, where each connection becomes a cheap task. Our version below stays single-threaded for the server loop but spawns the *client* on a thread so one program can demonstrate both ends of the socket deterministically.
+A single-threaded loop handles one request at a time, one slow client stalls everyone. The classic fix (Rust Book chapter 21) is a thread pool; the modern fix is the async runtime from Days 85-86, where each connection becomes a cheap task. Our version below stays single-threaded for the server loop but spawns the *client* on a thread so one program can demonstrate both ends of the socket deterministically.
 
 ::: tip Key Insight
 HTTP is just structured text over TCP. If you can parse `"GET /path HTTP/1.1"` and remember to send `Content-Length` plus the `\r\n\r\n` separator, you have a real web server that Firefox, curl, and load balancers will happily talk to.
@@ -162,7 +162,7 @@ server done -- course complete!
 ✅ A web server is a loop: `TcpListener::bind` → `incoming()` → parse request text → match on path → write status line, `Content-Length`, blank line, body  
 ✅ The `\r\n\r\n` separator and an accurate `Content-Length` header are what make your bytes valid HTTP that real clients accept  
 ✅ Separating pure parsing/routing (Example 1) from I/O (Example 2) makes the logic unit-testable without sockets, the same discipline frameworks enforce with handler functions  
-✅ Single-threaded serving blocks on slow clients; the production answers are a thread pool or the async tasks you built on Days 85–86, you now understand the full stack down to the bytes
+✅ Single-threaded serving blocks on slow clients; the production answers are a thread pool or the async tasks you built on Days 85-86, you now understand the full stack down to the bytes
 
 </div>
 
@@ -176,7 +176,7 @@ server done -- course complete!
 
 ## ✅ Quick Challenge
 
-Extend the router from Example 1 with a dynamic route: any path of the form `/greet/&lt;name&gt;` should return `(200, "Hello, &lt;name&gt;!")`. Everything else keeps its current behavior.
+Extend the router from Example 1 with a dynamic route: any path of the form `/greet/<name>` should return `(200, "Hello, <name>!")`. Everything else keeps its current behavior.
 
 ```rust
 // Starter code

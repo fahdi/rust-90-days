@@ -49,7 +49,7 @@ fn main() {
         println!("Bring a jacket.");
     }
 
-    // `if` is an expression — it returns a value
+    // `if` is an expression: it returns a value
     let category = if temperature > 20 { "warm" } else { "cool" };
     println!("Category: {}", category);
 }

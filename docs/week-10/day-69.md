@@ -19,14 +19,14 @@ Put this week's skills together, generics, trait bounds, default implementations
 
 Every real application needs somewhere to keep records: users, sessions, products, cache entries. Before reaching for a database, you often want a simple in-memory store, and you definitely don't want to write `UserStore`, `ProductStore`, and `SessionStore` as three copy-pasted structs. This is exactly the problem generics were made for.
 
-Today's project is a `Store&lt;T&gt;` built on `Vec&lt;(u32, T)&gt;`: auto-incrementing ids, insert, lookup, delete, and count. The struct itself needs *no* bounds, `Store&lt;T&gt;` should hold anything. Bounds belong on the methods that need them: a `find` method needs `T: PartialEq` to compare values, and a debug-print method needs `T: std::fmt::Debug`. This is a key design lesson: **put trait bounds on methods, not on the struct**, so users who never call `find` can store non-comparable types.
+Today's project is a `Store<T>` built on `Vec<(u32, T)>`: auto-incrementing ids, insert, lookup, delete, and count. The struct itself needs *no* bounds, `Store<T>` should hold anything. Bounds belong on the methods that need them: a `find` method needs `T: PartialEq` to compare values, and a debug-print method needs `T: std::fmt::Debug`. This is a key design lesson: **put trait bounds on methods, not on the struct**, so users who never call `find` can store non-comparable types.
 
-We'll also layer in this week's other tools. A `Describable` trait with a *default implementation* gives any store a free `summary()` method built on a required `len_hint()`. And because our store is generic over one `T`, we'll show how `Store&lt;Box&lt;dyn ...&gt;&gt;` combines generics with trait objects when you genuinely need mixed record types in one store.
+We'll also layer in this week's other tools. A `Describable` trait with a *default implementation* gives any store a free `summary()` method built on a required `len_hint()`. And because our store is generic over one `T`, we'll show how `Store<Box<dyn Describable>>` combines generics with trait objects when you genuinely need mixed record types in one store.
 
-This mirrors how real libraries are designed: `HashMap&lt;K, V&gt;` requires `K: Hash + Eq` only where hashing actually happens, and iterator adapters demand bounds only on the operations that use them.
+This mirrors how real libraries are designed: `HashMap<K, V>` requires `K: Hash + Eq` only where hashing actually happens, and iterator adapters demand bounds only on the operations that use them.
 
 ::: tip Key Insight
-Constrain methods, not structs. `impl&lt;T&gt; Store&lt;T&gt;` for universal operations, plus a second `impl&lt;T: PartialEq&gt; Store&lt;T&gt;` block for search operations, Rust lets you split impls by bound so every capability is pay-as-you-go.
+Constrain methods, not structs. `impl<T> Store<T>` for universal operations, plus a second `impl<T: PartialEq> Store<T>` block for search operations, Rust lets you split impls by bound so every capability is pay-as-you-go.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -137,6 +137,54 @@ fn main() {
 }
 ```
 
+### Example 3: Default Implementations and Trait Objects
+
+```rust
+struct Store<T> {
+    items: Vec<(u32, T)>,
+    next_id: u32,
+}
+
+impl<T> Store<T> {
+    fn new() -> Self {
+        Store { items: Vec::new(), next_id: 1 }
+    }
+
+    fn insert(&mut self, value: T) -> u32 {
+        let id = self.next_id;
+        self.next_id += 1;
+        self.items.push((id, value));
+        id
+    }
+}
+
+trait Describable {
+    fn len_hint(&self) -> usize; // required: implementors provide this
+
+    fn summary(&self) -> String { // default: every implementor gets it free
+        format!("store with {} record(s)", self.len_hint())
+    }
+}
+
+impl<T> Describable for Store<T> {
+    fn len_hint(&self) -> usize {
+        self.items.len()
+    }
+}
+
+fn main() {
+    let mut names: Store<String> = Store::new();
+    names.insert(String::from("Alice"));
+    names.insert(String::from("Bob"));
+    println!("{}", names.summary());
+
+    // Generics + trait objects: one store holding mixed describable values
+    let mut mixed: Store<Box<dyn Describable>> = Store::new();
+    mixed.insert(Box::new(names));
+    println!("{}", mixed.summary());
+}
+```
+
 ::: details Output
 ```
 count = 2
@@ -152,13 +200,18 @@ Bob's id: Some(2)
 removed: Some(User { name: "Bob", age: 25 })
 #1 => User { name: "Alice", age: 30 }
 ```
+Example 3:
+```
+store with 2 record(s)
+store with 1 record(s)
+```
 :::
 
 ## 🎓 Key Takeaways (1 min)
 
 <div class="takeaways">
 
-✅ One generic `Store&lt;T&gt;` replaces N copy-pasted concrete stores  
+✅ One generic `Store<T>` replaces N copy-pasted concrete stores  
 ✅ Multiple `impl` blocks with different bounds make capabilities pay-as-you-go (`PartialEq` only for search, `Debug` only for dumping)  
 ✅ `Option` is the natural return type for lookups and removals that can miss  
 ✅ Deriving `Debug` and `PartialEq` on your record types unlocks the bounded methods for free
@@ -210,7 +263,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-For `update`, use `iter_mut()` to get mutable access to the tuples. For `filter_ids`, chain `iter().filter(...).map(...).collect()` into a `Vec&lt;u32&gt;`.
+For `update`, use `iter_mut()` to get mutable access to the tuples. For `filter_ids`, chain `iter().filter(...).map(...).collect()` into a `Vec<u32>`.
 
 </details>
 

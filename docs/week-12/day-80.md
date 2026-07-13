@@ -1,6 +1,6 @@
 ---
-title: "Day 80 - Arc T  for Threading"
-description: "Learn about arc t  for threading in Rust"
+title: "Day 80 - Arc<T> for Threading"
+description: "Learn about Arc<T> for threading in Rust"
 ---
 
 # Day 80: Arc&lt;T&gt; for Threading

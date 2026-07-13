@@ -78,7 +78,7 @@ impl Feet {
     }
 }
 
-// This function ONLY accepts Meters — passing Feet is a compile error
+// This function ONLY accepts Meters; passing Feet is a compile error
 fn describe_altitude(altitude: Meters) {
     println!("Flying at {:.1} m ({:.1} ft)", altitude.0, altitude.to_feet().0);
 }

@@ -97,7 +97,7 @@ fn main() {
 
 ### Example 2: Practical Application
 
-A realistic HTTP request builder. The URL is *required*, so it's stored as `Option&lt;String&gt;` inside the builder and `build()` returns a `Result`, missing required data becomes a recoverable error, not a broken struct:
+A realistic HTTP request builder. The URL is *required*, so it's stored as `Option<String>` inside the builder and `build()` returns a `Result`, missing required data becomes a recoverable error, not a broken struct:
 
 ```rust
 #[derive(Debug)]
@@ -178,7 +178,7 @@ fn main() {
         Err(e) => println!("Failed to build request: {}", e),
     }
 
-    // Forgot the required url — build() catches it
+    // Forgot the required url - build() catches it
     let bad = HttpRequestBuilder::new().method("GET").build();
     match bad {
         Ok(req) => println!("{} {}", req.method, req.url),
@@ -208,7 +208,7 @@ Failed to build request: url is required
 
 ✅ A builder is a separate struct that holds work-in-progress state with defaults; `build()` consumes it and produces the final, always-valid value  
 ✅ The consuming style, `fn port(mut self, ...) -> Self`, takes ownership so each call moves the builder into the next, making one-expression chains natural  
-✅ Store *required* fields as `Option&lt;T&gt;` in the builder and have `build()` return `Result`, turning "forgot a field" into a compile-visible, handleable error  
+✅ Store *required* fields as `Option<T>` in the builder and have `build()` return `Result`, turning "forgot a field" into a compile-visible, handleable error  
 ✅ The standard library uses this pattern itself, `std::process::Command` and `std::thread::Builder` are builders you already call
 
 </div>

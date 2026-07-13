@@ -61,7 +61,7 @@ fn main() {
 
 fn take_ownership(msg: String) {
     println!("I now own: {}", msg);
-} // msg is dropped here — its memory is freed
+} // msg is dropped here; its memory is freed
 ```
 
 ### Example 2: Practical Application
@@ -76,7 +76,7 @@ fn main() {
         String::from("carol  "),
     ];
 
-    // raw_lines is MOVED into clean_names — we hand off the whole pipeline
+    // raw_lines is MOVED into clean_names; we hand off the whole pipeline
     let cleaned = clean_names(raw_lines);
 
     // clean_names gave us ownership of a brand-new Vec back
@@ -91,7 +91,7 @@ fn main() {
 // Takes ownership, transforms, returns ownership of the result
 fn clean_names(names: Vec<String>) -> Vec<String> {
     names
-        .into_iter() // consumes the Vec — moves each String out
+        .into_iter() // consumes the Vec, moving each String out
         .map(|n| n.trim().to_string())
         .collect()
 }
@@ -146,7 +146,7 @@ fn main() {
     let msg = String::from("rust moves fast");
 
     // TODO: call shout(msg), then print BOTH the original
-    // message and the shouted one — without using .clone()
+    // message and the shouted one, without using .clone()
 
     println!("{}", shout(msg));
 }

@@ -43,12 +43,12 @@ fn main() {
     // Without `move`: the closure borrows `name`
     let greet_borrow = || println!("Hello, {name}!");
     greet_borrow();
-    println!("Still usable here: {name}"); // fine — only borrowed
+    println!("Still usable here: {name}"); // fine, only borrowed
 
     // With `move`: the closure takes ownership of `name`
     let greet_own = move || println!("Hello again, {name}!");
     greet_own();
-    greet_own(); // can call repeatedly — printing only needs &name inside
+    greet_own(); // can call repeatedly, printing only needs &name inside
 
     // println!("{name}"); // ERROR if uncommented: `name` was moved
 }

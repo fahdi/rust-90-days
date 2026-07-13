@@ -43,7 +43,7 @@ Three pointers, three distinct jobs, one program:
 use std::cell::RefCell;
 use std::rc::Rc;
 
-// Box: recursive type — impossible without indirection
+// Box: recursive type, impossible without indirection
 #[derive(Debug)]
 enum List {
     Cons(i32, Box<List>),
@@ -180,11 +180,11 @@ Ask the two questions from the Key Insight for each: how many owners, and who mu
 
 ```rust
 fn main() {
-    // 1) Box<T>            — recursion needs indirection; single owner, no sharing
+    // 1) Box<T>            : recursion needs indirection; single owner, no sharing
     //    enum Json { Array(Vec<Json>), Object(Vec<(String, Box<Json>)>), ... }
-    // 2) Arc<T>            — many threads, read-only: no Mutex required
-    // 3) Rc<RefCell<Vec<Action>>> — one thread, two owners, both mutate
-    // 4) Weak<Node>        — back-edge must not own, or the tree leaks
+    // 2) Arc<T>            : many threads, read-only: no Mutex required
+    // 3) Rc<RefCell<Vec<Action>>> : one thread, two owners, both mutate
+    // 4) Weak<Node>        : back-edge must not own, or the tree leaks
     println!("1) Box  2) Arc  3) Rc<RefCell<..>>  4) Weak");
 }
 ```

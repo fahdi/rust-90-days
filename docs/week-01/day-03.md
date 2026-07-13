@@ -23,7 +23,7 @@ Think of types as differently sized boxes in a warehouse. A `u8` is a tiny box t
 
 Rust's **scalar types** come in four groups:
 
-- **Integers**: signed `i8`, `i16`, `i32`, `i64`, `i128`, `isize` and unsigned `u8`–`u128`, `usize`. The default is `i32`. The `u` types can never be negative.
+- **Integers**: signed `i8`, `i16`, `i32`, `i64`, `i128`, `isize` and unsigned `u8` through `u128`, `usize`. The default is `i32`. The `u` types can never be negative.
 - **Floating point**: `f32` and `f64` (the default). These hold decimals like `3.14`.
 - **Boolean**: `bool`, either `true` or `false`.
 - **Character**: `char`, a single Unicode scalar value written in *single* quotes, it can hold `'A'`, `'ß'`, or even `'🦀'` (it's 4 bytes, not 1).
@@ -106,7 +106,7 @@ Average per day: 111
 <div class="takeaways">
 
 ✅ Rust infers most types, but ambiguous cases (like `"42".parse()`) need an annotation such as `let n: u32 = ...`  
-✅ Integer types encode size and sign in the name: `u8` is 0–255, `i32` is the default, `usize` indexes collections  
+✅ Integer types encode size and sign in the name: `u8` is 0 to 255, `i32` is the default, `usize` indexes collections  
 ✅ `char` uses single quotes and holds any Unicode scalar (4 bytes), it is not a 1-byte C-style char  
 ✅ Numeric conversions are always explicit: `quantity as f64`, mixing `u32` and `f64` without a cast won't compile
 

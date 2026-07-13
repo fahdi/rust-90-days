@@ -92,7 +92,7 @@ fn main() {
 ::: details Output
 Example 1:
 ```
-Vec::new():           11 reallocations, final capacity 1024
+Vec::new():           9 reallocations, final capacity 1024
 with_capacity(1000):  capacity 1000 -> 1000 (unchanged)
 ```
 Example 2 (timings vary by machine; the ratio is what matters):

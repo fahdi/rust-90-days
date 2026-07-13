@@ -19,7 +19,7 @@ Understand the difference between static dispatch (`impl Trait` / generics, reso
 
 When you call `shape.area()` through a trait, *someone* has to decide which concrete function actually runs, `Circle::area` or `Square::area`. Rust gives you two ways to make that decision, and the choice affects performance, binary size, and flexibility.
 
-**Static dispatch** happens with generics: `fn print_area&lt;T: Shape&gt;(s: &T)`. At compile time, Rust performs *monomorphization*, it generates a separate copy of the function for every concrete type you call it with. `print_area::&lt;Circle&gt;` and `print_area::&lt;Square&gt;` become two distinct functions in the binary, each calling `area` directly. Zero runtime cost, and the compiler can inline aggressively. The price: larger binaries (one copy per type) and slower compilation.
+**Static dispatch** happens with generics: `fn print_area<T: Shape>(s: &T)`. At compile time, Rust performs *monomorphization*, it generates a separate copy of the function for every concrete type you call it with. `print_area::<Circle>` and `print_area::<Square>` become two distinct functions in the binary, each calling `area` directly. Zero runtime cost, and the compiler can inline aggressively. The price: larger binaries (one copy per type) and slower compilation.
 
 **Dynamic dispatch** happens with trait objects: `fn print_area(s: &dyn Shape)`. Exactly one copy of the function exists. The trait object carries a vtable pointer, and each method call follows that pointer to find the right function at runtime. The cost is one indirect call per method, usually a few nanoseconds, plus the compiler can't inline through it. The reward: one function serves every type, including types that don't exist yet when your library is compiled, and you can put mixed types in one collection.
 
@@ -140,7 +140,7 @@ Example 2:
 <div class="takeaways">
 
 ✅ Static dispatch (generics/`impl Trait`) resolves calls at compile time via monomorphization, fastest, but one function copy per type  
-✅ Dynamic dispatch (`&dyn Trait`, `Box&lt;dyn Trait&gt;`) resolves via a vtable at runtime, one copy, slight indirection cost  
+✅ Dynamic dispatch (`&dyn Trait`, `Box<dyn Trait>`) resolves via a vtable at runtime, one copy, slight indirection cost  
 ✅ Only dynamic dispatch allows heterogeneous collections and runtime-chosen implementations  
 ✅ Default to static for performance-critical code; use `dyn` for flexibility and smaller binaries
 
@@ -177,7 +177,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-The signatures you need are `fn show_static&lt;F: Formatter&gt;(f: &F, v: i32)` and `fn show_dynamic(f: &dyn Formatter, v: i32)`. Both bodies can be identical.
+The signatures you need are `fn show_static<F: Formatter>(f: &F, v: i32)` and `fn show_dynamic(f: &dyn Formatter, v: i32)`. Both bodies can be identical.
 
 </details>
 

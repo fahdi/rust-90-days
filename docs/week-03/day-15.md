@@ -51,7 +51,7 @@ fn main() {
     {
         let inner = String::from("scoped value");
         println!("Inside block: {}", inner);
-    } // `inner` goes out of scope here — Rust frees it automatically
+    } // `inner` goes out of scope here, Rust frees it automatically
 
     println!("Back outside: {} is still alive", name);
 } // `name` is freed here
@@ -74,7 +74,7 @@ fn describe(city: String) -> (String, usize) {
 fn main() {
     let greeting = String::from("welcome to week three");
     let loud = shout(greeting);
-    // `greeting` was moved into shout() — only `loud` exists now
+    // `greeting` was moved into shout(), only `loud` exists now
     println!("{}", loud);
 
     let city = String::from("Grand Rapids");
@@ -142,7 +142,7 @@ fn main() {
     let item = String::from("coffee");
     let labeled = add_label(item);
     println!("{}", labeled);
-    // Note: `item` can no longer be used here — add_label took ownership,
+    // Note: `item` can no longer be used here: add_label took ownership,
     // and the String was consumed to build `labeled`.
 }
 

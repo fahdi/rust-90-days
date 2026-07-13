@@ -58,7 +58,7 @@ A function returning a reference works fine when the compiler can see the output
 
 ```rust
 // Only one input reference, so the output's lifetime is unambiguous.
-// (The compiler infers this — no annotation needed. Day 73 explains why.)
+// (The compiler infers this, no annotation needed. Day 73 explains why.)
 fn first_word(s: &str) -> &str {
     match s.find(' ') {
         Some(i) => &s[..i],

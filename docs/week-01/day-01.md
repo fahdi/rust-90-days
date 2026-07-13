@@ -55,7 +55,7 @@ fn main() {
     let day = 1;
     println!("Welcome, {}!", name);
     println!("This is day {} of your 90-day journey.", day);
-    println!("Keep going, {name} — only {} days left!", 90 - day);
+    println!("Keep going, {name}, only {} days left!", 90 - day);
     println!("Progress: {:.1}%", (day as f64 / 90.0) * 100.0);
 }
 ```
@@ -72,7 +72,7 @@ Example 2:
 ```
 Welcome, Rustacean!
 This is day 1 of your 90-day journey.
-Keep going, Rustacean — only 89 days left!
+Keep going, Rustacean, only 89 days left!
 Progress: 1.1%
 ```
 :::

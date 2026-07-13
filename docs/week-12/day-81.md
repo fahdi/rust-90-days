@@ -1,6 +1,6 @@
 ---
-title: "Day 81 - Weak T  References"
-description: "Learn about weak t  references in Rust"
+title: "Day 81 - Weak<T> References"
+description: "Learn about Weak<T> references in Rust"
 ---
 
 # Day 81: Weak&lt;T&gt; References

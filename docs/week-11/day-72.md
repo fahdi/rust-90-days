@@ -13,7 +13,7 @@ description: "Learn about lifetime syntax in Rust"
 
 ## 🎯 Today's Goal
 
-Learn to write generic lifetime parameters, `fn longest&lt;'a&gt;(x: &'a str, y: &'a str) -> &'a str`, and understand exactly what that contract promises the compiler.
+Learn to write generic lifetime parameters, `fn longest<'a>(x: &'a str, y: &'a str) -> &'a str`, and understand exactly what that contract promises the compiler.
 
 ## 📚 The Concept (3 min)
 
@@ -31,7 +31,7 @@ This says: "there exists some region of code `'a`; both inputs are valid for it,
 
 Note what this does *not* do: it doesn't keep anything alive, and it doesn't pick which input is returned. It's a constraint, not behavior. If a caller passes one long-lived and one short-lived string, and then tries to use the result after the short one is dropped, compilation fails, even if at runtime the long one would have been returned. The compiler enforces the conservative contract you wrote.
 
-You'll also see lifetimes combined with generics and trait bounds: `fn foo&lt;'a, T: Display&gt;(x: &'a T) -> &'a T`. Same idea, lifetimes come first in the parameter list.
+You'll also see lifetimes combined with generics and trait bounds: `fn foo<'a, T: Display>(x: &'a T) -> &'a T`. Same idea, lifetimes come first in the parameter list.
 
 ::: tip Key Insight
 `&'a str` in a signature means "valid for *at least* `'a`". When two inputs share `'a`, the concrete lifetime chosen at the call site is the overlap of both, so the output can't be used beyond the shorter-lived argument.
@@ -76,7 +76,7 @@ fn main() {
     {
         let sep = String::from("."); // short-lived pattern
         prefix = until_pattern(&article, &sep);
-    } // `sep` dropped here — but `prefix` borrows from `article`, so it's fine
+    } // `sep` dropped here, but `prefix` borrows from `article`, so it's fine
     println!("prefix: {}", prefix);
 }
 ```
@@ -95,7 +95,7 @@ prefix: Rust is fast
 
 <div class="takeaways">
 
-✅ Lifetime parameters are declared like generics: `fn f&lt;'a&gt;(x: &'a str) -> &'a str`  
+✅ Lifetime parameters are declared like generics: `fn f<'a>(x: &'a str) -> &'a str`  
 ✅ Sharing one `'a` across two inputs constrains the output to the *overlap* (effectively the shorter) of their lifetimes  
 ✅ Use separate lifetimes (`'a`, `'b`) when a parameter doesn't flow into the output, it frees callers from unnecessary constraints  
 ✅ Annotations are checked contracts, not runtime behavior, they never affect what the function does
@@ -107,16 +107,16 @@ prefix: Rust is fast
 ::: warning Watch Out!
 - Tying every parameter to the same `'a` out of habit, this over-constrains callers when only one input reaches the output (see Example 2)
 - Returning `&'a`-annotated references to local variables, the annotation can't rescue a dangling reference; `return &local` never compiles
-- Forgetting to declare the lifetime: writing `fn f(x: &'a str)` without `&lt;'a&gt;` after the function name is error `E0261` (undeclared lifetime)
+- Forgetting to declare the lifetime: writing `fn f(x: &'a str)` without `<'a>` after the function name is error `E0261` (undeclared lifetime)
 :::
 
 ## ✅ Quick Challenge
 
-Write `first_longer_than&lt;'a&gt;(items: &'a [String], min: usize) -> Option&lt;&'a str&gt;` that returns the first string longer than `min` characters. Start from this compiling skeleton:
+Write `first_longer_than<'a>(items: &'a [String], min: usize) -> Option<&'a str>` that returns the first string longer than `min` characters. Start from this compiling skeleton:
 
 ```rust
 fn first_longer_than(items: &[String], min: usize) -> Option<String> {
-    // Currently clones — rewrite to return Option<&str> with a lifetime instead
+    // Currently clones. Rewrite to return Option<&str> with a lifetime instead
     items.iter().find(|s| s.len() > min).cloned()
 }
 
@@ -129,7 +129,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-The output borrows from `items`, so both share `'a`: `fn first_longer_than&lt;'a&gt;(items: &'a [String], min: usize) -> Option&lt;&'a str&gt;`. Use `.find()` and `.map(|s| s.as_str())`.
+The output borrows from `items`, so both share `'a`: `fn first_longer_than<'a>(items: &'a [String], min: usize) -> Option<&'a str>`. Use `.find()` and `.map(|s| s.as_str())`.
 
 </details>
 

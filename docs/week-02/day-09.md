@@ -51,7 +51,7 @@ fn main() {
         _ => println!("That's not a valid die"),
     }
 
-    // match is an expression — it returns a value
+    // match is an expression: it returns a value
     let description = match dice_roll {
         1..=2 => "low",
         3..=4 => "mid",

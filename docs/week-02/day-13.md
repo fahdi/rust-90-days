@@ -132,7 +132,7 @@ Notice: the values come straight from `Cargo.toml`, rename the package there, re
 ::: warning Watch Out!
 - **Running `cargo run` from the wrong directory.** Cargo looks for `Cargo.toml` in the current directory (and its parents). If you're one level above your project, you'll get `error: could not find Cargo.toml`, `cd` into the project folder first.
 - **Hand-editing `Cargo.lock` or adding it to `.gitignore` for a binary.** The lock file is what makes builds reproducible across machines. Commit it for applications; Cargo regenerates it only when `Cargo.toml` changes.
-- **Benchmarking a debug build.** `cargo build` produces an unoptimized binary that can be 10–100x slower than the real thing. If you're measuring performance, always use `cargo run --release`.
+- **Benchmarking a debug build.** `cargo build` produces an unoptimized binary that can be 10-100x slower than the real thing. If you're measuring performance, always use `cargo run --release`.
 :::
 
 ## ✅ Quick Challenge

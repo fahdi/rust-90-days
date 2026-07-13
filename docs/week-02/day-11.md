@@ -77,7 +77,7 @@ The full converter: it parses strings like `"100C"` or `"98.6F"`, handles bad in
 fn convert(input: &str) -> Result<String, String> {
     let input = input.trim();
     if input.len() < 2 {
-        return Err(format!("'{}' is too short — expected e.g. 100F or 37.5C", input));
+        return Err(format!("'{}' is too short, expected e.g. 100F or 37.5C", input));
     }
 
     // Split the value from the unit (last character)
@@ -89,7 +89,7 @@ fn convert(input: &str) -> Result<String, String> {
     match unit {
         "F" | "f" => Ok(format!("{}°F = {:.1}°C", value, (value - 32.0) * 5.0 / 9.0)),
         "C" | "c" => Ok(format!("{}°C = {:.1}°F", value, value * 9.0 / 5.0 + 32.0)),
-        _ => Err(format!("unknown unit '{}' — use C or F", unit)),
+        _ => Err(format!("unknown unit '{}', use C or F", unit)),
     }
 }
 
@@ -113,7 +113,7 @@ The `?` after `parse()` is doing real work: if parsing fails, `map_err` converts
 ✓ 98.6°F = 37.0°C
 ✓ 0°C = 32.0°F
 ✓ -40°F = -40.0°C
-✗ unknown unit 'X' — use C or F
+✗ unknown unit 'X', use C or F
 ✗ 'abc' is not a valid number
 ```
 :::

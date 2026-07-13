@@ -71,7 +71,7 @@ fn main() {
 ### Example 2: Practical Application
 
 ```rust
-// One function works for arrays, Vecs, and sub-slices — that's the power
+// One function works for arrays, Vecs, and sub-slices: that's the power
 fn average(readings: &[f64]) -> f64 {
     if readings.is_empty() {
         return 0.0;
@@ -143,8 +143,8 @@ Hottest day of week 1: 25.3°C
 
 ::: warning Watch Out!
 - **Out-of-bounds ranges panic at runtime, not compile time.** `&numbers[2..10]` on a 5-element array compiles fine but panics when it runs. Slice bounds are checked at runtime, use `.get(2..10)`, which returns an `Option`, when the range comes from user input.
-- **Mutating a collection while a slice into it exists.** This does NOT compile: `let v = vec![1, 2, 3]; let s = &v[..]; v.push(4); println!("{:?}", s);`, `push` needs a mutable borrow, but `s` holds an immutable one. The compiler stops you because `push` could reallocate the Vec and leave `s` pointing at freed memory.
-- **Slicing a String in the middle of a multi-byte character.** String ranges are *byte* indices, not character indices. `&"héllo"[0..2]` panics because `é` occupies bytes 1–2. Tomorrow's lesson digs into this properly.
+- **Mutating a collection while a slice into it exists.** This does NOT compile: `let mut v = vec![1, 2, 3]; let s = &v[..]; v.push(4); println!("{:?}", s);`, `push` needs a mutable borrow, but `s` holds an immutable one. The compiler stops you because `push` could reallocate the Vec and leave `s` pointing at freed memory.
+- **Slicing a String in the middle of a multi-byte character.** String ranges are *byte* indices, not character indices. `&"héllo"[0..2]` panics because `é` occupies bytes 1 and 2. Tomorrow's lesson digs into this properly.
 :::
 
 ## ✅ Quick Challenge

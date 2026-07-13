@@ -1,6 +1,6 @@
 ---
-title: "Day 77 - Rc T  & Reference Counting"
-description: "Learn about rc t  & reference counting in Rust"
+title: "Day 77 - Rc<T> & Reference Counting"
+description: "Learn about Rc<T> and reference counting in Rust"
 ---
 
 # Day 77: Rc&lt;T&gt; & Reference Counting

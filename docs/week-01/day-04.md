@@ -81,7 +81,7 @@ fn main() {
     println!("{}", from_literal);
     println!("{}", from_string);
 
-    // `owned` is still usable — we only lent it out
+    // `owned` is still usable, we only lent it out
     println!("Original still intact: {}", owned);
 }
 ```

@@ -45,7 +45,7 @@ println!("{}", s1);       // ERROR: borrow of moved value: `s1`
 
 ```rust
 fn main() {
-    // Error #1: use after move — and how to fix it
+    // Error #1: use after move, and how to fix it
     let original = String::from("Rust");
 
     // FIX A: borrow instead of moving
@@ -61,18 +61,18 @@ fn main() {
     // Note: integers implement Copy, so no move happens at all
     let a = 42;
     let b = a;
-    println!("a = {}, b = {} (both fine — i32 is Copy)", a, b);
+    println!("a = {}, b = {} (both fine, i32 is Copy)", a, b);
 }
 ```
 
 ### Example 2: Practical Application
 
 ```rust
-// Error #2: functions that steal ownership — fixed with borrowing
+// Error #2: functions that steal ownership, fixed with borrowing
 
 // BAD design (would consume the vec): fn total(scores: Vec<i32>) -> i32
-// GOOD design: borrow it instead
-fn total(scores: &Vec<i32>) -> i32 {
+// GOOD design: borrow a slice instead (&Vec<i32> coerces to &[i32])
+fn total(scores: &[i32]) -> i32 {
     scores.iter().sum()
 }
 
@@ -90,7 +90,7 @@ fn main() {
 
     add_bonus(&mut scores, 5);
 
-    // scores is still usable — we only ever lent it out
+    // scores is still usable, we only ever lent it out
     println!("Scores after bonus: {:?}", scores);
     println!("Total after bonus: {}", total(&scores));
 }
@@ -103,7 +103,7 @@ Borrowed: Rust
 Original still works: Rust
 Clone: Rust
 Original still works: Rust
-a = 42, b = 42 (both fine — i32 is Copy)
+a = 42, b = 42 (both fine, i32 is Copy)
 
 --- Example 2 ---
 Total before bonus: 255
@@ -148,8 +148,8 @@ fn count_chars(text: String) -> usize {
 fn main() {
     let greeting = String::from("hello, rustacean");
 
-    let loud = shout(greeting.clone());          // clone #1 — remove me
-    let length = count_chars(greeting.clone());  // clone #2 — remove me
+    let loud = shout(greeting.clone());          // clone #1: remove me
+    let length = count_chars(greeting.clone());  // clone #2: remove me
     println!("Loud: {}", loud);
     println!("Length: {}", length);
     println!("Original: {}", greeting);

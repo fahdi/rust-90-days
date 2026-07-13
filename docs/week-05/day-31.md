@@ -40,7 +40,7 @@ struct Book {
 }
 
 impl Book {
-    // Associated function: no `self` — called on the type itself
+    // Associated function: no `self`, called on the type itself
     fn new(title: &str, pages: u32) -> Book {
         Book {
             title: String::from(title),
@@ -48,7 +48,7 @@ impl Book {
         }
     }
 
-    // Method: takes `&self` — called on an instance
+    // Method: takes `&self`, called on an instance
     fn describe(&self) -> String {
         format!("'{}' has {} pages", self.title, self.pages)
     }

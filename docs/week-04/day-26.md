@@ -54,14 +54,14 @@ fn main() {
     // A reference that stays within the owner's lifetime is fine:
     let owner = String::from("still alive");
     let r = &owner;                 // borrow starts
-    println!("Borrowed: {}", r);    // borrow used while owner exists — OK
+    println!("Borrowed: {}", r);    // borrow used while owner exists, OK
 }
 
 // FIX for the classic dangle: return the String itself (ownership moves out),
 // instead of a &String pointing at a local that's about to be dropped.
 fn no_dangle() -> String {
     let s = String::from("hello from inside the function");
-    s // ownership moves to the caller — nothing is freed early
+    s // ownership moves to the caller, nothing is freed early
 }
 ```
 
@@ -69,7 +69,7 @@ fn no_dangle() -> String {
 
 ```rust
 // Practical pattern: return a reference INTO data the caller owns.
-// The returned &str borrows from `text`, so it can never dangle —
+// The returned &str borrows from `text`, so it can never dangle:
 // the compiler ties its validity to the input.
 fn first_word(text: &str) -> &str {
     match text.find(' ') {
@@ -84,7 +84,7 @@ fn main() {
     let word = first_word(&sentence);
     println!("First word: {}", word);
 
-    // This would NOT compile if uncommented — `word` still borrows `sentence`:
+    // This would NOT compile if uncommented, `word` still borrows `sentence`:
     // drop(sentence);
     // println!("{}", word);
 
@@ -129,7 +129,7 @@ The starter below shows the safe version of `build_label` (returning an owned `S
 // This function tries to hand out a reference to a local String.
 // Fix it so the program compiles AND prints the label.
 fn build_label(id: u32) -> String {
-    // Currently returns an owned String — but imagine the buggy version:
+    // Currently returns an owned String, but imagine the buggy version:
     // fn build_label(id: u32) -> &String { &format!("user-{}", id) }  // dangles!
     // Your job: keep this signature and make main() work,
     // then add trim_label() below.

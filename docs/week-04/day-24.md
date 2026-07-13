@@ -56,7 +56,7 @@ fn main() {
     let literal: &str = "I live in the program binary";
     println!("{literal}");
 
-    // len() works on slices too — it counts bytes
+    // len() works on slices too, it counts bytes
     println!("'{hello}' is {} bytes long", hello.len());
 }
 ```
@@ -81,7 +81,7 @@ fn main() {
     let owned = String::from("Rust is fast and safe");
     let literal = "slices everywhere";
 
-    // One function, three kinds of callers — thanks to deref coercion
+    // One function, three kinds of callers, thanks to deref coercion
     println!("{}", first_word(&owned));        // from a String
     println!("{}", first_word(literal));       // from a literal
     println!("{}", first_word(&owned[8..]));   // from another slice
@@ -124,7 +124,7 @@ domain: rust-90-days.dev
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Slicing in the middle of a multi-byte character panics at runtime.** Indices are byte offsets, and UTF-8 characters can be 1–4 bytes. `&"héllo"[0..2]` compiles fine but panics, because `é` occupies bytes 1–2. Use `char_indices()` or methods like `find()` to get safe boundaries.
+- **Slicing in the middle of a multi-byte character panics at runtime.** Indices are byte offsets, and UTF-8 characters can be 1 to 4 bytes. `&"héllo"[0..2]` compiles fine but panics, because `é` occupies bytes 1 and 2. Use `char_indices()` or methods like `find()` to get safe boundaries.
 - **Mutating the source while a slice is alive.** Code like `let word = &s[..5]; s.clear(); println!("{word}");` does NOT compile, `clear()` needs a mutable borrow while `word` still holds an immutable one. The error is confusing until you remember the slice borrows from `s`.
 - **Writing `fn foo(s: &String)` out of habit.** It compiles, but now callers with a literal or a slice must allocate a `String` just to call you. Clippy flags this; `&str` is strictly more useful.
 :::

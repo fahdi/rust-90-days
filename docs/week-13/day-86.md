@@ -209,8 +209,8 @@ fn main() {
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [Tokio Tutorial](https://tokio.rs/tokio/tutorial)
+- [The Async Book](https://rust-lang.github.io/async-book/)
 
 ---
 

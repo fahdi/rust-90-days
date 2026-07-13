@@ -54,7 +54,7 @@ fn main() {
 
     let excerpt = Excerpt { part: first_sentence };
     println!("excerpt: {}", excerpt.part);
-    // `excerpt` must be dropped before `novel` — here both end with main, so it's fine.
+    // `excerpt` must be dropped before `novel`; here both end with main, so it's fine.
 }
 ```
 

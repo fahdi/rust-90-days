@@ -28,6 +28,8 @@ fn  add_one_v1   (x: u32) -> u32 { x + 1 }  // function, for comparison
 let add_one_v2 = |x: u32| -> u32 { x + 1 }; // fully annotated closure
 let add_one_v3 = |x: u32|        { x + 1 }; // return type inferred
 let add_one_v4 = |x|               x + 1  ; // everything inferred
+
+add_one_v4(1); // v4 needs at least one call, or inference has nothing to work with
 ```
 
 The rules that govern what you can drop:

@@ -87,7 +87,7 @@ fn main() {
     g.add_edge(alice, bob);
     g.add_edge(alice, carol);
     g.add_edge(bob, dave);
-    g.add_edge(dave, alice); // cycle — no problem with indices
+    g.add_edge(dave, alice); // cycle - no problem with indices
 
     println!("BFS from Alice: {:?}", g.bfs(alice));
 }

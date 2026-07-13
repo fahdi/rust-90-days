@@ -21,7 +21,7 @@ Imagine a server handling 10,000 slow network connections. Spawning 10,000 OS th
 
 The mechanism is the `Future` trait. A future is a value representing work that may not be finished yet. It has one essential method, `poll`, which either returns `Poll::Ready(value)` or `Poll::Pending` ("not done, wake me later via the `Waker` you gave me").
 
-When you write `async fn fetch() -> u32 { ... }`, the compiler rewrites the body into an anonymous struct implementing `Future&lt;Output = u32&gt;`. Every `.await` point becomes a state in a generated state machine: local variables alive across the `.await` are stored in the struct, and each `poll` call resumes execution from the last suspension point.
+When you write `async fn fetch() -> u32 { ... }`, the compiler rewrites the body into an anonymous struct implementing `Future<Output = u32>`. Every `.await` point becomes a state in a generated state machine: local variables alive across the `.await` are stored in the struct, and each `poll` call resumes execution from the last suspension point.
 
 Two consequences follow. First, **futures are lazy**: calling an `async fn` does nothing until something polls the returned future. Second, **you need an executor**: `main` cannot be `async` in plain Rust because *someone* has to call `poll` in a loop. Runtimes like Tokio (tomorrow's topic) provide that loop, plus timers and non-blocking I/O. Today we build the smallest possible executor ourselves so the machinery is not magic.
 
@@ -228,8 +228,8 @@ fn main() {
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [Asynchronous Programming in Rust (the async book)](https://rust-lang.github.io/async-book/)
+- [The Rust Book - Chapter 17: Async and Await](https://doc.rust-lang.org/book/ch17-00-async-await.html)
 
 ---
 
