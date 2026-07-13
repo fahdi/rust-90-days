@@ -17,16 +17,16 @@ Understand the difference between associated functions and methods, and write yo
 
 ## 📚 The Concept (3 min)
 
-Yesterday you wrote methods — functions inside an `impl` block that take `&self` and operate on a specific instance. Today we meet their sibling: **associated functions**. These also live in an `impl` block, but they do *not* take `self` at all. They belong to the *type*, not to any particular instance.
+Yesterday you wrote methods, functions inside an `impl` block that take `&self` and operate on a specific instance. Today we meet their sibling: **associated functions**. These also live in an `impl` block, but they do *not* take `self` at all. They belong to the *type*, not to any particular instance.
 
-You've been using associated functions since Day 1 without realizing it: `String::from("hello")`, `String::new()`, `Vec::new()`. Notice the syntax — the double colon `::` after the type name. That's the giveaway. Methods are called with a dot on an instance (`book.describe()`); associated functions are called with `::` on the type itself (`Book::new(...)`).
+You've been using associated functions since Day 1 without realizing it: `String::from("hello")`, `String::new()`, `Vec::new()`. Notice the syntax, the double colon `::` after the type name. That's the giveaway. Methods are called with a dot on an instance (`book.describe()`); associated functions are called with `::` on the type itself (`Book::new(...)`).
 
-Here's an analogy. Think of a car factory versus a car. "Build me a new sedan" is a request you make to the *factory* — there's no car yet to talk to. "Turn on the headlights" is a request you make to a *specific car*. Associated functions are the factory operations; methods are the car operations. That's why the most common use for associated functions is **constructors** — functions conventionally named `new` that assemble and return a fresh instance of the type.
+Here's an analogy. Think of a car factory versus a car. "Build me a new sedan" is a request you make to the *factory*, there's no car yet to talk to. "Turn on the headlights" is a request you make to a *specific car*. Associated functions are the factory operations; methods are the car operations. That's why the most common use for associated functions is **constructors**, functions conventionally named `new` that assemble and return a fresh instance of the type.
 
-Rust has no special constructor keyword like other languages (`__init__` in Python, constructors in Java/C++). Instead, `new` is just a convention: an ordinary associated function that returns `Self`. Because it's ordinary, you can have as many constructors as you like, with any names you like — `Rectangle::square(5.0)`, `Config::default_dev()`, `Duration::from_secs(30)`. This is more flexible than single-constructor languages, and the names document *how* the value is being built.
+Rust has no special constructor keyword like other languages (`__init__` in Python, constructors in Java/C++). Instead, `new` is just a convention: an ordinary associated function that returns `Self`. Because it's ordinary, you can have as many constructors as you like, with any names you like, `Rectangle::square(5.0)`, `Config::default_dev()`, `Duration::from_secs(30)`. This is more flexible than single-constructor languages, and the names document *how* the value is being built.
 
 ::: tip Key Insight
-If a function in an `impl` block takes `self` (in any form), it's a method and you call it with `.` on an instance. If it doesn't take `self`, it's an associated function and you call it with `Type::function()`. Constructors named `new` are the classic example — but `new` is just a convention, not a keyword.
+If a function in an `impl` block takes `self` (in any form), it's a method and you call it with `.` on an instance. If it doesn't take `self`, it's an associated function and you call it with `Type::function()`. Constructors named `new` are the classic example, but `new` is just a convention, not a keyword.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -119,15 +119,15 @@ Screen: 1920 x 1080
 ```
 :::
 
-Tip: you can write the return type as `Self` instead of repeating the struct name — `fn new(width: f64, height: f64) -> Self`. Inside an `impl` block, `Self` is an alias for the type being implemented, so the code keeps working if you rename the struct.
+Tip: you can write the return type as `Self` instead of repeating the struct name, `fn new(width: f64, height: f64) -> Self`. Inside an `impl` block, `Self` is an alias for the type being implemented, so the code keeps working if you rename the struct.
 
 ## 🎓 Key Takeaways (1 min)
 
 <div class="takeaways">
 
-✅ Associated functions live in an `impl` block but take no `self` — they belong to the type, not an instance  
+✅ Associated functions live in an `impl` block but take no `self`, they belong to the type, not an instance  
 ✅ Call them with `::` on the type (`Book::new(...)`), not with `.` on a value  
-✅ `new` is a naming convention for constructors, not a keyword — you can define several constructors with descriptive names like `square` or `widescreen`  
+✅ `new` is a naming convention for constructors, not a keyword, you can define several constructors with descriptive names like `square` or `widescreen`  
 ✅ `Self` inside an `impl` block is an alias for the type, so `fn new(...) -> Self` avoids repeating the struct name
 
 </div>
@@ -135,8 +135,8 @@ Tip: you can write the return type as `Self` instead of repeating the struct nam
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Calling an associated function with dot syntax.** `book.new("...", 100)` does NOT compile — `new` takes no `self`, so there's no instance for the dot to attach to. Use `Book::new("...", 100)`. (The reverse error is just as common: `Book::describe()` fails because `describe` needs an instance.)
-- **Expecting `new` to be automatic.** Coming from Java or Python, learners assume every struct has a built-in constructor. It doesn't — if you don't write `fn new`, `Book::new(...)` is a compile error. You either write the constructor yourself or build the struct with literal syntax: `Book { title, pages }`.
+- **Calling an associated function with dot syntax.** `book.new("...", 100)` does NOT compile, `new` takes no `self`, so there's no instance for the dot to attach to. Use `Book::new("...", 100)`. (The reverse error is just as common: `Book::describe()` fails because `describe` needs an instance.)
+- **Expecting `new` to be automatic.** Coming from Java or Python, learners assume every struct has a built-in constructor. It doesn't, if you don't write `fn new`, `Book::new(...)` is a compile error. You either write the constructor yourself or build the struct with literal syntax: `Book { title, pages }`.
 - **Forgetting the return value.** An associated constructor must actually return the instance. Writing `Book { ... };` with a trailing semicolon as the last line makes the function return `()` instead of `Book`, and the compiler complains about mismatched types. Leave the semicolon off so the struct literal is the return expression.
 :::
 
@@ -173,7 +173,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Neither function takes `self`. Each one just builds and returns a `Circle` struct literal — and remember, no semicolon after the final expression. `unit()` can even reuse `new`: `Circle::new(1.0)`.
+Neither function takes `self`. Each one just builds and returns a `Circle` struct literal, and remember, no semicolon after the final expression. `unit()` can even reuse `new`: `Circle::new(1.0)`.
 
 </details>
 

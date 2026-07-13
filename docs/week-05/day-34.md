@@ -13,11 +13,11 @@ description: "Learn about option t  in Rust"
 
 ## 🎯 Today's Goal
 
-Use Option&lt;T&gt; to model values that may or may not exist, and safely extract them with `match`, `if let`, `unwrap_or`, and `map` — without ever risking a null-pointer-style crash.
+Use Option&lt;T&gt; to model values that may or may not exist, and safely extract them with `match`, `if let`, `unwrap_or`, and `map`, without ever risking a null-pointer-style crash.
 
 ## 📚 The Concept (3 min)
 
-Most languages answer "what if there's no value?" with `null` — a special value that can hide inside any variable and blow up the moment you touch it. Tony Hoare, who invented null references, famously called them his "billion-dollar mistake." Rust simply doesn't have null. Instead, it has Option&lt;T&gt;, an enum from the standard library that you already have the tools to understand after yesterday's lesson on enums:
+Most languages answer "what if there's no value?" with `null`, a special value that can hide inside any variable and blow up the moment you touch it. Tony Hoare, who invented null references, famously called them his "billion-dollar mistake." Rust simply doesn't have null. Instead, it has Option&lt;T&gt;, an enum from the standard library that you already have the tools to understand after yesterday's lesson on enums:
 
 ```rust
 enum Option<T> {
@@ -26,21 +26,21 @@ enum Option<T> {
 }
 ```
 
-Think of Option&lt;T&gt; as a labeled box. A `Some(42)` is a box with a sticker saying "contains an i32" — but you still have to open the box to get the 42. A `None` is an empty box with the same sticker. Crucially, an `i32` and an Option&lt;i32&gt; are **different types**: the compiler will not let you add an Option&lt;i32&gt; to an `i32`, so you can never accidentally use a "maybe missing" value as if it definitely exists. Absence stops being a runtime surprise and becomes a compile-time conversation.
+Think of Option&lt;T&gt; as a labeled box. A `Some(42)` is a box with a sticker saying "contains an i32", but you still have to open the box to get the 42. A `None` is an empty box with the same sticker. Crucially, an `i32` and an Option&lt;i32&gt; are **different types**: the compiler will not let you add an Option&lt;i32&gt; to an `i32`, so you can never accidentally use a "maybe missing" value as if it definitely exists. Absence stops being a runtime surprise and becomes a compile-time conversation.
 
 You've already met Option&lt;T&gt; without realizing it: `Vec::get` returns Option&lt;&amp;T&gt; instead of panicking on a bad index, `str::find` returns Option&lt;usize&gt;, and HashMap lookups return Option&lt;&amp;V&gt;. The standard library uses it everywhere a value might legitimately be missing.
 
-Because `Some` and `None` are so common, Rust brings them into scope automatically — you write `Some(5)` and `None`, not `Option::Some(5)`.
+Because `Some` and `None` are so common, Rust brings them into scope automatically, you write `Some(5)` and `None`, not `Option::Some(5)`.
 
 ::: tip Key Insight
-Option&lt;T&gt; forces the "value might be missing" case into the type system. The compiler makes you handle `None` before you can touch the inner value — so an entire class of null-reference bugs cannot compile.
+Option&lt;T&gt; forces the "value might be missing" case into the type system. The compiler makes you handle `None` before you can touch the inner value, so an entire class of null-reference bugs cannot compile.
 :::
 
 ## 💻 Hands-On Code (4 min)
 
 ### Example 1: Basic Usage
 
-A function that searches for a character. It might find one (`Some(index)`) or it might not (`None`) — the return type says so honestly:
+A function that searches for a character. It might find one (`Some(index)`) or it might not (`None`), the return type says so honestly:
 
 ```rust
 fn find_char(s: &str, target: char) -> Option<usize> {
@@ -126,10 +126,10 @@ Keyboards in stock: 0
 
 <div class="takeaways">
 
-✅ Rust has no null — Option&lt;T&gt; (an enum with `Some(T)` and `None`) is how you say "this value might be missing"  
+✅ Rust has no null, Option&lt;T&gt; (an enum with `Some(T)` and `None`) is how you say "this value might be missing"  
 ✅ Option&lt;T&gt; and T are different types, so the compiler forces you to handle the `None` case before using the inner value  
 ✅ Use `match` for exhaustive handling, `if let` when only the `Some` case matters, and `unwrap_or` / `unwrap_or_else` for defaults  
-✅ `map` transforms the value inside a `Some` while passing `None` straight through — no manual unpacking needed
+✅ `map` transforms the value inside a `Some` while passing `None` straight through, no manual unpacking needed
 
 </div>
 
@@ -137,13 +137,13 @@ Keyboards in stock: 0
 
 ::: warning Watch Out!
 - **Reaching for `.unwrap()` everywhere.** `unwrap()` panics on `None`, so it just recreates the null-pointer crash Option was designed to prevent. Fine in quick experiments; in real code prefer `match`, `if let`, or `unwrap_or`. If a `None` truly indicates a bug, use `.expect("stock list should contain laptop")` so the panic message explains itself.
-- **Trying to use an Option&lt;T&gt; as a T.** Writing `Some(5) + 1` does NOT compile — the box and its contents are different types. You must extract the value first (`match`, `unwrap_or`, etc.). This error surprises newcomers, but it's exactly the safety check working.
+- **Trying to use an Option&lt;T&gt; as a T.** Writing `Some(5) + 1` does NOT compile, the box and its contents are different types. You must extract the value first (`match`, `unwrap_or`, etc.). This error surprises newcomers, but it's exactly the safety check working.
 - **Forgetting that `match` on an Option must be exhaustive.** A `match` that handles only `Some(x)` and omits `None` does NOT compile. Either add a `None` arm or switch to `if let Some(x) = ...` to say "I intentionally ignore the None case."
 :::
 
 ## ✅ Quick Challenge
 
-Write `first_even`, a function that returns the first even number in a slice as Option&lt;i32&gt; — `Some(n)` if one exists, `None` otherwise.
+Write `first_even`, a function that returns the first even number in a slice as Option&lt;i32&gt;, `Some(n)` if one exists, `None` otherwise.
 
 ```rust
 fn first_even(numbers: &[i32]) -> Option<i32> {
@@ -163,7 +163,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Loop over the slice with `for &n in numbers` and check `n % 2 == 0`. The moment you find a match, `return Some(n);` — and after the loop ends without finding one, return `None`.
+Loop over the slice with `for &n in numbers` and check `n % 2 == 0`. The moment you find a match, `return Some(n);`, and after the loop ends without finding one, return `None`.
 
 </details>
 

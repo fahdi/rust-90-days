@@ -13,24 +13,24 @@ description: "Learn about control flow in Rust"
 
 ## 🎯 Today's Goal
 
-Branch your programs with `if`/`else` and repeat work with `loop`, `while`, and `for` — and use both as *expressions* that produce values, not just statements.
+Branch your programs with `if`/`else` and repeat work with `loop`, `while`, and `for`, and use both as *expressions* that produce values, not just statements.
 
 ## 📚 The Concept (3 min)
 
-Control flow is how your program makes decisions and repeats work. Think of a recipe: "**if** the dough is sticky, add flour; knead **while** it's lumpy; **for each** of the 12 cookies, bake 10 minutes." Every non-trivial program is built from exactly these two moves — branching and looping.
+Control flow is how your program makes decisions and repeats work. Think of a recipe: "**if** the dough is sticky, add flour; knead **while** it's lumpy; **for each** of the 12 cookies, bake 10 minutes." Every non-trivial program is built from exactly these two moves, branching and looping.
 
-Rust's `if` looks familiar from other languages, with two twists. First, the condition **must** be a `bool` — Rust never treats `1` or a non-empty string as "truthy" the way JavaScript or Python do. Second, `if` is an *expression*: it evaluates to a value, so you can write `let size = if count > 10 { "big" } else { "small" };`. That's why Rust has no ternary operator — it doesn't need one. Both branches must produce the same type, and the compiler checks this for you.
+Rust's `if` looks familiar from other languages, with two twists. First, the condition **must** be a `bool`, Rust never treats `1` or a non-empty string as "truthy" the way JavaScript or Python do. Second, `if` is an *expression*: it evaluates to a value, so you can write `let size = if count > 10 { "big" } else { "small" };`. That's why Rust has no ternary operator, it doesn't need one. Both branches must produce the same type, and the compiler checks this for you.
 
 For repetition, Rust gives you three loops, from most to least manual:
 
-- `loop` — repeats forever until you `break`. Uniquely, `break` can carry a value out of the loop: `let x = loop { break 42; };`
-- `while` — repeats as long as a condition holds. Great when you don't know the iteration count up front.
-- `for` — iterates over anything iterable, most commonly a range like `1..=10` (inclusive) or `0..10` (exclusive of 10). This is the loop you'll reach for 90% of the time: no manual counter, no off-by-one bugs.
+- `loop`, repeats forever until you `break`. Uniquely, `break` can carry a value out of the loop: `let x = loop { break 42; };`
+- `while`, repeats as long as a condition holds. Great when you don't know the iteration count up front.
+- `for`, iterates over anything iterable, most commonly a range like `1..=10` (inclusive) or `0..10` (exclusive of 10). This is the loop you'll reach for 90% of the time: no manual counter, no off-by-one bugs.
 
-Ranges compose nicely with methods — `(1..=3).rev()` counts down `3, 2, 1`. And unlike C, none of these constructs need parentheses around the condition, but the braces around the body are always required.
+Ranges compose nicely with methods, `(1..=3).rev()` counts down `3, 2, 1`. And unlike C, none of these constructs need parentheses around the condition, but the braces around the body are always required.
 
 ::: tip Key Insight
-In Rust, `if` and `loop` are **expressions**, not just statements — they can produce values you assign with `let`. This replaces the ternary operator and makes "compute a value by branching" a single, type-checked construct.
+In Rust, `if` and `loop` are **expressions**, not just statements, they can produce values you assign with `let`. This replaces the ternary operator and makes "compute a value by branching" a single, type-checked construct.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -106,9 +106,9 @@ First multiple of 7 above 50: 56
 
 <div class="takeaways">
 
-✅ `if` conditions must be a real `bool` — no truthy/falsy coercion in Rust  
+✅ `if` conditions must be a real `bool`, no truthy/falsy coercion in Rust  
 ✅ `if` is an expression: `let x = if cond { a } else { b };` replaces the ternary operator, and both branches must have the same type  
-✅ Three loops: `loop` (infinite until `break`), `while` (condition-driven), `for` (iterate a range or collection — your default choice)  
+✅ Three loops: `loop` (infinite until `break`), `while` (condition-driven), `for` (iterate a range or collection, your default choice)  
 ✅ `loop` can return a value via `break value;`, and ranges like `1..=10` / `(1..=3).rev()` make counting loops safe and readable
 
 </div>
@@ -116,9 +116,9 @@ First multiple of 7 above 50: 56
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Using a non-bool as a condition.** `if count { ... }` — this does NOT compile. Rust demands `if count != 0 { ... }`. Coming from Python or JS, this is the #1 control-flow error message you'll see: `expected 'bool', found integer`.
-- **Mismatched branch types in an `if` expression.** `let x = if flag { 5 } else { "five" };` — this does NOT compile, because `x` can't be both an integer and a string. Every branch of an `if` used as a value must produce the same type.
-- **Off-by-one with range syntax.** `1..10` stops at 9; `1..=10` includes 10. Forgetting the `=` in an inclusive range silently skips your last iteration — the compiler can't catch this one, so read your ranges carefully.
+- **Using a non-bool as a condition.** `if count { ... }`, this does NOT compile. Rust demands `if count != 0 { ... }`. Coming from Python or JS, this is the #1 control-flow error message you'll see: `expected 'bool', found integer`.
+- **Mismatched branch types in an `if` expression.** `let x = if flag { 5 } else { "five" };`, this does NOT compile, because `x` can't be both an integer and a string. Every branch of an `if` used as a value must produce the same type.
+- **Off-by-one with range syntax.** `1..10` stops at 9; `1..=10` includes 10. Forgetting the `=` in an inclusive range silently skips your last iteration, the compiler can't catch this one, so read your ranges carefully.
 :::
 
 ## ✅ Quick Challenge
@@ -141,7 +141,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Check the "multiple of both" case **first** — a number divisible by both 3 and 5 is divisible by 15, so test `n % 15 == 0` before the individual checks, or the earlier branches will steal it.
+Check the "multiple of both" case **first**, a number divisible by both 3 and 5 is divisible by 15, so test `n % 15 == 0` before the individual checks, or the earlier branches will steal it.
 
 </details>
 

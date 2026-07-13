@@ -13,20 +13,20 @@ description: "Learn about project: cli calculator in Rust"
 
 ## 🎯 Today's Goal
 
-Build a working command-line calculator that reads arguments with `std::env::args`, parses them into numbers, and reports errors cleanly with `Result` and exit codes — tying together everything from Week 2.
+Build a working command-line calculator that reads arguments with `std::env::args`, parses them into numbers, and reports errors cleanly with `Result` and exit codes, tying together everything from Week 2.
 
 ## 📚 The Concept (3 min)
 
-You've spent two weeks collecting parts: ownership, `String` vs `&str`, `match`, `Result`, and yesterday's Cargo tooling. Today you assemble them into a real program. A CLI calculator is the "hello world" of real software: tiny, but it forces you through the full pipeline every command-line tool follows — **read input → validate → compute → report**.
+You've spent two weeks collecting parts: ownership, `String` vs `&str`, `match`, `Result`, and yesterday's Cargo tooling. Today you assemble them into a real program. A CLI calculator is the "hello world" of real software: tiny, but it forces you through the full pipeline every command-line tool follows, **read input → validate → compute → report**.
 
-Input arrives via `std::env::args()`, an iterator over the arguments the shell passed to your program. Two things surprise newcomers. First, the item at index 0 is the *program's own name*, so `calc 2 + 3` gives you four arguments, not three. Second, every argument is a `String` — the shell doesn't know or care that `"2"` is a number. Converting `"2"` into `2.0` is your job, via `str::parse()`, which returns a `Result` because the user might have typed `"banana"`.
+Input arrives via `std::env::args()`, an iterator over the arguments the shell passed to your program. Two things surprise newcomers. First, the item at index 0 is the *program's own name*, so `calc 2 + 3` gives you four arguments, not three. Second, every argument is a `String`, the shell doesn't know or care that `"2"` is a number. Converting `"2"` into `2.0` is your job, via `str::parse()`, which returns a `Result` because the user might have typed `"banana"`.
 
-That's the deeper lesson of this project: at the edge of your program, *everything is untrusted text*. Think of your calculator as a restaurant kitchen. The dining room (the shell) hands you order slips (strings). Before cooking, you check each slip: is this a dish we serve (a valid operator)? Are the quantities readable (parseable numbers)? A bad slip gets sent back with a clear note (`eprintln!` + non-zero exit code) — you don't burn the kitchen down (`panic!`).
+That's the deeper lesson of this project: at the edge of your program, *everything is untrusted text*. Think of your calculator as a restaurant kitchen. The dining room (the shell) hands you order slips (strings). Before cooking, you check each slip: is this a dish we serve (a valid operator)? Are the quantities readable (parseable numbers)? A bad slip gets sent back with a clear note (`eprintln!` + non-zero exit code), you don't burn the kitchen down (`panic!`).
 
 Separating the *calculation* (a pure function returning `Result<f64, String>`) from the *I/O shell* (`main`, which parses args and prints) is the pattern to internalize. The pure core is easy to test and reuse; the messy edges stay in one place. Rust's `match` makes both halves pleasant: one `match` dispatches on the operator, another turns `Ok`/`Err` into output.
 
 ::: tip Key Insight
-Validate at the boundary, then trust the core. Arguments arrive as untrusted `String`s — parse them into typed values *once*, up front, handling every `Result`. After that, your calculation logic works with clean `f64` values and never has to worry about bad input.
+Validate at the boundary, then trust the core. Arguments arrive as untrusted `String`s, parse them into typed values *once*, up front, handling every `Result`. After that, your calculation logic works with clean `f64` values and never has to worry about bad input.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -143,10 +143,10 @@ $ cargo run -- 7.5 + 2.5
 
 <div class="takeaways">
 
-✅ `env::args()` yields the program name at index 0, so `calc 2 + 3` produces **four** arguments — check `args.len()` before indexing  
+✅ `env::args()` yields the program name at index 0, so `calc 2 + 3` produces **four** arguments, check `args.len()` before indexing  
 ✅ Every argument is a `String`; use `parse()` (which returns a `Result`) to convert text to numbers, and handle the `Err` case  
 ✅ Keep the calculation pure (`fn calculate(...) -> Result<f64, String>`) and confine I/O, `eprintln!`, and `process::exit` to `main`  
-✅ Report failures on stderr with a non-zero exit code instead of panicking — that's what makes a CLI tool script-friendly
+✅ Report failures on stderr with a non-zero exit code instead of panicking, that's what makes a CLI tool script-friendly
 
 </div>
 
@@ -155,12 +155,12 @@ $ cargo run -- 7.5 + 2.5
 ::: warning Watch Out!
 - **Forgetting the program name is `args[0]`.** Learners write `args[0]` expecting the first number and get something like `target/debug/calc`, which fails to parse. Your operands live at indices 1 and 3.
 - **Passing `*` for multiplication in the shell.** The shell expands a bare `*` into every filename in the current directory before your program ever runs, so `calc 3 * 4` may receive a dozen arguments. Quote it (`'*'`) or accept an alternative like `x`, as we did.
-- **Calling `parse()` without telling Rust the target type.** `let a = args[1].parse();` alone can't infer what to parse into. This does NOT compile — you must anchor the type somewhere, e.g. `let a: f64 = args[1].parse().unwrap();` or `args[1].parse::<f64>()`.
+- **Calling `parse()` without telling Rust the target type.** `let a = args[1].parse();` alone can't infer what to parse into. This does NOT compile, you must anchor the type somewhere, e.g. `let a: f64 = args[1].parse().unwrap();` or `args[1].parse::<f64>()`.
 :::
 
 ## ✅ Quick Challenge
 
-Extend the calculator's core with two new operators: `%` (remainder) and `^` (power). Remainder by zero should return an `Err`, just like division. The starter below compiles as-is — make the two commented test lines print `Ok(1.0)` and `Ok(1024.0)`.
+Extend the calculator's core with two new operators: `%` (remainder) and `^` (power). Remainder by zero should return an `Err`, just like division. The starter below compiles as-is, make the two commented test lines print `Ok(1.0)` and `Ok(1024.0)`.
 
 ```rust
 // Starter code
@@ -182,7 +182,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Add two new arms to the `match`. Rust's `%` operator works on `f64` directly, but guard against `b == 0.0` first. For power, there's no `^` math operator in Rust (`^` is bitwise XOR on integers) — use the method `a.powf(b)` instead.
+Add two new arms to the `match`. Rust's `%` operator works on `f64` directly, but guard against `b == 0.0` first. For power, there's no `^` math operator in Rust (`^` is bitwise XOR on integers), use the method `a.powf(b)` instead.
 
 </details>
 

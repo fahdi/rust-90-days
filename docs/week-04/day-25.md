@@ -13,22 +13,22 @@ description: "Learn about common ownership errors in Rust"
 
 ## 🎯 Today's Goal
 
-Recognize the three ownership errors you will hit most often — use-after-move, functions that steal ownership, and unnecessary cloning — and know the standard fix for each one on sight.
+Recognize the three ownership errors you will hit most often, use-after-move, functions that steal ownership, and unnecessary cloning, and know the standard fix for each one on sight.
 
 ## 📚 The Concept (3 min)
 
-By now you know the rules: every value has one owner, assignment of non-Copy types *moves* the value, and when the owner goes out of scope the value is dropped. Today is about what happens when you break those rules in practice — because the compiler errors you get are the same handful, over and over.
+By now you know the rules: every value has one owner, assignment of non-Copy types *moves* the value, and when the owner goes out of scope the value is dropped. Today is about what happens when you break those rules in practice, because the compiler errors you get are the same handful, over and over.
 
-**Error #1: Use after move.** You assign a `String` to a new variable or pass it to a function, then try to use the original. The compiler says `borrow of moved value`. Think of ownership like handing someone your car keys: once you hand them over, you can't drive the car anymore. The fix is almost always one of two things — lend the keys instead (`&value`, a borrow) or get a second car made (`.clone()`).
+**Error #1: Use after move.** You assign a `String` to a new variable or pass it to a function, then try to use the original. The compiler says `borrow of moved value`. Think of ownership like handing someone your car keys: once you hand them over, you can't drive the car anymore. The fix is almost always one of two things, lend the keys instead (`&value`, a borrow) or get a second car made (`.clone()`).
 
-**Error #2: Functions that steal ownership.** A function signature like `fn process(data: String)` takes ownership of its argument. The caller loses the value permanently. Nine times out of ten the function only needs to *read* the data, so the signature should be `fn process(data: &str)` — borrow, don't take.
+**Error #2: Functions that steal ownership.** A function signature like `fn process(data: String)` takes ownership of its argument. The caller loses the value permanently. Nine times out of ten the function only needs to *read* the data, so the signature should be `fn process(data: &str)`, borrow, don't take.
 
-**Error #3: Clone as a reflex.** When learners first fight the borrow checker, `.clone()` fixes everything — and litters the code with needless allocations. Cloning a 10 MB `String` copies 10 MB. A borrow copies one pointer. Reach for `&` first; reserve `.clone()` for when you genuinely need two independent owners.
+**Error #3: Clone as a reflex.** When learners first fight the borrow checker, `.clone()` fixes everything, and litters the code with needless allocations. Cloning a 10 MB `String` copies 10 MB. A borrow copies one pointer. Reach for `&` first; reserve `.clone()` for when you genuinely need two independent owners.
 
 One more thing that surprises people: simple scalar types like `i32`, `bool`, and `char` implement the `Copy` trait, so "moves" of these are actually cheap copies and the original stays valid. Move errors only bite on heap-owning types like `String`, `Vec`, and your own structs.
 
 ::: tip Key Insight
-When the compiler says "value moved here," ask one question: does the receiver need to *own* the data, or just *look at* it? If it just needs to look, pass a reference — that fixes the vast majority of ownership errors.
+When the compiler says "value moved here," ask one question: does the receiver need to *own* the data, or just *look at* it? If it just needs to look, pass a reference, that fixes the vast majority of ownership errors.
 :::
 
 Here's the classic error, so you recognize it. **This does NOT compile:**
@@ -116,9 +116,9 @@ Total after bonus: 270
 
 <div class="takeaways">
 
-✅ "Borrow of moved value" means ownership already transferred — fix it by borrowing with `&` or, if you need two owners, with `.clone()`  
+✅ "Borrow of moved value" means ownership already transferred, fix it by borrowing with `&` or, if you need two owners, with `.clone()`  
 ✅ Function parameters like `String` or `Vec` *consume* the caller's value; prefer `&str` or `&[T]` when the function only reads  
-✅ `Copy` types (`i32`, `bool`, `char`, `f64`) never move — the "use after move" error only applies to heap-owning types  
+✅ `Copy` types (`i32`, `bool`, `char`, `f64`) never move, the "use after move" error only applies to heap-owning types  
 ✅ Use `&mut` when a function must modify data in place; the caller keeps ownership afterward
 
 </div>
@@ -128,7 +128,7 @@ Total after bonus: 270
 ::: warning Watch Out!
 - **Using a value after passing it to a function.** `process(s); println!("{}", s);` fails because the call moved `s` into the function. Change the signature to borrow (`fn process(s: &str)`) rather than restructuring your caller.
 - **Cloning to silence the compiler.** `.clone()` makes errors vanish but performs a full deep copy every time. If you find a `.clone()` on every other line, the real fix is usually a `&` at a function boundary.
-- **Moving inside a loop.** Passing an owned value into a function *inside* a `for` loop fails on the second iteration — the first iteration already moved it. Borrow in the loop body instead.
+- **Moving inside a loop.** Passing an owned value into a function *inside* a `for` loop fails on the second iteration, the first iteration already moved it. Borrow in the loop body instead.
 :::
 
 ## ✅ Quick Challenge
@@ -159,7 +159,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Neither function needs to own the string — they only read it. Change each parameter to a borrowed type (yesterday's `&str` is perfect), then pass `&greeting` at the call sites.
+Neither function needs to own the string, they only read it. Change each parameter to a borrowed type (yesterday's `&str` is perfect), then pass `&greeting` at the call sites.
 
 </details>
 
@@ -194,7 +194,7 @@ Length: 16
 Original: hello, rustacean
 ```
 
-`&greeting` coerces to `&str` automatically, both functions merely borrow, and `greeting` remains fully usable in `main` — no allocations wasted.
+`&greeting` coerces to `&str` automatically, both functions merely borrow, and `greeting` remains fully usable in `main`, no allocations wasted.
 
 </details>
 

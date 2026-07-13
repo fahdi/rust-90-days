@@ -19,15 +19,15 @@ By the end of this lesson you'll be able to define your own functions with typed
 
 You've been using a function since Day 1: `main` is the function where every Rust program starts. Today you'll write your own.
 
-Think of a function as a vending machine: you put specific things in (parameters), something happens inside, and you get a specific thing back (the return value). The machine's front panel tells you exactly what coins it accepts and what it dispenses — and that's precisely what a Rust function signature does:
+Think of a function as a vending machine: you put specific things in (parameters), something happens inside, and you get a specific thing back (the return value). The machine's front panel tells you exactly what coins it accepts and what it dispenses, and that's precisely what a Rust function signature does:
 
 ```rust
 fn add(a: i32, b: i32) -> i32
 ```
 
-Reading left to right: `fn` declares a function named `add`, it takes two parameters `a` and `b` (both `i32`), and the `-> i32` says it hands back an `i32`. Unlike some languages, Rust *requires* you to annotate every parameter type and the return type. This isn't busywork — signatures become contracts. The compiler uses them to catch mistakes at every call site, and other programmers use them as documentation that can never go stale.
+Reading left to right: `fn` declares a function named `add`, it takes two parameters `a` and `b` (both `i32`), and the `-> i32` says it hands back an `i32`. Unlike some languages, Rust *requires* you to annotate every parameter type and the return type. This isn't busywork, signatures become contracts. The compiler uses them to catch mistakes at every call site, and other programmers use them as documentation that can never go stale.
 
-The part that surprises newcomers: Rust is an *expression-based* language. The last expression in a function body — written **without a semicolon** — is the return value:
+The part that surprises newcomers: Rust is an *expression-based* language. The last expression in a function body, written **without a semicolon**, is the return value:
 
 ```rust
 fn double(x: i32) -> i32 {
@@ -37,10 +37,10 @@ fn double(x: i32) -> i32 {
 
 Adding a semicolon turns an expression into a *statement*, which evaluates to nothing (the unit type, written `()` ). So `x * 2;` returns nothing, and the compiler will complain that your function promised an `i32` but delivered nothing. The `return` keyword exists too, but it's idiomatic to reserve it for early exits.
 
-Naming convention: functions use `snake_case` — `calculate_total`, not `calculateTotal`.
+Naming convention: functions use `snake_case`, `calculate_total`, not `calculateTotal`.
 
 ::: tip Key Insight
-The last expression in a function body, written without a semicolon, is the return value. A semicolon turns it into a statement that returns nothing — this one character is the difference between compiling and not.
+The last expression in a function body, written without a semicolon, is the return value. A semicolon turns it into a statement that returns nothing, this one character is the difference between compiling and not.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -72,7 +72,7 @@ fn double(x: i32) -> i32 {
 }
 ```
 
-Note that `double` is defined *after* `main` — order doesn't matter, as long as the function is in scope. `greet` has no `->` arrow, meaning it returns nothing (it just performs an action).
+Note that `double` is defined *after* `main`, order doesn't matter, as long as the function is in scope. `greet` has no `->` arrow, meaning it returns nothing (it just performs an action).
 
 ### Example 2: Practical Application
 
@@ -105,7 +105,7 @@ fn main() {
 }
 ```
 
-Notice `describe_temp`: the whole `if`/`else if`/`else` chain is an *expression*, and whichever branch runs becomes the return value — no `return` keyword needed. (The `&'static str` return type just means "a string that lives for the whole program" — string literals qualify. More on this in the ownership week.)
+Notice `describe_temp`: the whole `if`/`else if`/`else` chain is an *expression*, and whichever branch runs becomes the return value, no `return` keyword needed. (The `&'static str` return type just means "a string that lives for the whole program", string literals qualify. More on this in the ownership week.)
 
 ::: details Output
 ```
@@ -126,9 +126,9 @@ Reykjavik: -3°C is 26.6°F — cold
 
 <div class="takeaways">
 
-✅ Declare functions with `fn name(param: Type) -> ReturnType { ... }` — parameter and return types are mandatory, never inferred  
+✅ Declare functions with `fn name(param: Type) -> ReturnType { ... }`, parameter and return types are mandatory, never inferred  
 ✅ The last expression without a semicolon is the return value; use `return` only for early exits  
-✅ A function with no `->` arrow returns the unit type `()` — it does something rather than produces something  
+✅ A function with no `->` arrow returns the unit type `()`, it does something rather than produces something  
 ✅ Function definition order doesn't matter, and names use `snake_case` by convention
 
 </div>
@@ -136,9 +136,9 @@ Reykjavik: -3°C is 26.6°F — cold
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **The stray semicolon.** Writing `x * 2;` as the last line of a function that declares `-> i32` fails with "mismatched types: expected `i32`, found `()`". The semicolon converted your return expression into a statement. This is the single most common beginner error with functions — this does NOT compile.
-- **Omitting parameter types.** `fn add(a, b)` does NOT compile. Rust infers types for local `let` bindings, but function signatures must be fully annotated — they're the public contract of your code.
-- **Expecting a value from a `println!`-only function.** `let x = greet("Sam");` compiles, but `x` is `()`, not a string — so `x + 1` or printing it as a number fails. If you need a value out, the function must declare and return one.
+- **The stray semicolon.** Writing `x * 2;` as the last line of a function that declares `-> i32` fails with "mismatched types: expected `i32`, found `()`". The semicolon converted your return expression into a statement. This is the single most common beginner error with functions, this does NOT compile.
+- **Omitting parameter types.** `fn add(a, b)` does NOT compile. Rust infers types for local `let` bindings, but function signatures must be fully annotated, they're the public contract of your code.
+- **Expecting a value from a `println!`-only function.** `let x = greet("Sam");` compiles, but `x` is `()`, not a string, so `x + 1` or printing it as a number fails. If you need a value out, the function must declare and return one.
 :::
 
 ## ✅ Quick Challenge
@@ -161,7 +161,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-`area` needs the signature `fn area(width: u32, height: u32) -> u32`. For `is_square`, remember that a comparison like `width == height` is already a `bool` expression — you can return it directly, no `if` statement required.
+`area` needs the signature `fn area(width: u32, height: u32) -> u32`. For `is_square`, remember that a comparison like `width == height` is already a `bool` expression, you can return it directly, no `if` statement required.
 
 </details>
 

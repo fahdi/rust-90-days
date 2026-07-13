@@ -19,9 +19,9 @@ Understand exactly what happens when a value is "moved" in Rust, predict which a
 
 Yesterday you learned the ownership rules. Today we zoom in on the mechanism that enforces rule number one: **the move**.
 
-Think of a heap value like a `String` as a house, and the variable as the deed to that house. When you write `let s2 = s1;`, Rust doesn't build a second house — it signs the deed over to `s2`. There is still exactly one house, but `s1` no longer holds the deed. Trying to use `s1` afterward is like trying to sell a house you already sold: the compiler stops you at the door.
+Think of a heap value like a `String` as a house, and the variable as the deed to that house. When you write `let s2 = s1;`, Rust doesn't build a second house, it signs the deed over to `s2`. There is still exactly one house, but `s1` no longer holds the deed. Trying to use `s1` afterward is like trying to sell a house you already sold: the compiler stops you at the door.
 
-Why does Rust do this instead of copying? Under the hood, a `String` is a small stack-side struct (pointer, length, capacity) pointing at heap data. A move copies only that tiny struct and marks the old variable invalid. This is *cheap* — no heap allocation, no byte-by-byte copy — and it guarantees exactly one owner will free the heap memory. No double-frees, no leaks, no garbage collector.
+Why does Rust do this instead of copying? Under the hood, a `String` is a small stack-side struct (pointer, length, capacity) pointing at heap data. A move copies only that tiny struct and marks the old variable invalid. This is *cheap*, no heap allocation, no byte-by-byte copy, and it guarantees exactly one owner will free the heap memory. No double-frees, no leaks, no garbage collector.
 
 Moves happen in more places than plain assignment:
 
@@ -30,10 +30,10 @@ Moves happen in more places than plain assignment:
 - **Returns:** returning a value moves ownership *out* to the caller.
 - **Consuming iterators:** `into_iter()` moves each element out of a collection.
 
-Simple scalar types (`i32`, `bool`, `char`, `f64`) live entirely on the stack and implement `Copy`, so assignment duplicates them and the original stays valid. That's why integers "don't move" but Strings do — more on `Copy` and `Clone` tomorrow.
+Simple scalar types (`i32`, `bool`, `char`, `f64`) live entirely on the stack and implement `Copy`, so assignment duplicates them and the original stays valid. That's why integers "don't move" but Strings do, more on `Copy` and `Clone` tomorrow.
 
 ::: tip Key Insight
-A move transfers ownership without copying heap data — the old variable is invalidated at *compile time*, so there is never a moment when two owners could free the same memory.
+A move transfers ownership without copying heap data, the old variable is invalidated at *compile time*, so there is never a moment when two owners could free the same memory.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -117,9 +117,9 @@ Report: 3 attendees -> alice, bob, carol
 
 <div class="takeaways">
 
-✅ `let b = a;` on a heap-owning type moves ownership — `a` becomes invalid at compile time, and no heap data is copied  
+✅ `let b = a;` on a heap-owning type moves ownership, `a` becomes invalid at compile time, and no heap data is copied  
 ✅ Passing a value into a function moves it; the function drops it at the end unless it returns it back out  
-✅ Returning a value moves ownership to the caller — this is how factory functions like `String::from` work  
+✅ Returning a value moves ownership to the caller, this is how factory functions like `String::from` work  
 ✅ Stack-only types like `i32` and `bool` are `Copy`, so assignment duplicates them instead of moving
 
 </div>
@@ -127,14 +127,14 @@ Report: 3 attendees -> alice, bob, carol
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Using a variable after passing it to a function.** `process(data); println!("{}", data);` fails with "value borrowed here after move" — the function call was a move, not a loan. Either return the value from the function or (as you'll learn on Day 20) pass a reference with `&data`.
+- **Using a variable after passing it to a function.** `process(data); println!("{}", data);` fails with "value borrowed here after move", the function call was a move, not a loan. Either return the value from the function or (as you'll learn on Day 20) pass a reference with `&data`.
 - **Reaching for `.clone()` everywhere to silence the compiler.** It works, but each clone allocates and copies the whole heap buffer. Cloning a 10 MB `String` in a loop is a real performance bug. Treat `.clone()` as a deliberate choice, not a reflex.
-- **Expecting `String` to behave like `i32`.** `let b = a; println!("{}", a);` is fine for integers (`Copy`) but a compile error for Strings (moved). This example does NOT compile for `String` — the difference is whether the type owns heap data.
+- **Expecting `String` to behave like `i32`.** `let b = a; println!("{}", a);` is fine for integers (`Copy`) but a compile error for Strings (moved). This example does NOT compile for `String`, the difference is whether the type owns heap data.
 :::
 
 ## ✅ Quick Challenge
 
-The code below compiles, but `msg` is gone after the call to `shout`. Modify `shout` so `main` can print **both** the original message and the shouted version — without calling `.clone()`.
+The code below compiles, but `msg` is gone after the call to `shout`. Modify `shout` so `main` can print **both** the original message and the shouted version, without calling `.clone()`.
 
 ```rust
 // Starter code
@@ -187,7 +187,7 @@ original: rust moves fast
 shouted:  RUST MOVES FAST
 ```
 
-This "move in, move back out" pattern is real but clunky — which is exactly why Rust has references and borrowing, coming up on Day 20.
+This "move in, move back out" pattern is real but clunky, which is exactly why Rust has references and borrowing, coming up on Day 20.
 
 </details>
 

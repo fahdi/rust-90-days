@@ -13,7 +13,7 @@ description: "Learn about modules basics in Rust"
 
 ## 🎯 Today's Goal
 
-Organize code into modules with `mod`, control visibility with `pub`, and shorten paths with `use` — so your programs stop being one giant pile of functions in `main.rs`.
+Organize code into modules with `mod`, control visibility with `pub`, and shorten paths with `use`, so your programs stop being one giant pile of functions in `main.rs`.
 
 ## 📚 The Concept (3 min)
 
@@ -23,12 +23,12 @@ Think of a module as a labeled drawer in a filing cabinet. The `mod` keyword cre
 
 Here's where Rust differs from most languages: **everything in a module is private by default**. A function, struct, or nested module inside `mod foo` is invisible to the outside world unless you mark it `pub`. This is the opposite of Python or JavaScript, where everything is reachable unless you hide it. Rust makes you opt in to exposing things, which forces you to think about your module's public API: what callers *should* use, versus internal helpers they shouldn't depend on.
 
-Privacy applies to struct fields too — and independently of the struct itself. A `pub struct` can still have private fields, meaning outside code can hold the struct but can only touch it through the `pub` methods you provide. That's genuine encapsulation, enforced by the compiler.
+Privacy applies to struct fields too, and independently of the struct itself. A `pub struct` can still have private fields, meaning outside code can hold the struct but can only touch it through the `pub` methods you provide. That's genuine encapsulation, enforced by the compiler.
 
 Finally, `use` creates a shortcut. Writing `bank::Account::new()` everywhere gets tedious; `use bank::Account;` lets you write `Account::new()` instead. Important distinction: `mod` *defines* where code lives, `use` merely *shortens the path* to it.
 
 ::: tip Key Insight
-In Rust, everything inside a module is **private by default**. You must explicitly mark items `pub` to expose them — the compiler enforces your module's public API boundary.
+In Rust, everything inside a module is **private by default**. You must explicitly mark items `pub` to expose them, the compiler enforces your module's public API boundary.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -57,7 +57,7 @@ fn main() {
 }
 ```
 
-Note that `formal` needed `pub` too — a public function inside a private module is still unreachable, because you can't walk through a locked drawer.
+Note that `formal` needed `pub` too, a public function inside a private module is still unreachable, because you can't walk through a locked drawer.
 
 ### Example 2: Practical Application
 
@@ -100,7 +100,7 @@ fn main() {
 }
 ```
 
-The struct is `pub`, but its fields are not. `main` can create and use an `Account`, yet it *cannot* set `balance` directly — the only way in is through `deposit`, which validates the amount. Uncomment the last line and the compiler refuses with "field `balance` of struct `Account` is private."
+The struct is `pub`, but its fields are not. `main` can create and use an `Account`, yet it *cannot* set `balance` directly, the only way in is through `deposit`, which validates the amount. Uncomment the last line and the compiler refuses with "field `balance` of struct `Account` is private."
 
 ::: details Output
 ```
@@ -120,7 +120,7 @@ Amina has $324.50
 <div class="takeaways">
 
 ✅ `mod name { ... }` groups related code; access items with `name::item` and nest paths with `::`  
-✅ Everything in a module is private by default — add `pub` to functions, structs, and nested modules you want callers to reach  
+✅ Everything in a module is private by default, add `pub` to functions, structs, and nested modules you want callers to reach  
 ✅ `pub struct` with private fields gives compiler-enforced encapsulation: outsiders must go through your `pub` methods  
 ✅ `mod` defines where code lives; `use` only creates a shorter path to it
 
@@ -129,14 +129,14 @@ Amina has $324.50
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Forgetting `pub` on the path's middle links.** Marking a function `pub` isn't enough if it sits inside a private nested module — every module along the path must be `pub` too. The error "module `formal` is private" means the drawer, not the item, is locked.
+- **Forgetting `pub` on the path's middle links.** Marking a function `pub` isn't enough if it sits inside a private nested module, every module along the path must be `pub` too. The error "module `formal` is private" means the drawer, not the item, is locked.
 - **Expecting `use` to define a module.** Writing `use bank::Account;` without a `mod bank` anywhere fails with "unresolved import." `use` never brings code into existence; it only shortens the path to code that `mod` (or a dependency) already declared.
-- **Making a struct `pub` and assuming its fields are too.** `pub struct Account` with a plain `balance: f64` field means outside code can hold an `Account` but writing `account.balance = 5.0;` does NOT compile — field visibility is separate, and each field needs its own `pub` if you truly want it exposed.
+- **Making a struct `pub` and assuming its fields are too.** `pub struct Account` with a plain `balance: f64` field means outside code can hold an `Account` but writing `account.balance = 5.0;` does NOT compile, field visibility is separate, and each field needs its own `pub` if you truly want it exposed.
 :::
 
 ## ✅ Quick Challenge
 
-Refactor yesterday's temperature converter into a module. Create a module `converter` with two public functions — `to_celsius` and `to_fahrenheit` — then call them from `main` using module paths.
+Refactor yesterday's temperature converter into a module. Create a module `converter` with two public functions, `to_celsius` and `to_fahrenheit`, then call them from `main` using module paths.
 
 ```rust
 // Starter code
@@ -154,7 +154,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Wrap both functions in `mod converter { ... }` and put `pub` in front of each `fn`. In `main`, call them with the full path `converter::to_celsius(...)` — no `use` statement is required when you write the full path.
+Wrap both functions in `mod converter { ... }` and put `pub` in front of each `fn`. In `main`, call them with the full path `converter::to_celsius(...)`, no `use` statement is required when you write the full path.
 
 </details>
 

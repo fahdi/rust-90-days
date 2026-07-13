@@ -17,23 +17,23 @@ By the end of this lesson you'll be able to choose the right scalar type (intege
 
 ## 📚 The Concept (3 min)
 
-Rust is a **statically typed** language: the compiler must know the type of every value at compile time. Most of the time it figures types out on its own (that's *type inference*), but when several types are possible — like parsing a string into a number — you have to annotate.
+Rust is a **statically typed** language: the compiler must know the type of every value at compile time. Most of the time it figures types out on its own (that's *type inference*), but when several types are possible, like parsing a string into a number, you have to annotate.
 
-Think of types as differently sized boxes in a warehouse. A `u8` is a tiny box that holds whole numbers from 0 to 255 — perfect for an age or a color channel. An `i64` is a huge box that holds numbers into the quintillions, positive or negative. Picking the right box matters: a small box overflows if you stuff too much in, and using giant boxes everywhere wastes space.
+Think of types as differently sized boxes in a warehouse. A `u8` is a tiny box that holds whole numbers from 0 to 255, perfect for an age or a color channel. An `i64` is a huge box that holds numbers into the quintillions, positive or negative. Picking the right box matters: a small box overflows if you stuff too much in, and using giant boxes everywhere wastes space.
 
 Rust's **scalar types** come in four groups:
 
 - **Integers**: signed `i8`, `i16`, `i32`, `i64`, `i128`, `isize` and unsigned `u8`–`u128`, `usize`. The default is `i32`. The `u` types can never be negative.
 - **Floating point**: `f32` and `f64` (the default). These hold decimals like `3.14`.
 - **Boolean**: `bool`, either `true` or `false`.
-- **Character**: `char`, a single Unicode scalar value written in *single* quotes — it can hold `'A'`, `'ß'`, or even `'🦀'` (it's 4 bytes, not 1).
+- **Character**: `char`, a single Unicode scalar value written in *single* quotes, it can hold `'A'`, `'ß'`, or even `'🦀'` (it's 4 bytes, not 1).
 
 Rust also has two built-in **compound types**: a *tuple* groups a fixed number of values of possibly different types, like `("Coffee", 12.99, 3)`, and an *array* holds a fixed number of values of the *same* type, like `[u32; 5]`.
 
 One thing that surprises newcomers: Rust never converts numbers implicitly. Adding an integer to a float without an explicit `as` cast is a compile error, not a silent coercion.
 
 ::: tip Key Insight
-Rust never silently converts between numeric types. If you want a `u32` to act like an `f64`, you must say so explicitly with `as` — the compiler forces every conversion to be visible in your code.
+Rust never silently converts between numeric types. If you want a `u32` to act like an `f64`, you must say so explicitly with `as`, the compiler forces every conversion to be visible in your code.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -107,16 +107,16 @@ Average per day: 111
 
 ✅ Rust infers most types, but ambiguous cases (like `"42".parse()`) need an annotation such as `let n: u32 = ...`  
 ✅ Integer types encode size and sign in the name: `u8` is 0–255, `i32` is the default, `usize` indexes collections  
-✅ `char` uses single quotes and holds any Unicode scalar (4 bytes) — it is not a 1-byte C-style char  
-✅ Numeric conversions are always explicit: `quantity as f64` — mixing `u32` and `f64` without a cast won't compile
+✅ `char` uses single quotes and holds any Unicode scalar (4 bytes), it is not a 1-byte C-style char  
+✅ Numeric conversions are always explicit: `quantity as f64`, mixing `u32` and `f64` without a cast won't compile
 
 </div>
 
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Mixing numeric types in arithmetic.** `let x: u32 = 3; let y = 2.5 * x;` — this does NOT compile. Rust refuses to guess whether you wanted float or integer math; write `2.5 * x as f64` instead.
-- **Confusing `'a'` with `"a"`.** Single quotes make a `char`, double quotes make a string slice. `let c: char = "a";` does NOT compile — the types are completely different.
+- **Mixing numeric types in arithmetic.** `let x: u32 = 3; let y = 2.5 * x;`, this does NOT compile. Rust refuses to guess whether you wanted float or integer math; write `2.5 * x as f64` instead.
+- **Confusing `'a'` with `"a"`.** Single quotes make a `char`, double quotes make a string slice. `let c: char = "a";` does NOT compile, the types are completely different.
 - **Expecting integer division to produce decimals.** `5 / 2` is `2`, not `2.5`, because both operands are integers. Cast first (`5 as f64 / 2 as f64`) or use float literals (`5.0 / 2.0`) when you need the fractional part.
 :::
 
@@ -140,7 +140,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Use float literals (`9.0`, `5.0`, `32.0`) in the formula so all the math stays in `f64` — no casting needed. A comparison like `fahrenheit > 80.0` already produces a `bool`, so you can assign it directly.
+Use float literals (`9.0`, `5.0`, `32.0`) in the formula so all the math stays in `f64`, no casting needed. A comparison like `fahrenheit > 80.0` already produces a `bool`, so you can assign it directly.
 
 </details>
 

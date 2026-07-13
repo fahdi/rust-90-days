@@ -13,19 +13,19 @@ description: "Learn about stack vs heap in Rust"
 
 ## 🎯 Today's Goal
 
-Understand where Rust stores your data — stack or heap — and predict from a type alone whether assigning it makes a cheap copy or moves ownership.
+Understand where Rust stores your data, stack or heap, and predict from a type alone whether assigning it makes a cheap copy or moves ownership.
 
 ## 📚 The Concept (3 min)
 
 Yesterday you met ownership. Today you'll see the *why* behind it: memory layout.
 
-Think of the **stack** as a stack of cafeteria trays. You can only add a tray on top or take the top one off — fast, orderly, no searching. When a function runs, its local variables go on top; when it returns, they all come off at once. The catch: every tray must be a **fixed, known size at compile time**. An `i32`, a `bool`, a `(f64, f64)` tuple, a `[u8; 16]` array — all fixed size, all stack-friendly.
+Think of the **stack** as a stack of cafeteria trays. You can only add a tray on top or take the top one off, fast, orderly, no searching. When a function runs, its local variables go on top; when it returns, they all come off at once. The catch: every tray must be a **fixed, known size at compile time**. An `i32`, a `bool`, a `(f64, f64)` tuple, a `[u8; 16]` array, all fixed size, all stack-friendly.
 
-The **heap** is more like a restaurant with a host. You say "I need a table for six," the allocator finds free space, and hands you back an *address*. That indirection makes the heap flexible — a `String` can grow from 6 bytes to 6 megabytes at runtime — but slower: allocation takes bookkeeping, and reaching the data means following a pointer.
+The **heap** is more like a restaurant with a host. You say "I need a table for six," the allocator finds free space, and hands you back an *address*. That indirection makes the heap flexible, a `String` can grow from 6 bytes to 6 megabytes at runtime, but slower: allocation takes bookkeeping, and reaching the data means following a pointer.
 
-Rust types combine both. A `String` is really three stack values — a pointer, a length, and a capacity (24 bytes total on a 64-bit machine) — while the actual text lives on the heap. The same pattern applies to `Vec`, `Box`, and friends.
+Rust types combine both. A `String` is really three stack values, a pointer, a length, and a capacity (24 bytes total on a 64-bit machine), while the actual text lives on the heap. The same pattern applies to `Vec`, `Box`, and friends.
 
-This split explains the move rules from Day 15. Copying stack data is trivial, so simple types implement `Copy` and assignment duplicates them. Copying heap data would be expensive and would create two owners of one allocation — so Rust *moves* ownership instead. For example, this does **NOT** compile:
+This split explains the move rules from Day 15. Copying stack data is trivial, so simple types implement `Copy` and assignment duplicates them. Copying heap data would be expensive and would create two owners of one allocation, so Rust *moves* ownership instead. For example, this does **NOT** compile:
 
 ```rust
 let s1 = String::from("hi");
@@ -113,13 +113,13 @@ s2 = hello
 ```
 :::
 
-Notice the sizes in Example 2: the struct is 56 bytes (a 32-byte array plus a 24-byte `String` header), but a `Box` of it is just 8 bytes — a single pointer. That's the heap indirection made visible.
+Notice the sizes in Example 2: the struct is 56 bytes (a 32-byte array plus a 24-byte `String` header), but a `Box` of it is just 8 bytes, a single pointer. That's the heap indirection made visible.
 
 ## 🎓 Key Takeaways (1 min)
 
 <div class="takeaways">
 
-✅ The stack holds fixed-size data and is cleaned up automatically when a scope ends — no allocator involved  
+✅ The stack holds fixed-size data and is cleaned up automatically when a scope ends, no allocator involved  
 ✅ The heap holds data whose size can change at runtime; you reach it through a pointer stored on the stack  
 ✅ A `String` or `Vec` is a small stack header (pointer + length + capacity) pointing at heap contents  
 ✅ `Copy` types (integers, floats, bools, char, fixed arrays/tuples of `Copy` types) duplicate on assignment; heap-owning types move
@@ -129,14 +129,14 @@ Notice the sizes in Example 2: the struct is 56 bytes (a 32-byte array plus a 24
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Assuming "the variable is on the stack, so there's no heap involved."** A local `String` variable *is* on the stack — but only its 24-byte header. The text lives on the heap, which is exactly why assigning it moves rather than copies.
+- **Assuming "the variable is on the stack, so there's no heap involved."** A local `String` variable *is* on the stack, but only its 24-byte header. The text lives on the heap, which is exactly why assigning it moves rather than copies.
 - **Reaching for `Box::new` to "make things faster."** The heap is the *slower* option: `Box` adds an allocation and a pointer hop. Use it when you need it (recursive types, trait objects, very large values you want to move cheaply), not by default.
 - **Expecting `&str` and `String` to behave the same in moves.** A `&str` literal like `"hello"` is a borrowed reference (the bytes are baked into the binary), so it's `Copy`. A `String` owns heap memory, so it moves. Mixing them up is the classic source of surprise E0382 errors.
 :::
 
 ## ✅ Quick Challenge
 
-Complete the TODOs: copy the stack value, then call `shout` on the `String` — and make `name` still printable *after* the call by changing `shout` to borrow instead of taking ownership.
+Complete the TODOs: copy the stack value, then call `shout` on the `String`, and make `name` still printable *after* the call by changing `shout` to borrow instead of taking ownership.
 
 ```rust
 fn main() {
@@ -158,7 +158,7 @@ fn shout(text: String) -> String {
 <details>
 <summary>💡 Hint</summary>
 
-`count` is an `i32` (stack, `Copy`), so `let count_copy = count;` just works. For `name`, change the parameter type from `String` to `&str` and call it as `shout(&name)` — a `&String` coerces to `&str` automatically, and `name` keeps ownership of its heap data.
+`count` is an `i32` (stack, `Copy`), so `let count_copy = count;` just works. For `name`, change the parameter type from `String` to `&str` and call it as `shout(&name)`, a `&String` coerces to `&str` automatically, and `name` keeps ownership of its heap data.
 
 </details>
 

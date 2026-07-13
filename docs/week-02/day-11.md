@@ -13,13 +13,13 @@ description: "Learn about project: temperature converter in Rust"
 
 ## 🎯 Today's Goal
 
-Build a complete temperature converter that combines everything from Week 1 and 2 — functions, `match`, loops, string parsing, and `Result`-based error handling — into one small, working program.
+Build a complete temperature converter that combines everything from Week 1 and 2, functions, `match`, loops, string parsing, and `Result`-based error handling, into one small, working program.
 
 ## 📚 The Concept (3 min)
 
 Today is a project day. Instead of learning one new feature, you'll practice *composing* the features you already know. This is where Rust starts to click: individually, functions, `match`, and `Result` are simple; together, they form the shape of almost every real Rust program.
 
-Think of the converter as a tiny assembly line. Raw material (a string like `"98.6F"`) enters at one end. Each station does exactly one job: one function splits the number from the unit, `parse()` turns text into an `f64`, a `match` decides which formula applies, and the result rolls off the line — or gets rejected with a clear error message if something was malformed. No station needs to know about the others; each takes an input, produces an output.
+Think of the converter as a tiny assembly line. Raw material (a string like `"98.6F"`) enters at one end. Each station does exactly one job: one function splits the number from the unit, `parse()` turns text into an `f64`, a `match` decides which formula applies, and the result rolls off the line, or gets rejected with a clear error message if something was malformed. No station needs to know about the others; each takes an input, produces an output.
 
 The math itself is trivial:
 
@@ -29,7 +29,7 @@ The math itself is trivial:
 The engineering is what matters. Notice three deliberate choices in today's code:
 
 1. **Pure functions for the math.** `fahrenheit_to_celsius(f: f64) -> f64` takes a number and returns a number. No printing, no input reading. That makes it trivially testable and reusable.
-2. **`Result` for anything that can fail.** Parsing user input can fail two ways — bad number, unknown unit — so `convert` returns `Result<String, String>` and *describes* what went wrong instead of crashing.
+2. **`Result` for anything that can fail.** Parsing user input can fail two ways, bad number, unknown unit, so `convert` returns `Result<String, String>` and *describes* what went wrong instead of crashing.
 3. **`match` as the traffic director.** One `match` on the unit character routes to the right formula; another `match` on the `Result` decides whether to print a success or an error.
 
 ::: tip Key Insight
@@ -122,7 +122,7 @@ The `?` after `parse()` is doing real work: if parsing fails, `map_err` converts
 
 <div class="takeaways">
 
-✅ Keep math in pure functions (`f64` in, `f64` out) and do printing/parsing separately — small pieces compose into full programs  
+✅ Keep math in pure functions (`f64` in, `f64` out) and do printing/parsing separately, small pieces compose into full programs  
 ✅ Float literals need the decimal point: write `32.0`, not `32`, when working with `f64`  
 ✅ `Result<String, String>` plus `?` and `map_err` turns bad input into helpful error messages instead of panics  
 ✅ Format specifiers like `{:.1}` (one decimal) and `{:>5.1}` (right-aligned, width 5) make numeric output readable
@@ -132,9 +132,9 @@ The `?` after `parse()` is doing real work: if parsing fails, `map_err` converts
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Mixing integer and float math.** `(f - 32) * 5 / 9` does NOT compile when `f` is `f64` — Rust refuses to mix `f64` and integer literals. Even in pure integer math, `5 / 9` is `0` (integer division), which silently breaks the formula in other languages. Always write `32.0`, `5.0`, `9.0`.
+- **Mixing integer and float math.** `(f - 32) * 5 / 9` does NOT compile when `f` is `f64`, Rust refuses to mix `f64` and integer literals. Even in pure integer math, `5 / 9` is `0` (integer division), which silently breaks the formula in other languages. Always write `32.0`, `5.0`, `9.0`.
 - **Calling `.unwrap()` on `parse()`.** `"abc".parse::<f64>().unwrap()` compiles fine but *panics* at runtime on bad input. In anything user-facing, handle the `Result` with `match`, `?`, or `map_err` like Example 2 does.
-- **Slicing strings by bytes.** `&input[..1]` panics if the string starts with a multi-byte character (like `°`). `split_at` has the same byte-index caveat — it's safe here only because we validated the input first. When unsure, iterate with `.chars()` instead of indexing.
+- **Slicing strings by bytes.** `&input[..1]` panics if the string starts with a multi-byte character (like `°`). `split_at` has the same byte-index caveat, it's safe here only because we validated the input first. When unsure, iterate with `.chars()` instead of indexing.
 :::
 
 ## ✅ Quick Challenge
@@ -167,7 +167,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-`celsius_to_kelvin` is a one-liner — just return the expression (no semicolon). For `kelvin_to_celsius`, an `if k < 0.0 { None } else { Some(...) }` expression is all you need; remember `Some(...)` wraps the successful value.
+`celsius_to_kelvin` is a one-liner, just return the expression (no semicolon). For `kelvin_to_celsius`, an `if k < 0.0 { None } else { Some(...) }` expression is all you need; remember `Some(...)` wraps the successful value.
 
 </details>
 

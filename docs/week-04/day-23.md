@@ -13,27 +13,27 @@ description: "Learn about slices in Rust"
 
 ## 🎯 Today's Goal
 
-Borrow a portion of an array, Vec, or String as a slice using range syntax, and write functions that accept `&[T]` or `&str` so they work with any contiguous sequence — without copying data.
+Borrow a portion of an array, Vec, or String as a slice using range syntax, and write functions that accept `&[T]` or `&str` so they work with any contiguous sequence, without copying data.
 
 ## 📚 The Concept (3 min)
 
-You've spent this week learning how references borrow a *whole* value. A **slice** is the natural next step: a reference to a *contiguous portion* of a collection. Think of a loaf of bread — you rarely need the whole loaf; you cut a few slices. The slices are still part of the loaf (no bread is duplicated), you just get a view into a section of it.
+You've spent this week learning how references borrow a *whole* value. A **slice** is the natural next step: a reference to a *contiguous portion* of a collection. Think of a loaf of bread, you rarely need the whole loaf; you cut a few slices. The slices are still part of the loaf (no bread is duplicated), you just get a view into a section of it.
 
-Under the hood, a slice is a "fat pointer": a pointer to the first element plus a length. That's it. Creating `&numbers[1..4]` doesn't copy elements 1 through 3 — it records "start here, three elements long." This makes slices essentially free to create and pass around, no matter how big the underlying data is.
+Under the hood, a slice is a "fat pointer": a pointer to the first element plus a length. That's it. Creating `&numbers[1..4]` doesn't copy elements 1 through 3, it records "start here, three elements long." This makes slices essentially free to create and pass around, no matter how big the underlying data is.
 
 You create slices with range syntax:
 
-- `&data[1..4]` — elements 1, 2, 3 (the end index is exclusive)
-- `&data[..2]` — from the start up to (not including) index 2
-- `&data[3..]` — from index 3 to the end
-- `&data[..]` — the whole thing as a slice
+- `&data[1..4]`, elements 1, 2, 3 (the end index is exclusive)
+- `&data[..2]`, from the start up to (not including) index 2
+- `&data[3..]`, from index 3 to the end
+- `&data[..]`, the whole thing as a slice
 
-Because a slice borrows the collection, all of the borrowing rules from Day 22 apply: while a slice exists, you can't mutate the collection it points into. That's a feature — it guarantees your slice never dangles or gets invalidated mid-use.
+Because a slice borrows the collection, all of the borrowing rules from Day 22 apply: while a slice exists, you can't mutate the collection it points into. That's a feature, it guarantees your slice never dangles or gets invalidated mid-use.
 
-The type of an array or Vec slice is written `&[T]` (e.g., `&[i32]`), and the slice type for strings is `&str`. This is why idiomatic Rust functions take `&[T]` instead of `&Vec<T>`, and `&str` instead of `&String`: a `&Vec<T>` parameter only accepts Vecs, but `&[T]` accepts arrays, Vecs, and sub-slices alike — Rust converts automatically.
+The type of an array or Vec slice is written `&[T]` (e.g., `&[i32]`), and the slice type for strings is `&str`. This is why idiomatic Rust functions take `&[T]` instead of `&Vec<T>`, and `&str` instead of `&String`: a `&Vec<T>` parameter only accepts Vecs, but `&[T]` accepts arrays, Vecs, and sub-slices alike, Rust converts automatically.
 
 ::: tip Key Insight
-A slice is a borrowed *view* into existing data — a pointer plus a length, never a copy. Accepting `&[T]` or `&str` in your function signatures makes them work with arrays, Vecs, Strings, and sub-slices for free.
+A slice is a borrowed *view* into existing data, a pointer plus a length, never a copy. Accepting `&[T]` or `&str` in your function signatures makes them work with arrays, Vecs, Strings, and sub-slices for free.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -132,9 +132,9 @@ Hottest day of week 1: 25.3°C
 
 <div class="takeaways">
 
-✅ A slice (`&[T]` or `&str`) is a pointer + length into existing data — creating one never copies elements  
+✅ A slice (`&[T]` or `&str`) is a pointer + length into existing data, creating one never copies elements  
 ✅ Range syntax `[start..end]` is end-exclusive; `[..n]`, `[n..]`, and `[..]` cover the common shorthand cases  
-✅ Prefer `&[T]` over `&Vec<T>` and `&str` over `&String` in function parameters — callers can pass arrays, Vecs, Strings, and sub-slices  
+✅ Prefer `&[T]` over `&Vec<T>` and `&str` over `&String` in function parameters, callers can pass arrays, Vecs, Strings, and sub-slices  
 ✅ Slices are borrows, so Day 22's rules apply: the underlying collection can't be mutated while a slice into it is alive
 
 </div>
@@ -142,8 +142,8 @@ Hottest day of week 1: 25.3°C
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Out-of-bounds ranges panic at runtime, not compile time.** `&numbers[2..10]` on a 5-element array compiles fine but panics when it runs. Slice bounds are checked at runtime — use `.get(2..10)`, which returns an `Option`, when the range comes from user input.
-- **Mutating a collection while a slice into it exists.** This does NOT compile: `let v = vec![1, 2, 3]; let s = &v[..]; v.push(4); println!("{:?}", s);` — `push` needs a mutable borrow, but `s` holds an immutable one. The compiler stops you because `push` could reallocate the Vec and leave `s` pointing at freed memory.
+- **Out-of-bounds ranges panic at runtime, not compile time.** `&numbers[2..10]` on a 5-element array compiles fine but panics when it runs. Slice bounds are checked at runtime, use `.get(2..10)`, which returns an `Option`, when the range comes from user input.
+- **Mutating a collection while a slice into it exists.** This does NOT compile: `let v = vec![1, 2, 3]; let s = &v[..]; v.push(4); println!("{:?}", s);`, `push` needs a mutable borrow, but `s` holds an immutable one. The compiler stops you because `push` could reallocate the Vec and leave `s` pointing at freed memory.
 - **Slicing a String in the middle of a multi-byte character.** String ranges are *byte* indices, not character indices. `&"héllo"[0..2]` panics because `é` occupies bytes 1–2. Tomorrow's lesson digs into this properly.
 :::
 
@@ -172,7 +172,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-`&scores[..3]` gives you the first three elements and `&scores[3..]` gives you the rest. Inside `sum_slice`, a plain `for n in numbers` loop works — iterating a `&[i32]` yields references you can add directly to a total. (Or try the one-liner: `numbers.iter().sum()`.)
+`&scores[..3]` gives you the first three elements and `&scores[3..]` gives you the rest. Inside `sum_slice`, a plain `for n in numbers` loop works, iterating a `&[i32]` yields references you can add directly to a total. (Or try the one-liner: `numbers.iter().sum()`.)
 
 </details>
 

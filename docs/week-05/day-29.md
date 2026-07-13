@@ -19,14 +19,14 @@ Define your own struct types with named fields, create instances of them, and us
 
 So far you've stored related data in separate variables or in tuples. That works, but it gets fragile fast: a tuple like `(String, String, u64, bool)` gives you no clue which field means what. A **struct** solves this by grouping related data under one name, with a *label* on every field.
 
-Think of a struct as a custom form you design once and fill out many times. A `User` form has slots for `username`, `email`, `sign_in_count`, and `active`. Every instance of `User` is a filled-out copy of that form — the shape is guaranteed by the compiler, and you access data by name (`user.email`) instead of by position (`tuple.1`).
+Think of a struct as a custom form you design once and fill out many times. A `User` form has slots for `username`, `email`, `sign_in_count`, and `active`. Every instance of `User` is a filled-out copy of that form, the shape is guaranteed by the compiler, and you access data by name (`user.email`) instead of by position (`tuple.1`).
 
-Defining a struct uses the `struct` keyword, a name in PascalCase, and a list of `field: Type` pairs. Creating an instance means providing a value for *every* field — Rust never leaves fields uninitialized. Mutability is all-or-nothing: if the binding is `mut`, you can change any field; there is no way to mark just one field as mutable.
+Defining a struct uses the `struct` keyword, a name in PascalCase, and a list of `field: Type` pairs. Creating an instance means providing a value for *every* field, Rust never leaves fields uninitialized. Mutability is all-or-nothing: if the binding is `mut`, you can change any field; there is no way to mark just one field as mutable.
 
 Two ergonomic features come up constantly in real code:
 
-- **Field init shorthand** — when a variable has the same name as a field, `User { email, .. }` works instead of `email: email`.
-- **Struct update syntax** — `..other_instance` fills in every field you didn't mention from another instance. Great for "same as before, but with these changes" configuration.
+- **Field init shorthand**, when a variable has the same name as a field, `User { email, .. }` works instead of `email: email`.
+- **Struct update syntax**, `..other_instance` fills in every field you didn't mention from another instance. Great for "same as before, but with these changes" configuration.
 
 One ownership note: if you move a `String` field out of one struct into another via `..`, the old instance can no longer be used as a whole (you learned why in Week 3).
 
@@ -124,7 +124,7 @@ TLS enabled: true
 
 ✅ `struct Name { field: Type, ... }` defines a new type; every instance must initialize every field  
 ✅ Access and update fields by name with dot syntax: `config.port`, `user.email`  
-✅ Mutability applies to the whole instance (`let mut`) — you cannot make a single field mutable  
+✅ Mutability applies to the whole instance (`let mut`), you cannot make a single field mutable  
 ✅ Field init shorthand (`host,`) and struct update syntax (`..other`) cut boilerplate when building instances
 
 </div>
@@ -132,7 +132,7 @@ TLS enabled: true
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Forgetting a field at creation.** `User { username: ..., email: ... }` without `sign_in_count` and `active` does NOT compile — Rust reports "missing fields". Unlike some languages, there are no implicit defaults.
+- **Forgetting a field at creation.** `User { username: ..., email: ... }` without `sign_in_count` and `active` does NOT compile, Rust reports "missing fields". Unlike some languages, there are no implicit defaults.
 - **Trying `let user = ...; user.active = false;` without `mut`.** The binding controls mutability, so this fails with "cannot assign to `user.active`". Declare `let mut user` instead.
 - **Using struct update syntax with owned fields, then touching the old instance.** `..dev` *moves* `dev`'s remaining `String` fields, so using `dev.max_connections` afterwards is fine (it's `Copy`) but `dev.host`-style access on a moved `String` field is a compile error. This does NOT compile: `let prod = ServerConfig { port: 443, ..dev }; println!("{}", dev.host);`
 :::
@@ -153,7 +153,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Have `describe` take `&Book` (a reference) so the book isn't moved into the function — you can still print or reuse it afterwards. Use `format!` to build the summary string.
+Have `describe` take `&Book` (a reference) so the book isn't moved into the function, you can still print or reuse it afterwards. Use `format!` to build the summary string.
 
 </details>
 

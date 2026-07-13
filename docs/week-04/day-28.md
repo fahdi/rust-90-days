@@ -13,30 +13,30 @@ description: "Learn about ownership patterns review in Rust"
 
 ## 🎯 Today's Goal
 
-Consolidate the four core ownership patterns — move, immutable borrow, mutable borrow, and clone — and learn a simple decision rule for choosing the right one in every function signature you write.
+Consolidate the four core ownership patterns, move, immutable borrow, mutable borrow, and clone, and learn a simple decision rule for choosing the right one in every function signature you write.
 
 ## 📚 The Concept (3 min)
 
-Four weeks in, you've met every ownership tool Rust gives you. Today we step back and see them as one system, because in real code the hard part isn't understanding each rule — it's choosing between them.
+Four weeks in, you've met every ownership tool Rust gives you. Today we step back and see them as one system, because in real code the hard part isn't understanding each rule, it's choosing between them.
 
 Think of a value as a physical book. There are exactly four things you can do with it:
 
-1. **Move** — you *give the book away*. The new owner keeps it; you can't read it anymore. In Rust: `let b = a;` for heap types like `String`, or passing by value.
-2. **Immutable borrow (`&T`)** — you *lend it for reading*. Any number of people can read it at once, but nobody may scribble in it while it's lent out.
-3. **Mutable borrow (`&mut T`)** — you *lend it to an editor*. Exactly one person may hold it, and nobody else may even read it until they hand it back.
-4. **Clone** — you *photocopy the whole book*. Now there are two independent copies. It works, but copying costs time and paper (allocation), so do it deliberately, not reflexively.
+1. **Move**, you *give the book away*. The new owner keeps it; you can't read it anymore. In Rust: `let b = a;` for heap types like `String`, or passing by value.
+2. **Immutable borrow (`&T`)**, you *lend it for reading*. Any number of people can read it at once, but nobody may scribble in it while it's lent out.
+3. **Mutable borrow (`&mut T`)**, you *lend it to an editor*. Exactly one person may hold it, and nobody else may even read it until they hand it back.
+4. **Clone**, you *photocopy the whole book*. Now there are two independent copies. It works, but copying costs time and paper (allocation), so do it deliberately, not reflexively.
 
 The decision rule that covers 90% of function signatures:
 
 - Does the function only **read** the data? Take `&str`, `&[T]`, or `&T`.
 - Does it need to **modify** the caller's data in place? Take `&mut T`.
-- Does it **consume** the data — store it, transform it into something else, or end its life? Take ownership (`T`).
+- Does it **consume** the data, store it, transform it into something else, or end its life? Take ownership (`T`).
 - Do you genuinely need **two independent copies**? Only then call `.clone()`.
 
-Note the borrowing hierarchy: prefer `&str` over `&String` and `&[T]` over `&Vec<T>` in parameters — the flexible forms accept more callers (string literals, slices, arrays) at zero cost thanks to deref coercion.
+Note the borrowing hierarchy: prefer `&str` over `&String` and `&[T]` over `&Vec<T>` in parameters, the flexible forms accept more callers (string literals, slices, arrays) at zero cost thanks to deref coercion.
 
 ::: tip Key Insight
-Default to borrowing (`&T`), escalate to `&mut T` only to modify, take ownership only to consume — and treat `.clone()` as a deliberate design choice, never as a way to silence the borrow checker.
+Default to borrowing (`&T`), escalate to `&mut T` only to modify, take ownership only to consume, and treat `.clone()` as a deliberate design choice, never as a way to silence the borrow checker.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -77,7 +77,7 @@ fn add_suffix(s: &mut String) {
 
 ### Example 2: Practical Application
 
-An inventory tracker where each function's signature announces its intent — read, modify, or consume:
+An inventory tracker where each function's signature announces its intent, read, modify, or consume:
 
 ```rust
 // Read-only check: borrow &str so it works with String AND literals
@@ -137,15 +137,15 @@ springs    11
 ```
 :::
 
-Notice the naming convention: `into_report` signals "this consumes its input" — the same convention the standard library uses with `into_iter`, `into_bytes`, and `into_string`.
+Notice the naming convention: `into_report` signals "this consumes its input", the same convention the standard library uses with `into_iter`, `into_bytes`, and `into_string`.
 
 ## 🎓 Key Takeaways (1 min)
 
 <div class="takeaways">
 
-✅ Function signatures are ownership contracts: `&T` reads, `&mut T` modifies, `T` consumes — pick the weakest one that does the job  
+✅ Function signatures are ownership contracts: `&T` reads, `&mut T` modifies, `T` consumes, pick the weakest one that does the job  
 ✅ Prefer `&str` over `&String` and `&[T]` over `&Vec<T>` in parameters; deref coercion makes them accept more callers for free  
-✅ At any moment a value has either many immutable borrows OR one mutable borrow — never both at once  
+✅ At any moment a value has either many immutable borrows OR one mutable borrow, never both at once  
 ✅ `.clone()` is legitimate when you need two independent copies, but it's a red flag when used only to make a borrow-checker error go away
 
 </div>
@@ -153,14 +153,14 @@ Notice the naming convention: `into_report` signals "this consumes its input" �
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Cloning your way past the borrow checker.** `process(data.clone())` compiles, but each clone heap-allocates and copies — and it usually hides a design question the compiler was asking: should this function borrow instead? Fix the signature, not the call site.
+- **Cloning your way past the borrow checker.** `process(data.clone())` compiles, but each clone heap-allocates and copies, and it usually hides a design question the compiler was asking: should this function borrow instead? Fix the signature, not the call site.
 - **Taking `&String` or `&Vec<u32>` as parameters.** They compile, but a `&String` parameter rejects string literals and slices that `&str` would accept for free. Clippy flags this as `ptr_arg` for a reason.
 - **Mutating a collection while iterating over it.** Calling `inventory.push(...)` inside `for item in &inventory { ... }` does NOT compile: the loop holds an immutable borrow, and `push` needs a mutable one. Collect the changes first, or use `iter_mut()` when you only modify elements in place.
 :::
 
 ## ✅ Quick Challenge
 
-The program below works, but the function signatures force `main` to clone twice. Change `shout` and `count_chars` so that `main` needs **zero** calls to `.clone()` — and still prints the original at the end.
+The program below works, but the function signatures force `main` to clone twice. Change `shout` and `count_chars` so that `main` needs **zero** calls to `.clone()`, and still prints the original at the end.
 
 ```rust
 // Starter code
@@ -186,7 +186,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Neither function stores or consumes `word` — they only read it. Apply the decision rule: read-only access means borrowing, and for strings the most flexible borrow is `&str`. Then update the call sites to pass `&greeting`.
+Neither function stores or consumes `word`, they only read it. Apply the decision rule: read-only access means borrowing, and for strings the most flexible borrow is `&str`. Then update the call sites to pass `&greeting`.
 
 </details>
 

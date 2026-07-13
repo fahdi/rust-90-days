@@ -13,25 +13,25 @@ description: "Learn about mutable references in Rust"
 
 ## 🎯 Today's Goal
 
-By the end of this lesson you'll be able to modify data through a `&mut` reference — letting functions change values they don't own — and explain why Rust allows only one mutable reference to a value at a time.
+By the end of this lesson you'll be able to modify data through a `&mut` reference, letting functions change values they don't own, and explain why Rust allows only one mutable reference to a value at a time.
 
 ## 📚 The Concept (3 min)
 
-Yesterday you learned that a reference (`&T`) lets you *look at* a value without taking ownership. But looking isn't always enough — sometimes a function needs to *change* the caller's data. That's what a **mutable reference** (`&mut T`) is for.
+Yesterday you learned that a reference (`&T`) lets you *look at* a value without taking ownership. But looking isn't always enough, sometimes a function needs to *change* the caller's data. That's what a **mutable reference** (`&mut T`) is for.
 
-Think of it like lending out a notebook. A shared reference (`&`) is a photocopy pass: any number of people can read it at the same time, but nobody may write in it. A mutable reference (`&mut`) is handing over the actual notebook with a pen: the borrower can edit it — but only **one person** can hold it at a time. If two people could scribble in the notebook simultaneously (or one person edits while others read stale photocopies), chaos follows. Rust enforces this rule at compile time.
+Think of it like lending out a notebook. A shared reference (`&`) is a photocopy pass: any number of people can read it at the same time, but nobody may write in it. A mutable reference (`&mut`) is handing over the actual notebook with a pen: the borrower can edit it, but only **one person** can hold it at a time. If two people could scribble in the notebook simultaneously (or one person edits while others read stale photocopies), chaos follows. Rust enforces this rule at compile time.
 
 Creating a mutable reference has two requirements:
 
-1. The original variable must be declared `let mut` — you can't lend write access you don't have.
+1. The original variable must be declared `let mut`, you can't lend write access you don't have.
 2. You borrow with `&mut value`, and the receiving side declares the type as `&mut T`.
 
 To read or write the value *behind* the reference, you use the dereference operator `*`. So `*value += 100` means "add 100 to the thing this reference points to." (Method calls like `v.push(...)` dereference automatically, which is why you don't see `*` everywhere.)
 
-The famous restriction: while a mutable reference is alive, you can have **no other references** to that value — not even shared ones. This is the rule that eliminates data races and iterator invalidation bugs at compile time instead of at 3 AM in production.
+The famous restriction: while a mutable reference is alive, you can have **no other references** to that value, not even shared ones. This is the rule that eliminates data races and iterator invalidation bugs at compile time instead of at 3 AM in production.
 
 ::: tip Key Insight
-`&mut T` gives temporary, *exclusive* write access: at any moment a value can have either one mutable reference OR any number of shared references — never both.
+`&mut T` gives temporary, *exclusive* write access: at any moment a value can have either one mutable reference OR any number of shared references, never both.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -101,24 +101,24 @@ Inventory (4 items):
 ```
 :::
 
-Notice that `main` keeps ownership of `inventory` the whole time — the helper functions borrow it, mutate it, and hand it back automatically when they return.
+Notice that `main` keeps ownership of `inventory` the whole time, the helper functions borrow it, mutate it, and hand it back automatically when they return.
 
 ## 🎓 Key Takeaways (1 min)
 
 <div class="takeaways">
 
-✅ `&mut T` lets a function modify a value it doesn't own — no ownership transfer, no returning the value back  
+✅ `&mut T` lets a function modify a value it doesn't own, no ownership transfer, no returning the value back  
 ✅ The original binding must be `let mut` before you can create a `&mut` borrow of it  
 ✅ Use `*reference` to read or assign the value behind the reference (e.g. `*value += 100`)  
-✅ Exclusivity rule: one `&mut` reference OR many `&` references — never both at once
+✅ Exclusivity rule: one `&mut` reference OR many `&` references, never both at once
 
 </div>
 
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Borrowing `&mut` from a non-`mut` variable.** `let x = 5; let r = &mut x;` — this does NOT compile ("cannot borrow `x` as mutable"). Mutability starts at the binding: declare `let mut x` first.
-- **Two mutable borrows alive at once.** `let a = &mut s; let b = &mut s; a.push('!');` — this does NOT compile. The compiler rejects the second borrow because `a` is still used afterward. Finish with one borrow before starting the next.
+- **Borrowing `&mut` from a non-`mut` variable.** `let x = 5; let r = &mut x;`, this does NOT compile ("cannot borrow `x` as mutable"). Mutability starts at the binding: declare `let mut x` first.
+- **Two mutable borrows alive at once.** `let a = &mut s; let b = &mut s; a.push('!');`, this does NOT compile. The compiler rejects the second borrow because `a` is still used afterward. Finish with one borrow before starting the next.
 - **Mutating a collection while iterating over it.** Calling `items.push(...)` inside `for item in &items { ... }` does NOT compile: the loop holds a shared borrow, and `push` needs a mutable one. Collect changes first, then apply them after the loop.
 :::
 

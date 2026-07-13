@@ -13,11 +13,11 @@ description: "Learn about pattern matching in Rust"
 
 ## 🎯 Today's Goal
 
-By the end of this lesson you'll be able to use `match` to branch on values, ranges, and multiple patterns at once — and understand why the compiler forces you to handle every possible case.
+By the end of this lesson you'll be able to use `match` to branch on values, ranges, and multiple patterns at once, and understand why the compiler forces you to handle every possible case.
 
 ## 📚 The Concept (3 min)
 
-Yesterday you wrote loops with `if`/`else` chains to make decisions. Today you meet `match`, Rust's most powerful control-flow tool — think of it as a `switch` statement that went to the gym.
+Yesterday you wrote loops with `if`/`else` chains to make decisions. Today you meet `match`, Rust's most powerful control-flow tool, think of it as a `switch` statement that went to the gym.
 
 A `match` takes a value and compares it against a series of **patterns**, top to bottom. The first pattern that fits wins, and its arm runs. Picture a coin sorting machine: you drop a coin in the top, and it falls through a series of slots until it hits the one shaped exactly like it. Each slot is a pattern; the coin is your value.
 
@@ -27,9 +27,9 @@ What makes `match` special compared to a `switch` in C or JavaScript:
 2. **It's an expression.** Like `if` in Rust, a `match` produces a value, so you can write `let label = match score { ... };` and assign the result directly.
 3. **Patterns are rich.** You can match exact values (`5`), several values at once (`2 | 3`), inclusive ranges (`1..=6`), destructure tuples (`(x, 0)`), and add extra conditions with guards (`t if t < -10`).
 
-The underscore pattern `_` is the "everything else" slot at the bottom of the machine — it matches any value you haven't handled explicitly. You'll use it constantly, but place it last: patterns are tried in order, and `_` swallows everything that reaches it.
+The underscore pattern `_` is the "everything else" slot at the bottom of the machine, it matches any value you haven't handled explicitly. You'll use it constantly, but place it last: patterns are tried in order, and `_` swallows everything that reaches it.
 
-Pattern matching becomes even more powerful next week when you meet enums like `Option` and `Result` — `match` is *the* way to work with them. Today builds that muscle on simple values.
+Pattern matching becomes even more powerful next week when you meet enums like `Option` and `Result`, `match` is *the* way to work with them. Today builds that muscle on simple values.
 
 ::: tip Key Insight
 `match` is **exhaustive**: the compiler refuses to build your program unless every possible value is handled. This turns forgotten edge cases from runtime surprises into compile-time errors.
@@ -115,7 +115,7 @@ Point is on the y-axis at y=7
 <div class="takeaways">
 
 ✅ `match` compares a value against patterns top to bottom; the first matching arm runs  
-✅ Matches must be exhaustive — cover every case or add a `_` catch-all arm  
+✅ Matches must be exhaustive, cover every case or add a `_` catch-all arm  
 ✅ Patterns can be exact values, `|` alternatives, `1..=6` ranges, tuple destructuring, and `if` guards  
 ✅ `match` is an expression: every arm can produce a value you assign with `let`
 
@@ -124,9 +124,9 @@ Point is on the y-axis at y=7
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Forgetting the catch-all arm.** Matching an `i32` against only `1 => ...` and `2 => ...` does NOT compile — the compiler reports "non-exhaustive patterns" because billions of other integers aren't handled. Add a `_` arm or cover the full range.
+- **Forgetting the catch-all arm.** Matching an `i32` against only `1 => ...` and `2 => ...` does NOT compile, the compiler reports "non-exhaustive patterns" because billions of other integers aren't handled. Add a `_` arm or cover the full range.
 - **Putting `_` first.** Arms are tried in order, so a `_` at the top matches everything and the compiler warns that all later arms are unreachable dead code. The catch-all always goes last.
-- **Mismatched arm types.** When you use `match` as an expression, every arm must return the same type. `match n { 0 => "zero", _ => 1 }` does NOT compile — one arm is a string, the other an integer.
+- **Mismatched arm types.** When you use `match` as an expression, every arm must return the same type. `match n { 0 => "zero", _ => 1 }` does NOT compile, one arm is a string, the other an integer.
 :::
 
 ## ✅ Quick Challenge
@@ -149,7 +149,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-A number divisible by 3 makes `n % 3` equal `0`. Match the tuple against `(0, 0)`, `(0, _)`, `(_, 0)`, and `_` — in that order. Why must `(0, 0)` come first?
+A number divisible by 3 makes `n % 3` equal `0`. Match the tuple against `(0, 0)`, `(0, _)`, `(_, 0)`, and `_`, in that order. Why must `(0, 0)` come first?
 
 </details>
 
@@ -173,7 +173,7 @@ fn main() {
 }
 ```
 
-`(0, 0)` must come first because arms are checked in order — if `(0, _)` were first, 15 would print "Fizz" instead of "FizzBuzz".
+`(0, 0)` must come first because arms are checked in order, if `(0, _)` were first, 15 would print "Fizz" instead of "FizzBuzz".
 
 </details>
 

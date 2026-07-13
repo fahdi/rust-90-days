@@ -13,15 +13,15 @@ description: "Learn about generic functions in Rust"
 
 ## 🎯 Today's Goal
 
-Write generic functions that actually *do* something with their type parameters — comparing, selecting, and returning generic values — and learn how type inference and the turbofish decide what `T` becomes.
+Write generic functions that actually *do* something with their type parameters, comparing, selecting, and returning generic values, and learn how type inference and the turbofish decide what `T` becomes.
 
 ## 📚 The Concept (3 min)
 
-Yesterday you wrote `first<T>`, which only moved a reference around. Real generic functions usually need to *operate* on their values: compare them, print them, clone them. The moment you try, the compiler pushes back. Write `if item > largest` inside a plain `fn largest<T>(...)` and you get: *"binary operation `>` cannot be applied to type `&T`"*. **This does NOT compile** — and that's a feature. The compiler refuses because `T` could be a type with no notion of ordering (what would `>` mean for a `File` handle?).
+Yesterday you wrote `first<T>`, which only moved a reference around. Real generic functions usually need to *operate* on their values: compare them, print them, clone them. The moment you try, the compiler pushes back. Write `if item > largest` inside a plain `fn largest<T>(...)` and you get: *"binary operation `>` cannot be applied to type `&T`"*. **This does NOT compile**, and that's a feature. The compiler refuses because `T` could be a type with no notion of ordering (what would `>` mean for a `File` handle?).
 
 The fix is a *bound*: `fn largest<T: PartialOrd>(list: &[T]) -> &T`. Read it as "for any type T that can be compared with less-than/greater-than." You're making a deal with the compiler: you restrict which types are allowed in, and in exchange you're allowed to use the operations those types guarantee. We'll go deep on bounds on Day 62; today you just need `PartialOrd` to make comparisons work.
 
-The second thing every generic function needs is an answer to "how does Rust know what `T` is?" Usually: inference. Call `pick(true, 100, 250)` and Rust sees two `i32` arguments, so `T = i32`. But sometimes there's nothing to infer from — `"42".parse()` could parse into an `i32`, an `f64`, a `u8`... When inference is ambiguous, you name the type explicitly with the *turbofish* syntax: `"42".parse::<i32>()`. The name comes from `::<>` looking vaguely like a fish. You'll use it constantly with `parse` and `collect`.
+The second thing every generic function needs is an answer to "how does Rust know what `T` is?" Usually: inference. Call `pick(true, 100, 250)` and Rust sees two `i32` arguments, so `T = i32`. But sometimes there's nothing to infer from, `"42".parse()` could parse into an `i32`, an `f64`, a `u8`... When inference is ambiguous, you name the type explicitly with the *turbofish* syntax: `"42".parse::<i32>()`. The name comes from `::<>` looking vaguely like a fish. You'll use it constantly with `parse` and `collect`.
 
 ::: tip Key Insight
 A generic function can only use operations its bounds guarantee. No bound = you can only move, reference, or drop a `T`. Add `T: PartialOrd` and you may compare; the bound is the contract that makes the body compile.
@@ -51,7 +51,7 @@ fn main() {
 }
 ```
 
-This is the classic from the Rust Book: one `largest` for numbers, chars, strings — anything comparable.
+This is the classic from the Rust Book: one `largest` for numbers, chars, strings, anything comparable.
 
 ### Example 2: Practical Application
 
@@ -95,18 +95,18 @@ squares: [1, 4, 9, 16, 25]
 <div class="takeaways">
 
 ✅ Operations on `T` require bounds: `fn largest<T: PartialOrd>` unlocks `>` and `<` inside the body  
-✅ Rust infers `T` from the arguments at each call site — `pick(true, 100, 250)` makes `T = i32` automatically  
+✅ Rust infers `T` from the arguments at each call site, `pick(true, 100, 250)` makes `T = i32` automatically  
 ✅ When inference can't decide (`parse`, `collect`), use the turbofish: `parse::<i32>()`, `collect::<Vec<i32>>()`  
-✅ Both arguments of `pick(cond, a, b)` must be the *same* `T` — one type parameter means one concrete type per call
+✅ Both arguments of `pick(cond, a, b)` must be the *same* `T`, one type parameter means one concrete type per call
 
 </div>
 
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Comparing without a bound.** `fn max<T>(a: T, b: T)` with `a > b` in the body fails with "binary operation `>` cannot be applied" — the bound `T: PartialOrd` is not optional, it's what *permits* the comparison.
+- **Comparing without a bound.** `fn max<T>(a: T, b: T)` with `a > b` in the body fails with "binary operation `>` cannot be applied", the bound `T: PartialOrd` is not optional, it's what *permits* the comparison.
 - **Mixing types in one parameter.** `pick(true, 1, "one")` does NOT compile: `T` was inferred as an integer from the second argument, so `"one"` mismatches. If you genuinely need two types, declare two parameters (`<T, U>`).
-- **A bare `collect()` with no target type.** `let v = (1..5).collect();` fails with "type annotations needed" — `collect` can build a `Vec`, `HashSet`, `String`, and more. Annotate the variable or use the turbofish.
+- **A bare `collect()` with no target type.** `let v = (1..5).collect();` fails with "type annotations needed", `collect` can build a `Vec`, `HashSet`, `String`, and more. Annotate the variable or use the turbofish.
 :::
 
 ## ✅ Quick Challenge

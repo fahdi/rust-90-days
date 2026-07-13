@@ -19,18 +19,18 @@ Understand the difference between the owned `String` type and the borrowed `&str
 
 Rust has two main string types, and mixing them up is the number one source of confusion for newcomers coming from languages with a single string type.
 
-**`String`** is an owned, growable buffer of UTF-8 text stored on the heap. You own it, you can mutate it, push more text onto it, and when it goes out of scope, Rust frees the memory. Think of it as a whiteboard you bought: you can write on it, erase it, and extend it — but you're also responsible for it.
+**`String`** is an owned, growable buffer of UTF-8 text stored on the heap. You own it, you can mutate it, push more text onto it, and when it goes out of scope, Rust frees the memory. Think of it as a whiteboard you bought: you can write on it, erase it, and extend it, but you're also responsible for it.
 
-**`&str`** (pronounced "string slice") is a borrowed *view* into string data that lives somewhere else. It's just a pointer plus a length — it doesn't own anything and can't grow. It's like a photo of part of someone's whiteboard: you can read it, but you can't write on the original through the photo, and the whiteboard must outlive your photo.
+**`&str`** (pronounced "string slice") is a borrowed *view* into string data that lives somewhere else. It's just a pointer plus a length, it doesn't own anything and can't grow. It's like a photo of part of someone's whiteboard: you can read it, but you can't write on the original through the photo, and the whiteboard must outlive your photo.
 
 String *literals* like `"hello"` have the type `&'static str`: they're baked directly into your compiled binary, so the borrowed data lives for the entire program.
 
-Why two types? Performance and clarity. Passing a `&str` is cheap (copying two machine words) and communicates "I only need to read this." Passing a `String` transfers ownership — the caller gives the value away. If Rust only had `String`, every function call would either move the value or force a heap copy.
+Why two types? Performance and clarity. Passing a `&str` is cheap (copying two machine words) and communicates "I only need to read this." Passing a `String` transfers ownership, the caller gives the value away. If Rust only had `String`, every function call would either move the value or force a heap copy.
 
 The practical rules of thumb:
 
 - **Store** text you need to keep or modify as `String`.
-- **Accept** text in function parameters as `&str` — thanks to deref coercion, callers can pass either a literal or `&my_string`.
+- **Accept** text in function parameters as `&str`, thanks to deref coercion, callers can pass either a literal or `&my_string`.
 - **Return** freshly built text as `String`, because a function can't return a borrow of data it created locally (the data would be dropped at the end of the function).
 
 ::: tip Key Insight
@@ -98,8 +98,8 @@ Original still intact: strings are utf-8
 
 <div class="takeaways">
 
-✅ `String` is owned, heap-allocated, and growable — use it when you need to build or keep text  
-✅ `&str` is a borrowed slice (pointer + length) — cheap to pass, read-only, can't outlive its owner  
+✅ `String` is owned, heap-allocated, and growable, use it when you need to build or keep text  
+✅ `&str` is a borrowed slice (pointer + length), cheap to pass, read-only, can't outlive its owner  
 ✅ Function parameters should usually be `&str`; deref coercion lets callers pass `&my_string` or a literal  
 ✅ Convert between them with `String::from("...")` / `"...".to_string()` one way and `&my_string` (or `my_string.as_str()`) the other
 
@@ -108,14 +108,14 @@ Original still intact: strings are utf-8
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Passing a `String` where a `&str` is expected without `&`.** `shout(owned)` fails with "expected `&str`, found `String`" — you must borrow it: `shout(&owned)`. This does NOT compile because the types are genuinely different; the `&` triggers the automatic `&String` → `&str` coercion.
-- **Trying to mutate through a `&str`.** Code like `let s = "hi"; s.push_str(" there");` does NOT compile — `push_str` only exists on `String`, because a slice has no buffer to grow. Convert first: `let mut s = String::from("hi");`.
-- **Concatenating two `String`s with `+` directly.** `let c = a + b;` does NOT compile when both are `String` — the `+` operator needs a `&str` on the right side: `let c = a + &b;`. Also note that `+` *moves* `a`, so `a` is unusable afterward; `format!("{}{}", a, b)` avoids both surprises.
+- **Passing a `String` where a `&str` is expected without `&`.** `shout(owned)` fails with "expected `&str`, found `String`", you must borrow it: `shout(&owned)`. This does NOT compile because the types are genuinely different; the `&` triggers the automatic `&String` → `&str` coercion.
+- **Trying to mutate through a `&str`.** Code like `let s = "hi"; s.push_str(" there");` does NOT compile, `push_str` only exists on `String`, because a slice has no buffer to grow. Convert first: `let mut s = String::from("hi");`.
+- **Concatenating two `String`s with `+` directly.** `let c = a + b;` does NOT compile when both are `String`, the `+` operator needs a `&str` on the right side: `let c = a + &b;`. Also note that `+` *moves* `a`, so `a` is unusable afterward; `format!("{}{}", a, b)` avoids both surprises.
 :::
 
 ## ✅ Quick Challenge
 
-Complete the `describe` function so it accepts any text — a string literal or a borrowed `String` — and returns an owned `String` in the format `"cargo has 5 characters"`. The `main` function is already wired up to test both call styles.
+Complete the `describe` function so it accepts any text, a string literal or a borrowed `String`, and returns an owned `String` in the format `"cargo has 5 characters"`. The `main` function is already wired up to test both call styles.
 
 ```rust
 // Write `describe` so it accepts BOTH a literal and a String,

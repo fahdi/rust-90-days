@@ -13,14 +13,18 @@ description: "Learn about refcell t  & interior mutability in Rust"
 
 ## 🎯 Today's Goal
 
-[Learning objective for RefCell&lt;T&gt; & Interior Mutability]
+Understand interior mutability: how `RefCell<T>` lets you mutate data through a shared reference by moving borrow checking from compile time to runtime.
 
 ## 📚 The Concept (3 min)
 
-[Conceptual explanation goes here]
+Rust's borrowing rules normally say: either many immutable borrows or one mutable borrow, checked at compile time. But sometimes a value is logically immutable from the outside while needing internal mutation. A classic example is a mock object in tests: the trait method takes `&self`, yet your mock needs to record which calls happened. You cannot change the trait signature to `&mut self` just for the mock, so how do you mutate through `&self`?
+
+`RefCell<T>` is the answer. It wraps a value and enforces the same borrowing rules, but at runtime instead of compile time. You call `.borrow()` to get an immutable `Ref<T>` and `.borrow_mut()` to get a mutable `RefMut<T>`. Internally, `RefCell` keeps a counter of active borrows. If you violate the rules, say, calling `borrow_mut()` while a `borrow()` is still alive, the program panics with `already borrowed: BorrowMutError` rather than failing to compile.
+
+This is a trade-off, not a loophole. You gain flexibility for patterns the borrow checker cannot verify statically, and you pay with a small runtime cost and the risk of panics. `RefCell<T>` is strictly single-threaded (`!Sync`); for threads you use `Mutex<T>` instead. Related types in the same family: `Cell<T>` (moves values in and out, no references, good for `Copy` types) and `OnceCell<T>` (write-once initialization).
 
 ::: tip Key Insight
-[Important concept to remember]
+`RefCell<T>` does not remove Rust's borrow rules, it defers them to runtime. Break the rules and the program panics instead of failing to compile. Use it only when you know your access pattern is safe but the compiler can't prove it.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -28,21 +32,83 @@ description: "Learn about refcell t  & interior mutability in Rust"
 ### Example 1: Basic Usage
 
 ```rust
-// Code example goes here
+use std::cell::RefCell;
+
 fn main() {
-    println!("Day 78: RefCell<T> & Interior Mutability");
+    let value = RefCell::new(10);
+
+    // Mutate through an immutable binding
+    *value.borrow_mut() += 5;
+
+    println!("value = {}", value.borrow());
+
+    // Multiple immutable borrows are fine
+    let a = value.borrow();
+    let b = value.borrow();
+    println!("a = {}, b = {}", a, b);
+    drop(a);
+    drop(b);
+
+    // try_borrow_mut lets us check instead of panicking
+    let guard = value.borrow();
+    match value.try_borrow_mut() {
+        Ok(_) => println!("got mutable borrow"),
+        Err(e) => println!("could not borrow mutably: {}", e),
+    }
+    drop(guard);
 }
 ```
 
 ### Example 2: Practical Application
 
+A logger that records messages through `&self`, the interior mutability pattern used by mock objects:
+
 ```rust
-// More advanced example
+use std::cell::RefCell;
+
+trait Logger {
+    fn log(&self, message: &str); // note: &self, not &mut self
+}
+
+struct MemoryLogger {
+    messages: RefCell<Vec<String>>,
+}
+
+impl Logger for MemoryLogger {
+    fn log(&self, message: &str) {
+        self.messages.borrow_mut().push(message.to_string());
+    }
+}
+
+fn run_job(logger: &dyn Logger) {
+    logger.log("job started");
+    logger.log("job finished");
+}
+
+fn main() {
+    let logger = MemoryLogger {
+        messages: RefCell::new(Vec::new()),
+    };
+    run_job(&logger);
+
+    for (i, msg) in logger.messages.borrow().iter().enumerate() {
+        println!("{}: {}", i, msg);
+    }
+}
 ```
 
 ::: details Output
+Example 1:
 ```
-Expected output here
+value = 15
+a = 15, b = 15
+could not borrow mutably: already borrowed
+```
+
+Example 2:
+```
+0: job started
+1: job finished
 ```
 :::
 
@@ -50,35 +116,43 @@ Expected output here
 
 <div class="takeaways">
 
-✅ [Key point 1]  
-✅ [Key point 2]  
-✅ [Key point 3]  
-✅ [Key point 4]
+✅ `RefCell<T>` enforces the borrow rules at runtime: many `borrow()`s or one `borrow_mut()`, never both  
+✅ Violations panic (`BorrowError` / `BorrowMutError`); use `try_borrow` / `try_borrow_mut` to handle them gracefully  
+✅ Interior mutability lets you mutate state behind `&self`, essential for mocks, caches, and observers  
+✅ `RefCell<T>` is single-threaded only; reach for `Mutex<T>` or `RwLock<T>` across threads
 
 </div>
 
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- [Common mistake 1]
-- [Common mistake 2]
+- Holding a `Ref` (from `borrow()`) alive while calling `borrow_mut()` in the same scope, classic runtime panic that the compiler won't catch
+- Keeping a borrow guard across a function call that also borrows the same `RefCell`, the panic appears far from the original borrow
+- Using `RefCell<T>` everywhere to "silence" the borrow checker instead of restructuring ownership, it hides bugs until runtime
 :::
 
 ## ✅ Quick Challenge
 
-[Practice exercise description]
+Build a `Counter` struct whose `increment` method takes `&self` but still increases an internal count stored in a `RefCell<u32>`. Add a `get` method returning the current value.
 
 ```rust
-// Starter code
+use std::cell::RefCell;
+
+struct Counter {
+    count: RefCell<u32>,
+}
+
 fn main() {
-    // Your code here
+    // Create a Counter, call increment three times via a
+    // shared reference, then print the count (should be 3).
+    println!("TODO");
 }
 ```
 
 <details>
 <summary>💡 Hint</summary>
 
-[Helpful hint for the challenge]
+Inside `increment`, call `self.count.borrow_mut()` and dereference it with `*` to add 1. In `get`, return `*self.count.borrow()`.
 
 </details>
 
@@ -86,15 +160,42 @@ fn main() {
 <summary>✅ Solution</summary>
 
 ```rust
-// Solution code
+use std::cell::RefCell;
+
+struct Counter {
+    count: RefCell<u32>,
+}
+
+impl Counter {
+    fn new() -> Self {
+        Counter { count: RefCell::new(0) }
+    }
+
+    fn increment(&self) {
+        *self.count.borrow_mut() += 1;
+    }
+
+    fn get(&self) -> u32 {
+        *self.count.borrow()
+    }
+}
+
+fn main() {
+    let counter = Counter::new();
+    let shared: &Counter = &counter;
+    shared.increment();
+    shared.increment();
+    shared.increment();
+    println!("count = {}", shared.get()); // count = 3
+}
 ```
 
 </details>
 
 ## 📖 Additional Resources
 
-- [The Rust Book - Relevant Chapter](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [The Rust Book - RefCell and Interior Mutability](https://doc.rust-lang.org/book/ch15-05-interior-mutability.html)
+- [std::cell module docs](https://doc.rust-lang.org/std/cell/)
 
 ---
 

@@ -13,22 +13,22 @@ description: "Learn about loops in Rust"
 
 ## 🎯 Today's Goal
 
-Use Rust's three loop constructs — `loop`, `while`, and `for` — and know exactly when to reach for each one, including how to break out of a loop with a value.
+Use Rust's three loop constructs, `loop`, `while`, and `for`, and know exactly when to reach for each one, including how to break out of a loop with a value.
 
 ## 📚 The Concept (3 min)
 
-Yesterday (Day 7) you used `if`/`else` to make decisions once. Loops let you make them repeatedly. Rust gives you three tools, and each has a distinct job — think of them as three settings on a washing machine.
+Yesterday (Day 7) you used `if`/`else` to make decisions once. Loops let you make them repeatedly. Rust gives you three tools, and each has a distinct job, think of them as three settings on a washing machine.
 
-**`loop`** is the "run until I say stop" setting. It repeats forever until you explicitly `break`. This sounds dangerous, but it's Rust's most honest loop: when you genuinely don't know how many iterations you need (retrying a network call, reading user input until it's valid), `loop` says so in the code. Uniquely, `break` can hand a value back out: `let x = loop { break 42; };` — the loop itself is an expression, just like `if` was on Day 7.
+**`loop`** is the "run until I say stop" setting. It repeats forever until you explicitly `break`. This sounds dangerous, but it's Rust's most honest loop: when you genuinely don't know how many iterations you need (retrying a network call, reading user input until it's valid), `loop` says so in the code. Uniquely, `break` can hand a value back out: `let x = loop { break 42; };`, the loop itself is an expression, just like `if` was on Day 7.
 
 **`while`** is the "run while a condition holds" setting. It checks the condition *before* every iteration, so it may run zero times. Use it when the stopping condition is a test on changing state.
 
-**`for`** is the workhorse — probably 90% of the loops you'll write. It iterates over anything iterable: ranges like `1..=10`, and the arrays you met on Day 5. Unlike C-style `for(i=0; i<n; i++)`, Rust's `for` can't have off-by-one index bugs because there's no manual index to get wrong.
+**`for`** is the workhorse, probably 90% of the loops you'll write. It iterates over anything iterable: ranges like `1..=10`, and the arrays you met on Day 5. Unlike C-style `for(i=0; i<n; i++)`, Rust's `for` can't have off-by-one index bugs because there's no manual index to get wrong.
 
 Two extras that make Rust loops pleasant: `continue` skips to the next iteration, and *loop labels* like `'outer:` let you break out of nested loops in one jump instead of juggling flag variables.
 
 ::: tip Key Insight
-Prefer `for` whenever you're iterating over something (a range or collection); reserve `while` for condition-driven repetition and `loop` for "repeat until break" — and remember that `break` can return a value from a `loop`.
+Prefer `for` whenever you're iterating over something (a range or collection); reserve `while` for condition-driven repetition and `loop` for "repeat until break", and remember that `break` can return a value from a `loop`.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -107,9 +107,9 @@ Found target at row 2, col 2
 
 <div class="takeaways">
 
-✅ `loop` runs forever until `break` — and `break value;` lets the loop produce a value  
+✅ `loop` runs forever until `break`, and `break value;` lets the loop produce a value  
 ✅ `while` checks its condition before each pass, so it can run zero times  
-✅ `for x in collection` is the idiomatic default — no manual indexing, no off-by-one bugs  
+✅ `for x in collection` is the idiomatic default, no manual indexing, no off-by-one bugs  
 ✅ `continue` skips one iteration; labels like `'outer:` let `break` escape nested loops
 
 </div>
@@ -118,7 +118,7 @@ Found target at row 2, col 2
 
 ::: warning Watch Out!
 - **Confusing `1..5` with `1..=5`.** The first is *exclusive* (1, 2, 3, 4); the second is *inclusive* (1 through 5). Off-by-one bugs in Rust almost always come from picking the wrong range operator.
-- **Forgetting `mut` on the loop variable you're updating.** `let fuel = 3; while fuel > 0 { fuel -= 1; }` does NOT compile — you're mutating an immutable binding (Day 2 strikes again). Declare it `let mut fuel = 3;`.
+- **Forgetting `mut` on the loop variable you're updating.** `let fuel = 3; while fuel > 0 { fuel -= 1; }` does NOT compile, you're mutating an immutable binding (Day 2 strikes again). Declare it `let mut fuel = 3;`.
 - **Trying to `break` a `while` or `for` with a value.** `break value;` only works inside `loop`. In `while`/`for`, the "did the condition end it or did I?" question makes a return value ambiguous, so Rust forbids it.
 :::
 

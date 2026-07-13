@@ -17,17 +17,17 @@ Attach behavior to the structs you defined yesterday by writing methods in an `i
 
 ## 📚 The Concept (3 min)
 
-Yesterday's structs held data but couldn't *do* anything — every operation lived in a free function like `describe(&book)`. **Methods** move that behavior onto the type itself, so callers write `book.describe()` and all the logic for a type lives in one place.
+Yesterday's structs held data but couldn't *do* anything, every operation lived in a free function like `describe(&book)`. **Methods** move that behavior onto the type itself, so callers write `book.describe()` and all the logic for a type lives in one place.
 
-Methods go inside an `impl` block (short for *implementation*): `impl Rectangle { ... }`. A method looks like a normal function except its first parameter is a *receiver* — some form of `self`, which is the instance the method was called on. The receiver you pick is a promise about what the method does:
+Methods go inside an `impl` block (short for *implementation*): `impl Rectangle { ... }`. A method looks like a normal function except its first parameter is a *receiver*, some form of `self`, which is the instance the method was called on. The receiver you pick is a promise about what the method does:
 
-- `&self` — "I only read the data." This is by far the most common. Borrowing rules from Week 3 apply: many readers can coexist.
-- `&mut self` — "I modify the data." The instance must be stored in a `mut` binding, and no other borrows can be active.
-- `self` — "I consume the instance." The value is moved into the method and the caller can't use it afterwards. Rare, but useful for conversions and builder patterns.
+- `&self`, "I only read the data." This is by far the most common. Borrowing rules from Week 3 apply: many readers can coexist.
+- `&mut self`, "I modify the data." The instance must be stored in a `mut` binding, and no other borrows can be active.
+- `self`, "I consume the instance." The value is moved into the method and the caller can't use it afterwards. Rare, but useful for conversions and builder patterns.
 
 The analogy: a struct is a machine's parts list; the `impl` block is its control panel. `temperature()` is a read-only gauge (`&self`), `set_target()` is a dial that changes state (`&mut self`), and `into_scrap_metal()` destroys the machine to produce something else (`self`).
 
-Method calls use dot syntax, and Rust automatically references or dereferences for you — `rect.area()` works whether `rect` is a value, a `&Rectangle`, or a `&mut Rectangle`. That's why Rust has no need for an arrow operator like C's `->`. Methods can also take extra parameters after `self`, including references to other instances of the same struct, as you'll see with `can_hold`.
+Method calls use dot syntax, and Rust automatically references or dereferences for you, `rect.area()` works whether `rect` is a value, a `&Rectangle`, or a `&mut Rectangle`. That's why Rust has no need for an arrow operator like C's `->`. Methods can also take extra parameters after `self`, including references to other instances of the same struct, as you'll see with `can_hold`.
 
 ::: tip Key Insight
 The receiver type is documentation the compiler enforces: `&self` methods can never mutate, `&mut self` methods require exclusive access, and `self` methods consume the value. Read a method signature and you already know its side effects.
@@ -129,7 +129,7 @@ Amina's balance: $120.00
 ✅ Methods live in `impl StructName { ... }` blocks and are called with dot syntax: `rect.area()`  
 ✅ Choose the receiver deliberately: `&self` to read, `&mut self` to modify, `self` to consume  
 ✅ Calling a `&mut self` method requires the instance to be in a `let mut` binding  
-✅ Rust auto-references on method calls, so `rect.area()` works for values and references alike — no `->` operator needed
+✅ Rust auto-references on method calls, so `rect.area()` works for values and references alike, no `->` operator needed
 
 </div>
 
@@ -137,7 +137,7 @@ Amina's balance: $120.00
 
 ::: warning Watch Out!
 - **Calling a `&mut self` method on an immutable binding.** `let account = ...; account.deposit(50.0);` fails with "cannot borrow `account` as mutable". The fix is at the binding: `let mut account`.
-- **Forgetting `self.` inside a method.** Writing `width * height` instead of `self.width * self.height` fails with "cannot find value `width` in this scope" — fields are not in scope as bare names.
+- **Forgetting `self.` inside a method.** Writing `width * height` instead of `self.width * self.height` fails with "cannot find value `width` in this scope", fields are not in scope as bare names.
 - **Consuming when you meant to borrow.** If you declare `fn summary(self)` instead of `fn summary(&self)`, the first call moves the struct and a second use fails with "borrow of moved value". This does NOT compile: `account.summary(); account.summary();` when `summary` takes `self` by value.
 :::
 
@@ -169,7 +169,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-`scale` changes the struct, so it needs `&mut self` — and `rect` in `main` must become `let mut rect`. For `can_hold`, compare both dimensions: `self.width > other.width && self.height > other.height`.
+`scale` changes the struct, so it needs `&mut self`, and `rect` in `main` must become `let mut rect`. For `can_hold`, compare both dimensions: `self.width > other.width && self.height > other.height`.
 
 </details>
 

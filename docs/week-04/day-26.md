@@ -17,7 +17,7 @@ Understand what a dangling reference is, why Rust makes it a compile-time error 
 
 ## 📚 The Concept (3 min)
 
-A dangling reference is a pointer to memory that has already been freed. Think of it like keeping a hotel room key after checkout: the key still exists, but the room has been cleaned and handed to someone else. Using that key is at best embarrassing and at worst a disaster. In C and C++, "use-after-free" bugs like this are a leading cause of crashes and security vulnerabilities — the program compiles fine and fails unpredictably at runtime.
+A dangling reference is a pointer to memory that has already been freed. Think of it like keeping a hotel room key after checkout: the key still exists, but the room has been cleaned and handed to someone else. Using that key is at best embarrassing and at worst a disaster. In C and C++, "use-after-free" bugs like this are a leading cause of crashes and security vulnerabilities, the program compiles fine and fails unpredictably at runtime.
 
 Rust takes a different stance: **the borrow checker refuses to compile any code that could produce a dangling reference**. It does this by tracking the lifetime of every value and every reference. A reference is only allowed to exist while the value it points to is still alive.
 
@@ -35,7 +35,7 @@ The compiler stops you with `missing lifetime specifier` and explains that the r
 There are two idiomatic fixes:
 
 1. **Return the value itself** (`String`, not `&String`). Ownership moves out to the caller, so nothing is freed early.
-2. **Return a reference derived from an input reference.** If the output borrows from the caller's data, it lives exactly as long as that data — no dangle possible.
+2. **Return a reference derived from an input reference.** If the output borrows from the caller's data, it lives exactly as long as that data, no dangle possible.
 
 ::: tip Key Insight
 A reference can never outlive the value it points to. If you create data inside a function, return it by value; if the data came in as a parameter, you may return a reference into it.
@@ -105,10 +105,10 @@ Full sentence still usable: Rust prevents dangling references
 
 <div class="takeaways">
 
-✅ A dangling reference points to freed memory — Rust rejects it at compile time, not at runtime  
+✅ A dangling reference points to freed memory, Rust rejects it at compile time, not at runtime  
 ✅ Returning `&String` to a local variable fails because the local is dropped when the function ends  
 ✅ Fix 1: return the owned value (`String`) so ownership moves to the caller  
-✅ Fix 2: return a slice borrowed from an input parameter — its lifetime is tied to the caller's data
+✅ Fix 2: return a slice borrowed from an input parameter, its lifetime is tied to the caller's data
 
 </div>
 
@@ -116,13 +116,13 @@ Full sentence still usable: Rust prevents dangling references
 
 ::: warning Watch Out!
 - **Returning `&format!(...)` or `&vec![...]` directly.** The temporary value is dropped at the end of the expression, so the reference has nothing to point to. Bind the value to an owned variable and return it by value instead.
-- **Storing a reference that outlives its source.** Pushing `&local` into a `Vec` that lives longer than `local` (or returning it from a block) fails with "borrowed value does not live long enough" — the container would hold a dangle.
+- **Storing a reference that outlives its source.** Pushing `&local` into a `Vec` that lives longer than `local` (or returning it from a block) fails with "borrowed value does not live long enough", the container would hold a dangle.
 - **"Fixing" the error by cloning everywhere.** `.clone()` silences the compiler but copies data you may not need to copy. First ask: should this function return ownership, or borrow from its input?
 :::
 
 ## ✅ Quick Challenge
 
-The starter below shows the safe version of `build_label` (returning an owned `String`). Add a second function, `trim_label`, that takes `&str` and returns a **reference** to the trimmed slice — no allocation, no clone. Then call it from `main` and print the result in square brackets.
+The starter below shows the safe version of `build_label` (returning an owned `String`). Add a second function, `trim_label`, that takes `&str` and returns a **reference** to the trimmed slice, no allocation, no clone. Then call it from `main` and print the result in square brackets.
 
 ```rust
 // Starter code
@@ -146,7 +146,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-`str` already has a `.trim()` method that returns a `&str` borrowing from the original string. Your function signature should be `fn trim_label(raw: &str) -> &str` — because the output borrows from the input, the compiler knows it can never dangle.
+`str` already has a `.trim()` method that returns a `&str` borrowing from the original string. Your function signature should be `fn trim_label(raw: &str) -> &str`, because the output borrows from the input, the compiler knows it can never dangle.
 
 </details>
 

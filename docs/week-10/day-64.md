@@ -13,7 +13,7 @@ description: "Learn about where clauses in Rust"
 
 ## 🎯 Today's Goal
 
-Rewrite crowded inline trait bounds as clean `where` clauses, and use bounds that inline syntax cannot even express — like constraining an iterator's `Item` type.
+Rewrite crowded inline trait bounds as clean `where` clauses, and use bounds that inline syntax cannot even express, like constraining an iterator's `Item` type.
 
 ## 📚 The Concept (3 min)
 
@@ -34,19 +34,19 @@ where
 {}
 ```
 
-But `where` clauses are not just cosmetic. They can express bounds that inline syntax literally cannot. The most common example: constraining an *associated type* of a type parameter, like requiring that whatever an iterator yields must be printable — `where I: IntoIterator, I::Item: Display`. There is no way to write that bound inline on `I`. You will lean on this constantly once you start writing functions that accept "anything iterable".
+But `where` clauses are not just cosmetic. They can express bounds that inline syntax literally cannot. The most common example: constraining an *associated type* of a type parameter, like requiring that whatever an iterator yields must be printable, `where I: IntoIterator, I::Item: Display`. There is no way to write that bound inline on `I`. You will lean on this constantly once you start writing functions that accept "anything iterable".
 
 Style rule used across the Rust standard library: one or two simple bounds, inline is fine; anything more, or any bound on an associated type, use `where`.
 
 ::: tip Key Insight
-A `where` clause is not just prettier syntax — it can express bounds inline syntax cannot, such as constraints on associated types like `I::Item: Display`.
+A `where` clause is not just prettier syntax, it can express bounds inline syntax cannot, such as constraints on associated types like `I::Item: Display`.
 :::
 
 ## 💻 Hands-On Code (4 min)
 
 ### Example 1: Basic Usage
 
-The `largest` function from your generics week, now with a helper that stacks multiple bounds — much more readable with `where`:
+The `largest` function from your generics week, now with a helper that stacks multiple bounds, much more readable with `where`:
 
 ```rust
 use std::fmt::Display;
@@ -126,17 +126,17 @@ Example 2:
 
 <div class="takeaways">
 
-✅ `where` clauses and inline bounds compile to exactly the same thing — choose for readability  
+✅ `where` clauses and inline bounds compile to exactly the same thing, choose for readability  
 ✅ Use `where` once you have two or more type parameters or three or more bounds  
 ✅ Only `where` can constrain associated types, e.g. `I::Item: Display`  
-✅ Bounds listed in `where` are checked at compile time — a caller passing a type missing a trait gets a clear error at the call site
+✅ Bounds listed in `where` are checked at compile time, a caller passing a type missing a trait gets a clear error at the call site
 
 </div>
 
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Putting the `where` clause after the function body's opening brace.** It belongs between the return type and `{`. Writing `fn f<T>(x: T) { where T: Clone` does not compile — the clause is part of the signature, not the body.
+- **Putting the `where` clause after the function body's opening brace.** It belongs between the return type and `{`. Writing `fn f<T>(x: T) { where T: Clone` does not compile, the clause is part of the signature, not the body.
 - **Duplicating bounds inline AND in `where`.** `fn f<T: Clone>(x: T) where T: Clone` compiles but confuses readers about where the source of truth is. Pick one location.
 - **Forgetting the comma between bounds on different parameters.** Each `Type: Bounds` entry in a `where` clause is comma-separated; a missing comma produces a cryptic "expected `{`" error pointing at the next line.
 :::
@@ -168,7 +168,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Move `PartialOrd + Copy` into a `where T:` block under the signature. For `print_bounds`, the `where` clause needs `T: PartialOrd + Copy + Display` because it both compares values and prints them — and remember to `use std::fmt::Display;` at the top.
+Move `PartialOrd + Copy` into a `where T:` block under the signature. For `print_bounds`, the `where` clause needs `T: PartialOrd + Copy + Display` because it both compares values and prints them, and remember to `use std::fmt::Display;` at the top.
 
 </details>
 

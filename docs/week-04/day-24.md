@@ -19,9 +19,9 @@ Understand exactly what a `&str` is under the hood, slice strings safely with ra
 
 Yesterday you met slices in general. Today we zoom in on the most common slice in all of Rust: the string slice, `&str`.
 
-Think of a `String` as a whole book you own, and a `&str` as a bookmark plus a sticky note that says "read from page 12 to page 47." The bookmark doesn't copy any pages — it just points into someone else's book and records how far to read. Concretely, a `&str` is a *fat pointer*: a memory address plus a length in bytes. That's the whole thing. No allocation, no ownership, no cleanup.
+Think of a `String` as a whole book you own, and a `&str` as a bookmark plus a sticky note that says "read from page 12 to page 47." The bookmark doesn't copy any pages, it just points into someone else's book and records how far to read. Concretely, a `&str` is a *fat pointer*: a memory address plus a length in bytes. That's the whole thing. No allocation, no ownership, no cleanup.
 
-This explains a fact that surprises many learners: string literals like `"hello"` are already `&str` values. The text is baked into your compiled binary, and the literal is just a pointer-plus-length into that read-only data. That's why literals are `&'static str` — the data lives as long as the program does.
+This explains a fact that surprises many learners: string literals like `"hello"` are already `&str` values. The text is baked into your compiled binary, and the literal is just a pointer-plus-length into that read-only data. That's why literals are `&'static str`, the data lives as long as the program does.
 
 The range syntax `&s[a..b]` creates a slice covering bytes `a` up to (not including) `b`. Shorthands: `&s[..b]` starts at 0, `&s[a..]` runs to the end, and `&s[..]` covers everything.
 
@@ -30,7 +30,7 @@ Because a slice *borrows* from its source, the borrow checker guarantees the sou
 The practical payoff: write your function parameters as `&str`, not `&String`. A `&String` argument only accepts a `String`; a `&str` argument accepts a `String` (via automatic deref coercion), a literal, and any other slice. Same code, three times the flexibility, zero cost.
 
 ::: tip Key Insight
-A `&str` is just a pointer + byte length borrowed from data owned elsewhere. Prefer `&str` over `&String` in function signatures — it accepts strings of every flavor for free.
+A `&str` is just a pointer + byte length borrowed from data owned elsewhere. Prefer `&str` over `&String` in function signatures, it accepts strings of every flavor for free.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -114,10 +114,10 @@ domain: rust-90-days.dev
 
 <div class="takeaways">
 
-✅ A `&str` is a fat pointer — an address plus a byte length — that borrows string data owned elsewhere  
+✅ A `&str` is a fat pointer, an address plus a byte length, that borrows string data owned elsewhere  
 ✅ String literals are `&'static str`: slices into read-only data compiled into your binary  
 ✅ Range syntax `&s[a..b]` indexes by *bytes*, and `..b`, `a..`, and `..` are handy shorthands  
-✅ Take `&str` instead of `&String` in function parameters — deref coercion lets callers pass a `String`, a literal, or another slice
+✅ Take `&str` instead of `&String` in function parameters, deref coercion lets callers pass a `String`, a literal, or another slice
 
 </div>
 
@@ -125,13 +125,13 @@ domain: rust-90-days.dev
 
 ::: warning Watch Out!
 - **Slicing in the middle of a multi-byte character panics at runtime.** Indices are byte offsets, and UTF-8 characters can be 1–4 bytes. `&"héllo"[0..2]` compiles fine but panics, because `é` occupies bytes 1–2. Use `char_indices()` or methods like `find()` to get safe boundaries.
-- **Mutating the source while a slice is alive.** Code like `let word = &s[..5]; s.clear(); println!("{word}");` does NOT compile — `clear()` needs a mutable borrow while `word` still holds an immutable one. The error is confusing until you remember the slice borrows from `s`.
+- **Mutating the source while a slice is alive.** Code like `let word = &s[..5]; s.clear(); println!("{word}");` does NOT compile, `clear()` needs a mutable borrow while `word` still holds an immutable one. The error is confusing until you remember the slice borrows from `s`.
 - **Writing `fn foo(s: &String)` out of habit.** It compiles, but now callers with a literal or a slice must allocate a `String` just to call you. Clippy flags this; `&str` is strictly more useful.
 :::
 
 ## ✅ Quick Challenge
 
-Write `extension`, which returns the file extension of a filename as a slice of the input — the text after the *last* `.`. Return `None` when there is no dot (like `Makefile`). Don't allocate any new `String`.
+Write `extension`, which returns the file extension of a filename as a slice of the input, the text after the *last* `.`. Return `None` when there is no dot (like `Makefile`). Don't allocate any new `String`.
 
 ```rust
 // Starter code
@@ -155,7 +155,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-`str` has an `rfind` method that searches from the right and returns `Option<usize>` — the byte index of the match. Combine it with the `?` operator and a range slice starting just past the dot.
+`str` has an `rfind` method that searches from the right and returns `Option<usize>`, the byte index of the match. Combine it with the `?` operator and a range slice starting just past the dot.
 
 </details>
 
@@ -187,7 +187,7 @@ photo.tar.gz -> gz
 Makefile -> no extension
 ```
 
-Note that `photo.tar.gz` yields `gz`, because `rfind` locates the *last* dot — exactly what we want here.
+Note that `photo.tar.gz` yields `gz`, because `rfind` locates the *last* dot, exactly what we want here.
 
 </details>
 

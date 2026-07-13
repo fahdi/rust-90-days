@@ -17,7 +17,7 @@ Pass values to functions with `&` references so the caller keeps ownership, and 
 
 ## 📚 The Concept (3 min)
 
-This week you learned that passing a `String` to a function *moves* it — the caller can't use it afterward. That's correct but often inconvenient: most functions just want to *look at* data, not keep it. Rust's answer is **borrowing**.
+This week you learned that passing a `String` to a function *moves* it, the caller can't use it afterward. That's correct but often inconvenient: most functions just want to *look at* data, not keep it. Rust's answer is **borrowing**.
 
 A reference, written `&value`, lets a function access a value **without taking ownership**. Think of it like a library book: the library (the owner) lends you the book, you read it, and when you're done the book goes back on the shelf. You never owned it, so you're not allowed to burn it (drop it), and the library can lend it to the next reader. Creating a reference is called *borrowing* for exactly this reason.
 
@@ -26,14 +26,14 @@ In code, the pattern has two halves:
 - The **caller** lends with `&`: `calculate_length(&greeting)`
 - The **function** declares it accepts a loan: `fn calculate_length(s: &String)`
 
-When the reference goes out of scope at the end of the function, nothing is dropped — the parameter never owned the data, so there's nothing for it to clean up. The original value in the caller stays fully usable.
+When the reference goes out of scope at the end of the function, nothing is dropped, the parameter never owned the data, so there's nothing for it to clean up. The original value in the caller stays fully usable.
 
-References you create with plain `&` are **immutable** by default: you can read through them, but not modify. This is a feature, not a limitation — you can hand out many immutable references at once and Rust guarantees nobody mutates the data underneath you. (Tomorrow, Day 21, covers `&mut` references, which allow modification under stricter rules.)
+References you create with plain `&` are **immutable** by default: you can read through them, but not modify. This is a feature, not a limitation, you can hand out many immutable references at once and Rust guarantees nobody mutates the data underneath you. (Tomorrow, Day 21, covers `&mut` references, which allow modification under stricter rules.)
 
 Borrowing is also cheaper than the `clone()` escape hatch from Day 19: a reference is just a pointer, while a clone copies the entire heap allocation.
 
 ::: tip Key Insight
-`&T` means "access without ownership." The function can read the value, but the caller keeps it — no move, no clone, no double-free, because a reference never triggers a drop.
+`&T` means "access without ownership." The function can read the value, but the caller keeps it, no move, no clone, no double-free, because a reference never triggers a drop.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -113,24 +113,24 @@ Biggest order: #102 at $89.99
 
 <div class="takeaways">
 
-✅ `&value` creates a reference — the function borrows the data and the caller keeps ownership  
+✅ `&value` creates a reference, the function borrows the data and the caller keeps ownership  
 ✅ When a reference goes out of scope, nothing is dropped, because the reference never owned the value  
 ✅ Plain `&` references are read-only: you can call methods like `.len()` but cannot modify the data  
-✅ Prefer borrowing over `clone()` when a function only needs to read — a reference is a cheap pointer, a clone copies the heap
+✅ Prefer borrowing over `clone()` when a function only needs to read, a reference is a cheap pointer, a clone copies the heap
 
 </div>
 
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Forgetting the `&` at the call site.** If the signature is `fn describe(city: &String)` but you call `describe(city)`, the types don't match: you passed an owned `String` where a `&String` was expected. This does NOT compile — `expected &String, found String`. Borrowing requires `&` in *both* places.
-- **Trying to mutate through an immutable reference.** `fn add_suffix(s: &String) { s.push_str("!"); }` does NOT compile — `cannot borrow *s as mutable`. Plain `&` is a read-only loan; you need `&mut` (Day 21) to modify.
+- **Forgetting the `&` at the call site.** If the signature is `fn describe(city: &String)` but you call `describe(city)`, the types don't match: you passed an owned `String` where a `&String` was expected. This does NOT compile, `expected &String, found String`. Borrowing requires `&` in *both* places.
+- **Trying to mutate through an immutable reference.** `fn add_suffix(s: &String) { s.push_str("!"); }` does NOT compile, `cannot borrow *s as mutable`. Plain `&` is a read-only loan; you need `&mut` (Day 21) to modify.
 - **Cloning out of habit.** Reaching for `.clone()` every time the compiler complains about a move works, but it silently copies entire heap allocations. If the function only reads the data, a `&` reference gives you the same result for the cost of one pointer.
 :::
 
 ## ✅ Quick Challenge
 
-The program below compiles, but `describe` takes ownership of `city`, so the last `println!` is stuck commented out. Change `describe` to *borrow* instead — without using `clone()` — then uncomment the final line and confirm the original value is still usable.
+The program below compiles, but `describe` takes ownership of `city`, so the last `println!` is stuck commented out. Change `describe` to *borrow* instead, without using `clone()`, then uncomment the final line and confirm the original value is still usable.
 
 ```rust
 // Fix this program so it compiles WITHOUT cloning:
@@ -151,7 +151,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Two edits: change the parameter type from `String` to `&String`, and change the call from `describe(city)` to `describe(&city)`. The body of `describe` doesn't need to change at all — `format!` is happy to read through a reference.
+Two edits: change the parameter type from `String` to `&String`, and change the call from `describe(city)` to `describe(&city)`. The body of `describe` doesn't need to change at all, `format!` is happy to read through a reference.
 
 </details>
 

@@ -28,16 +28,16 @@ enum Result<T, E> {
 }
 ```
 
-Think of it like a package delivery. When the courier rings your doorbell, you either get the box you ordered (`Ok(package)`) or a slip explaining what went wrong (`Err("address not found")`). Crucially, you always get *something* — the failure isn't silent, and the slip tells you the reason. That's the difference from `Option`: `None` just says "nothing here," while `Err(E)` carries a description of the failure.
+Think of it like a package delivery. When the courier rings your doorbell, you either get the box you ordered (`Ok(package)`) or a slip explaining what went wrong (`Err("address not found")`). Crucially, you always get *something*, the failure isn't silent, and the slip tells you the reason. That's the difference from `Option`: `None` just says "nothing here," while `Err(E)` carries a description of the failure.
 
-In languages with exceptions, errors travel through an invisible side channel — any call might throw, and the function signature won't warn you. Rust puts errors in the return type itself. If a function returns `Result<f64, String>`, the compiler forces every caller to acknowledge that it might fail. You literally cannot get at the `f64` without deciding what to do about the `String` error case first.
+In languages with exceptions, errors travel through an invisible side channel, any call might throw, and the function signature won't warn you. Rust puts errors in the return type itself. If a function returns `Result<f64, String>`, the compiler forces every caller to acknowledge that it might fail. You literally cannot get at the `f64` without deciding what to do about the `String` error case first.
 
 You've already been using `Result` without noticing: `"42".parse::<i32>()` returns `Result<i32, ParseIntError>`, and file operations like `File::open` return `Result` too. It's everywhere in the standard library.
 
 The `E` type is up to you: a `String` for quick scripts, or a custom enum (as in Example 2) when callers need to distinguish between different failure modes.
 
 ::: tip Key Insight
-`Result<T, E>` makes failure part of a function's signature. The compiler forces callers to handle the error case before they can touch the success value — errors can't be silently ignored.
+`Result<T, E>` makes failure part of a function's signature. The compiler forces callers to handle the error case before they can touch the success value, errors can't be silently ignored.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -136,9 +136,9 @@ Declined: amount must be positive
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Sprinkling `.unwrap()` everywhere.** `unwrap()` panics the moment it hits an `Err`, crashing your program — it turns a recoverable error back into an unrecoverable one. Fine in quick experiments; in real code, `match`, `unwrap_or`, or `?` are almost always better.
-- **Forgetting that `Result` is `#[must_use]`.** If you call a function returning `Result` and ignore the return value, the compiler warns you — because a silently dropped `Err` is a bug waiting to happen. Handle it or explicitly discard it with `let _ = ...`.
-- **Reaching for the value without unwrapping the `Result` first.** Writing `let n: i32 = "42".parse();` does NOT compile — `parse` gives you a `Result<i32, _>`, not an `i32`. The wrapper exists precisely so you must deal with the failure case before using the value.
+- **Sprinkling `.unwrap()` everywhere.** `unwrap()` panics the moment it hits an `Err`, crashing your program, it turns a recoverable error back into an unrecoverable one. Fine in quick experiments; in real code, `match`, `unwrap_or`, or `?` are almost always better.
+- **Forgetting that `Result` is `#[must_use]`.** If you call a function returning `Result` and ignore the return value, the compiler warns you, because a silently dropped `Err` is a bug waiting to happen. Handle it or explicitly discard it with `let _ = ...`.
+- **Reaching for the value without unwrapping the `Result` first.** Writing `let n: i32 = "42".parse();` does NOT compile, `parse` gives you a `Result<i32, _>`, not an `i32`. The wrapper exists precisely so you must deal with the failure case before using the value.
 :::
 
 ## ✅ Quick Challenge
@@ -166,7 +166,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-`input.parse()` returns a `Result<u8, ParseIntError>`. Use `match` on it: in the `Err(_)` arm, `return` your own error string; in the `Ok(n)` arm, keep the number and then run the range check. Note that `"200"` parses fine into a `u8` (max 255) — it's your range check that must reject it.
+`input.parse()` returns a `Result<u8, ParseIntError>`. Use `match` on it: in the `Err(_)` arm, `return` your own error string; in the `Ok(n)` arm, keep the number and then run the range check. Note that `"200"` parses fine into a `u8` (max 255), it's your range check that must reject it.
 
 </details>
 

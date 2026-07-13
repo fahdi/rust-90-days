@@ -17,19 +17,19 @@ Understand Rust's two borrowing rules and use shared (`&`) and mutable (`&mut`) 
 
 ## 📚 The Concept (3 min)
 
-Last week you learned that ownership means every value has exactly one owner. But constantly moving values around (or cloning them) would be exhausting. *Borrowing* lets you lend access to a value without giving up ownership — like lending a book to a friend: they can read it, but the book is still yours and comes back.
+Last week you learned that ownership means every value has exactly one owner. But constantly moving values around (or cloning them) would be exhausting. *Borrowing* lets you lend access to a value without giving up ownership, like lending a book to a friend: they can read it, but the book is still yours and comes back.
 
 Rust enforces exactly two rules about references:
 
-1. **At any given time, you can have EITHER any number of shared references (`&T`) OR exactly one mutable reference (`&mut T`)** — never both at once.
-2. **References must always be valid** — they can never outlive the value they point to (more on this on Day 26).
+1. **At any given time, you can have EITHER any number of shared references (`&T`) OR exactly one mutable reference (`&mut T`)**, never both at once.
+2. **References must always be valid**, they can never outlive the value they point to (more on this on Day 26).
 
-Why so strict? Think of a shared spreadsheet. If ten people are *reading* it, everything is fine. But if one person starts *editing* while others read, readers see half-finished garbage. Rust's rule is the compiler-enforced version of "readers and writers can't overlap": many readers, or one writer, never both. This single rule eliminates data races and a whole class of "value changed under my feet" bugs — at compile time, with zero runtime cost.
+Why so strict? Think of a shared spreadsheet. If ten people are *reading* it, everything is fine. But if one person starts *editing* while others read, readers see half-finished garbage. Rust's rule is the compiler-enforced version of "readers and writers can't overlap": many readers, or one writer, never both. This single rule eliminates data races and a whole class of "value changed under my feet" bugs, at compile time, with zero runtime cost.
 
 The good news: since Rust 2018, borrows end at their *last use*, not at the end of the scope (this is called non-lexical lifetimes). So you can read with shared references, finish, and then take a mutable reference in the same block without any ceremony.
 
 ::: tip Key Insight
-Many readers OR one writer — never both. If you can explain your code's borrows in those terms, the borrow checker will agree with you.
+Many readers OR one writer, never both. If you can explain your code's borrows in those terms, the borrow checker will agree with you.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -85,16 +85,16 @@ score after mutable borrow: 15
 ```
 :::
 
-Notice how `main` keeps ownership of `todo` the whole time — the functions only borrow it, mutably to write and immutably to read.
+Notice how `main` keeps ownership of `todo` the whole time, the functions only borrow it, mutably to write and immutably to read.
 
 ## 🎓 Key Takeaways (1 min)
 
 <div class="takeaways">
 
 ✅ `&value` creates a shared borrow (read-only); `&mut value` creates a mutable borrow (read-write)  
-✅ You can have many shared references OR one mutable reference — never both at the same time  
+✅ You can have many shared references OR one mutable reference, never both at the same time  
 ✅ Borrows end at their last use, so sequential read-then-write code compiles fine  
-✅ Functions that borrow (`&T` / `&mut T`) let the caller keep ownership — no moves, no clones
+✅ Functions that borrow (`&T` / `&mut T`) let the caller keep ownership, no moves, no clones
 
 </div>
 
@@ -103,7 +103,7 @@ Notice how `main` keeps ownership of `todo` the whole time — the functions onl
 ::: warning Watch Out!
 - **Holding a shared reference while mutating.** `let r = &v; v.push(1); println!("{}", r);` fails with E0502 because `r` is still in use when `push` needs exclusive access. Finish reading before you mutate.
 - **Forgetting `mut` in two places.** To take `&mut x`, the variable itself must be declared `let mut x` AND you must write `&mut` at the call site. Missing either one is a compile error.
-- **Taking two mutable references "just to be safe."** `let a = &mut v; let b = &mut v;` fails with E0499 if both are used. One writer at a time — restructure so each mutable borrow ends before the next begins.
+- **Taking two mutable references "just to be safe."** `let a = &mut v; let b = &mut v;` fails with E0499 if both are used. One writer at a time, restructure so each mutable borrow ends before the next begins.
 :::
 
 ## ✅ Quick Challenge

@@ -19,14 +19,14 @@ Understand what generics are and why Rust uses them, and write your first functi
 
 By now you've written functions that take `i32`, `String`, or `Vec` values. But what happens when the *logic* is identical and only the *type* changes? Copy-pasting `first_i32`, `first_char`, and `first_str` is a maintenance nightmare. Generics solve this: they let you write code once, with a placeholder for the type, and let the compiler fill in the concrete type at each call site.
 
-Think of a generic like a blank on a form: "Return the first element of a slice of ____." You don't care what goes in the blank — the procedure is the same. In Rust, that blank is written as a type parameter, conventionally named `T`, declared in angle brackets right after the function name: `fn first<T>(items: &[T]) -> &T`.
+Think of a generic like a blank on a form: "Return the first element of a slice of ____." You don't care what goes in the blank, the procedure is the same. In Rust, that blank is written as a type parameter, conventionally named `T`, declared in angle brackets right after the function name: `fn first<T>(items: &[T]) -> &T`.
 
-Here's the part that surprises people coming from dynamic languages: generics in Rust have **zero runtime cost**. At compile time, Rust performs *monomorphization* — it stamps out a separate, fully concrete copy of your generic function for every type you actually use it with. Calling `first` on an `&[i32]` and on an `&[&str]` produces two specialized functions in the binary, each as fast as if you'd written them by hand.
+Here's the part that surprises people coming from dynamic languages: generics in Rust have **zero runtime cost**. At compile time, Rust performs *monomorphization*, it stamps out a separate, fully concrete copy of your generic function for every type you actually use it with. Calling `first` on an `&[i32]` and on an `&[&str]` produces two specialized functions in the binary, each as fast as if you'd written them by hand.
 
-You've actually been using generics since Week 4 without noticing. `Option<T>`, `Result<T, E>`, and `Vec<T>` are all generic types — `Option<u32>` and `Option<String>` are the same blueprint filled in with different types. This week just teaches you to build those blueprints yourself.
+You've actually been using generics since Week 4 without noticing. `Option<T>`, `Result<T, E>`, and `Vec<T>` are all generic types, `Option<u32>` and `Option<String>` are the same blueprint filled in with different types. This week just teaches you to build those blueprints yourself.
 
 ::: tip Key Insight
-A generic type parameter `T` is a compile-time placeholder. Rust monomorphizes it — generating a concrete copy per type used — so generic code is exactly as fast as hand-written type-specific code.
+A generic type parameter `T` is a compile-time placeholder. Rust monomorphizes it, generating a concrete copy per type used, so generic code is exactly as fast as hand-written type-specific code.
 :::
 
 ## 💻 Hands-On Code (4 min)
@@ -84,9 +84,9 @@ A function can take *multiple* type parameters (`T` and `U` here), and each is i
 
 <div class="takeaways">
 
-✅ Generics eliminate duplicated functions that differ only in type — write the logic once with a placeholder like `T`  
+✅ Generics eliminate duplicated functions that differ only in type, write the logic once with a placeholder like `T`  
 ✅ Type parameters are declared in angle brackets after the name: `fn first<T>(items: &[T]) -> &T`  
-✅ Monomorphization means generics cost nothing at runtime — the compiler stamps out a concrete copy per type used  
+✅ Monomorphization means generics cost nothing at runtime, the compiler stamps out a concrete copy per type used  
 ✅ `Option<T>`, `Result<T, E>`, and `Vec<T>` are generics you've already been using since earlier weeks
 
 </div>
@@ -94,9 +94,9 @@ A function can take *multiple* type parameters (`T` and `U` here), and each is i
 ## ⚠️ Common Pitfalls
 
 ::: warning Watch Out!
-- **Forgetting to declare the parameter.** Writing `fn first(items: &[T])` without the `<T>` after the function name makes the compiler complain "cannot find type `T` in this scope" — the angle-bracket list is the *declaration*, the rest are *uses*.
-- **Assuming you can do anything with a `T`.** Inside a plain generic function, `T` could be *any* type, so `a + b` or `a > b` does NOT compile — the compiler has no proof `T` supports those operations. You'll fix this with trait bounds on Day 62.
-- **Thinking generics are like dynamic typing.** `T` is fixed to one concrete type per call at compile time. A `Vec<T>` can't hold an `i32` *and* a `String` at once — that's a different tool (trait objects, later in the course).
+- **Forgetting to declare the parameter.** Writing `fn first(items: &[T])` without the `<T>` after the function name makes the compiler complain "cannot find type `T` in this scope", the angle-bracket list is the *declaration*, the rest are *uses*.
+- **Assuming you can do anything with a `T`.** Inside a plain generic function, `T` could be *any* type, so `a + b` or `a > b` does NOT compile, the compiler has no proof `T` supports those operations. You'll fix this with trait bounds on Day 62.
+- **Thinking generics are like dynamic typing.** `T` is fixed to one concrete type per call at compile time. A `Vec<T>` can't hold an `i32` *and* a `String` at once, that's a different tool (trait objects, later in the course).
 :::
 
 ## ✅ Quick Challenge
@@ -116,7 +116,7 @@ fn main() {
 <details>
 <summary>💡 Hint</summary>
 
-Use `items.is_empty()` to guard the empty case, and `items.len() - 1` to index the last element. Returning `Option<&T>` means you never panic on an empty slice — this mirrors how `slice::last` works in the standard library.
+Use `items.is_empty()` to guard the empty case, and `items.len() - 1` to index the last element. Returning `Option<&T>` means you never panic on an empty slice, this mirrors how `slice::last` works in the standard library.
 
 </details>
 
