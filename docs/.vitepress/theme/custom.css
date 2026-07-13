@@ -77,6 +77,10 @@
 }
 
 .journey-grid h2 {
+  /* VitePress's own theme sets position:relative on headings (for its
+     heading-anchor-link feature); override it so the ::after stretched
+     link below sizes against the card, not just the heading's own box. */
+  position: static;
   margin-top: 0;
   font-size: 1.25rem;
 }
