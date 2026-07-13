@@ -1,32 +1,15 @@
 <template>
-  <div class="continue-cta-row">
-    <div v-if="firstAction" class="action">
-      <VPButton
-        tag="a"
-        size="medium"
-        :theme="firstAction.theme || 'brand'"
-        :text="firstAction.text"
-        :href="firstAction.link"
-      />
-    </div>
-    <div class="action">
-      <VPButton tag="a" size="medium" theme="alt" :text="label" :href="link" />
-    </div>
+  <div class="rd-hero-ctas">
+    <a class="rd-btn rd-btn-solid" :href="withBase('/introduction')">Start Learning</a>
+    <a class="rd-btn rd-btn-outline" :href="withBase(link)">{{ label }}</a>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useData } from 'vitepress'
-import { VPButton } from 'vitepress/theme'
+import { ref, onMounted } from 'vue'
+import { withBase } from 'vitepress'
 
 const TOTAL_LESSONS = 90
-const { frontmatter } = useData()
-
-const firstAction = computed(() => {
-  const actions = frontmatter.value.hero && frontmatter.value.hero.actions
-  return actions && actions[0]
-})
 
 const label = ref('View Weeks')
 const link = ref('/week-01/')
@@ -47,12 +30,6 @@ function findNextIncompleteDay(completed) {
 }
 
 onMounted(() => {
-  const actions = frontmatter.value.hero && frontmatter.value.hero.actions
-  if (actions && actions[1]) {
-    label.value = actions[1].text
-    link.value = actions[1].link
-  }
-
   let saved
   try {
     saved = localStorage.getItem('rust90days-progress')
