@@ -46,14 +46,22 @@ and is not actually broken.
 
 ### 2. Progress-aware hero CTA
 
-VitePress's declarative `hero.actions` frontmatter can't be made conditional,
-so this uses the Default theme's `home-hero-actions` slot override instead:
-`docs/.vitepress/theme/index.ts` registers a `Layout` component that fills
-that slot, re-rendering the "Start Learning" button as static markup and
-replacing the second button with a new `ContinueButton.vue` component
-(`docs/.vitepress/theme/ContinueButton.vue`). This fully replaces VitePress's
-own rendering of the actions row for the homepage only; every other page is
-unaffected since the slot only renders in the `home` layout.
+Verified against the installed VitePress source
+(`node_modules/vitepress/dist/client/theme-default/components/VPHomeHero.vue`):
+the hero's action buttons render directly from `useData().frontmatter.hero.actions`,
+which is a reactive ref. There is no slot that lets you replace the actions
+row wholesale (only `home-hero-actions-after`, which appends, not replaces).
+
+So instead of a custom `Layout` override, this adds one new component,
+`docs/.vitepress/theme/ContinueButton.vue`, mounted via the
+`home-hero-actions-after` slot (wired up in `docs/.vitepress/theme/index.ts`
+using the `Layout` wrapper pattern from VitePress's own
+"Extending the Default Theme" docs). The component renders no visible markup
+of its own; in `onMounted` it calls `useData()`, reads
+`localStorage['rust90days-progress']`, and when progress exists, mutates
+`frontmatter.value.hero.actions[1].text` and `.link` directly. Because that
+ref is reactive, VPHero re-renders the existing second button with the new
+label/link automatically, no third button, no layout shift, no DOM hacking.
 
 Behavior:
 - Reads `localStorage['rust90days-progress']` (same key/shape
