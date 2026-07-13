@@ -2,6 +2,8 @@
 /* Light mode */
 :root {
   --vp-c-brand: #b93a25; /* legacy alias used by lesson styles below */
+  --vp-c-brand-light: #ce422b; /* legacy: .progress-bar gradient */
+  --vp-c-brand-dark: #a33320; /* legacy: .lesson-complete-btn:hover */
   --vp-c-brand-1: #b93a25;
   --vp-c-brand-2: #ce422b;
   --vp-c-brand-3: #b93a25;
@@ -24,6 +26,8 @@
 /* Dark mode (flagship) */
 .dark {
   --vp-c-brand: #e86a50;
+  --vp-c-brand-light: #e86a50; /* legacy: .progress-bar gradient */
+  --vp-c-brand-dark: #a33320; /* legacy: .lesson-complete-btn:hover */
   --vp-c-brand-1: #e86a50;
   --vp-c-brand-2: #ce422b;
   --vp-c-brand-3: #b93a25;
